@@ -1,5 +1,2 @@
-# Source export and material not used by any page
-*.zip
-uploads/
-.thumbnail
-*-check.png
+# Original export from the design tool; index.html is the published copy
+Unit 2 Respect.html
