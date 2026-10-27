@@ -1,0 +1,5 @@
+# Source export and material not used by any page
+*.zip
+uploads/
+.thumbnail
+*-check.png

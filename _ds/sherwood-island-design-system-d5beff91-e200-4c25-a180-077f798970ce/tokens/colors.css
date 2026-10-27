@@ -1,0 +1,68 @@
+:root{
+  /* Parchment — every surface */
+  --sw-canvas:#EFE6D2;
+  --sw-canvas-haze:#E5E2CF;
+  --sw-paper:#F5EDE0;
+  --sw-paper-high:#FBF6EA;
+  --sw-inset:#EFE7D3;
+  --sw-track:#E3DBC7;
+  --sw-line:#DCD5BF;
+  --sw-line-soft:#E8E0CB;
+
+  /* Forest — navigation, actions, progress */
+  --sw-forest-900:#2C3826;
+  --sw-forest-800:#3A4932;
+  --sw-forest-700:#47583C;
+  --sw-moss:#5F6139;
+  --sw-moss-dark:#4E5030;
+  --sw-leaf:#74845A;
+  --sw-leaf-dark:#66754D;
+  --sw-leaf-light:#8B9A72;
+  --sw-progress:#6E7A5C;
+  --sw-sage:#899875;
+  --sw-icon:#737C52;
+
+  /* Wood — signage and "physical" objects */
+  --sw-wood:#956F3E;
+  --sw-wood-dark:#6E5029;
+  --sw-wood-light:#B08A57;
+  --sw-wood-cream:#FDEAC8;
+
+  /* Gold — ratings and achievements only */
+  --sw-gold:#E8B84E;
+  --sw-gold-soft:#F2D28C;
+  --sw-star-empty:#D1C9B6;
+
+  /* Ink — text */
+  --sw-ink:#2F3020;
+  --sw-ink-body:#4A4B39;
+  --sw-ink-soft:#6E6B58;
+  --sw-ink-muted:#8E8877;
+  --sw-ink-faint:#B6AE99;
+  --sw-ink-onDark:#F5EEE1;
+
+  /* Semantic aliases */
+  --surface-page:var(--sw-canvas);
+  --surface-card:var(--sw-paper);
+  --surface-raised:var(--sw-paper-high);
+  --surface-inset:var(--sw-inset);
+  --surface-dark:var(--sw-forest-800);
+  --border-default:var(--sw-line);
+  --border-soft:var(--sw-line-soft);
+  --text-heading:var(--sw-ink);
+  --text-body:var(--sw-ink-body);
+  --text-secondary:var(--sw-ink-soft);
+  --text-muted:var(--sw-ink-muted);
+  --text-placeholder:var(--sw-ink-faint);
+  --text-on-dark:var(--sw-ink-onDark);
+  --text-on-wood:var(--sw-wood-cream);
+  --action-primary:var(--sw-leaf);
+  --action-primary-hover:var(--sw-leaf-dark);
+  --action-wood:var(--sw-wood);
+  --accent-achievement:var(--sw-gold);
+  --progress-fill:var(--sw-progress);
+  --progress-track:var(--sw-track);
+  --icon-default:var(--sw-icon);
+
+  color-scheme:light;
+}

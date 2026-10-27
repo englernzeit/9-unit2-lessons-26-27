@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-48901e82-f5d1-4762-8f5c-bf730a4b2417/styles.css">
+<script src="_ds/broadsheet-48901e82-f5d1-4762-8f5c-bf730a4b2417/_ds_bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+@keyframes stampIn{0%{transform:rotate(-14deg) scale(2.4);opacity:0}60%{transform:rotate(-9deg) scale(.94);opacity:1}100%{transform:rotate(-9deg) scale(1);opacity:1}}
+@keyframes pillIn{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.18)}100%{transform:scale(1);opacity:1}}
+@keyframes slotPop{0%{transform:scale(1)}45%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes markPulse{0%{opacity:.15}100%{opacity:1}}
+.ink{font-family:var(--font-body);color:var(--color-accent-800);background:transparent;border:none;border-bottom:1px solid var(--color-accent-400);outline:none;padding:.15em .2em;font-size:inherit;-webkit-appearance:none;border-radius:0;transition:border-color .18s,box-shadow .18s}
+.ink:focus{border-color:var(--color-accent-800);box-shadow:0 2px 0 -1px var(--color-accent-800)}
+.ink:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px;border-radius:2px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.2,.7,.3,1),transform .5s cubic-bezier(.2,.7,.3,1)}
+.reveal[data-in="1"]{opacity:1;transform:none}
+.ex{display:grid;grid-template-columns:3.6rem 1fr;gap:var(--space-4);align-items:start;margin-bottom:var(--space-8)}
+.exnum{font-family:var(--font-heading);font-weight:600;font-size:54px;line-height:.8;color:var(--color-accent)}
+.instr{font-family:var(--font-heading);font-size:26px;line-height:1.18;font-weight:600;margin:0 0 var(--space-3);max-width:38ch}
+.bd{font-family:var(--font-body);font-size:15.5px;line-height:1.6;margin:0 0 var(--space-4);max-width:62ch}
+.pad{background:var(--color-accent-100);border-radius:var(--radius-md);padding:var(--space-4) var(--space-6)}
+.pad-m{background:var(--color-accent-2-100)}
+.sub{font-family:var(--font-heading);font-size:17px;font-weight:600;margin:0 0 var(--space-2);display:flex;gap:.5em;align-items:baseline}
+.sublet{font-family:var(--font-heading);font-size:17px;font-weight:600;color:var(--color-accent-2);line-height:1}
+.qlist{font-family:var(--font-body);font-size:15.5px;padding-left:1.4em;margin:0}
+.task{margin-bottom:var(--space-6)}
+.yn{cursor:pointer;padding:.15em .55em;color:var(--color-neutral-600);font-style:italic;user-select:none;-webkit-user-select:none;border-radius:999px;border:2px solid transparent;transition:border-color .2s,color .2s,transform .2s}
+.yn:hover{color:var(--color-accent-700)}
+.yn[data-on="1"]{border-color:var(--color-accent-800);color:var(--color-accent-800);font-style:normal;transform:rotate(-1.5deg)}
+.ck{display:inline-flex;align-items:center;gap:.5em;cursor:pointer;user-select:none;-webkit-user-select:none;color:var(--color-neutral-700);padding:.25em .1em;transition:color .15s}
+.ck:hover{color:var(--color-accent-700)}
+.ckb{display:inline-block;width:1.05em;height:1.05em;border:2px solid var(--color-accent);flex:none;transition:background .18s,border-color .18s,transform .18s}
+.ck[data-on="1"] .ckb{background:var(--color-accent-800);border-color:var(--color-accent-800);transform:rotate(-6deg) scale(1.06)}
+.ck[data-on="1"]{color:var(--color-accent-800)}
+.ws{border-collapse:collapse;font-family:var(--font-body);font-size:16px;touch-action:none;user-select:none;-webkit-user-select:none;position:relative;z-index:1}
+.ws td{width:2em;height:2em;text-align:center;border:1px solid var(--color-accent-200);cursor:pointer;transition:background .12s}
+.ws td[data-sel="1"]{background:var(--color-accent-200)}
+.ws td[data-found="1"]{color:var(--color-accent-2-900);font-weight:600}
+.wsw{transition:color .25s,opacity .25s}
+.wsw[data-on="1"]{color:var(--color-accent-2);text-decoration:line-through;opacity:.65}
+.chip{font-family:var(--font-body);font-size:15px;padding:.45em .8em;border:1px solid var(--color-accent-300);border-radius:var(--radius-md);background:var(--color-bg);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;display:flex;gap:.6em;align-items:baseline;transition:transform .15s,box-shadow .15s,border-color .15s}
+.chip:hover{transform:translateX(3px);border-color:var(--color-accent);box-shadow:var(--shadow-sm)}
+.chip[data-drag="1"]{opacity:.35}
+.slot{width:2.6em;height:2.1em;border:2px dashed var(--color-accent-300);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:600;color:var(--color-accent-800);flex:none;transition:border-color .15s,background .15s}
+.slot[data-over="1"]{border-color:var(--color-accent);background:var(--color-accent-100);transform:scale(1.08)}
+.slot[data-filled="1"]{border-style:solid;background:var(--color-accent-100);cursor:pointer}
+.pill{font-family:var(--font-heading);font-size:12px;font-weight:600;letter-spacing:.04em;padding:.25em .6em;border-radius:999px;min-width:2.6em;text-align:center;display:inline-block}
+.rail{position:sticky;top:var(--space-6);align-self:start;display:grid;gap:var(--space-3);justify-items:center}
+.plate{width:34px;height:34px;display:grid;place-items:center;font-family:var(--font-heading);font-weight:600;font-size:15px;border-radius:50%;color:var(--color-neutral-600);cursor:pointer;position:relative;overflow:hidden;border:1px solid var(--color-accent-200);transition:color .25s,border-color .25s;text-decoration:none}
+.plate:hover{border-color:var(--color-accent);color:var(--color-accent-700)}
+.plate:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+a{color:var(--color-accent-700)}
+a:hover{color:var(--color-accent-900)}
+.plate span{position:relative;z-index:1}
+.plate i{position:absolute;left:0;right:0;bottom:0;height:0%;background:var(--color-accent);transition:height .5s cubic-bezier(.2,.7,.3,1)}
+.plate[data-done="1"]{color:#fff;border-color:var(--color-accent)}
+.regmark{position:absolute;width:22px;height:22px;opacity:.5}
+.bar{position:sticky;bottom:0;background:var(--color-bg);border-top:1px solid var(--color-text);padding:var(--space-4) 0;display:flex;gap:var(--space-4);align-items:center;flex-wrap:wrap;z-index:5}
+.stamp{font-family:var(--font-heading);font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:var(--color-accent-2);border:2px solid var(--color-accent-2);border-radius:var(--radius-md);padding:.4em .8em;transform:rotate(-9deg);animation:stampIn .45s cubic-bezier(.2,.9,.3,1) both}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="max-width:1180px;margin:0 auto;padding:var(--space-6);display:grid;grid-template-columns:56px minmax(0,1fr);gap:var(--space-6);font-family:var(--font-body);color:var(--color-text);position:relative">
+
+<svg class="regmark" viewBox="0 0 22 22" style="top:8px;left:8px"><circle cx="11" cy="11" r="7" fill="none" stroke="var(--color-accent)" stroke-width="1"></circle><path d="M11 0v22M0 11h22" stroke="var(--color-accent-2)" stroke-width="1"></path></svg>
+
+<div class="rail">
+  <div style="writing-mode:vertical-rl;font-family:var(--font-heading);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:var(--space-2)">Progress</div>
+  <a class="plate" data-jump="1" href="#ex1"><i></i><span>1</span></a>
+  <a class="plate" data-jump="2" href="#ex2"><i></i><span>2</span></a>
+  <a class="plate" data-jump="3" href="#ex3"><i></i><span>3</span></a>
+  <a class="plate" data-jump="4" href="#ex4"><i></i><span>4</span></a>
+  <a class="plate" data-jump="5" href="#ex5"><i></i><span>5</span></a>
+  <a class="plate" data-jump="6" href="#ex6"><i></i><span>6</span></a>
+  <a class="plate" data-jump="7" href="#ex7"><i></i><span>7</span></a>
+</div>
+
+<div>
+<div style="border-top:5px solid var(--color-text);margin-bottom:var(--space-4)"></div>
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap">
+  <h1 style="font-family:var(--font-heading);font-size:72px;line-height:.96;font-weight:600;letter-spacing:-.02em;margin:0">Australia<span style="color:var(--color-accent-2)">.</span></h1>
+  <p style="font-style:italic;font-size:17px;color:var(--color-neutral-700);margin:0 0 .5em;max-width:19ch">Six exercises, eight words, one continent.</p>
+</div>
+
+<div style="display:flex;gap:var(--space-4) var(--space-6);flex-wrap:wrap;align-items:flex-end;font-size:15px;color:var(--color-neutral-700);padding-bottom:var(--space-3);border-bottom:1px solid var(--color-text);margin:var(--space-6) 0 var(--space-8)">
+  <span style="display:flex;align-items:flex-end;gap:.5em;flex:3 1 16em">Name <input class="ink" data-k="name" style="flex:1;min-width:8em" /></span>
+  <span style="display:flex;align-items:flex-end;gap:.5em;flex:1 1 7em">Klasse <input class="ink" data-k="klasse" style="flex:1;min-width:4em" /></span>
+  <span style="display:flex;align-items:flex-end;gap:.5em;flex:1 1 7em">Datum <input class="ink" data-k="datum" style="flex:1;min-width:4em" /></span>
+</div>
+
+<div class="ex reveal" id="ex1" data-ex="1">
+  <span class="exnum">1</span>
+  <div>
+    <h2 class="instr">What comes to your mind when you here the word „Australia“?</h2>
+    <p class="bd">Write down three things — an animal, a place, a word, anything.</p>
+    <div class="pad" style="max-width:38em;display:grid;gap:var(--space-3)">
+      <div style="display:flex;align-items:center;gap:var(--space-3)"><span style="font-family:var(--font-heading);font-weight:600;color:var(--color-accent-700)">1</span><input class="ink" data-k="e1-1" style="flex:1;font-size:17px" /></div>
+      <div style="display:flex;align-items:center;gap:var(--space-3)"><span style="font-family:var(--font-heading);font-weight:600;color:var(--color-accent-700)">2</span><input class="ink" data-k="e1-2" style="flex:1;font-size:17px" /></div>
+      <div style="display:flex;align-items:center;gap:var(--space-3)"><span style="font-family:var(--font-heading);font-weight:600;color:var(--color-accent-700)">3</span><input class="ink" data-k="e1-3" style="flex:1;font-size:17px" /></div>
+    </div>
+  </div>
+</div>
+
+<div class="ex reveal" id="ex2" data-ex="2">
+  <span class="exnum">2</span>
+  <div>
+    <h2 class="instr">Your word bank</h2>
+    <p class="bd">Tap a word to hide its translation and test yourself.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 var(--space-8);font-size:16px">
+      <div class="wb" data-wb="continent" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;border-bottom:1px solid var(--color-accent-200);cursor:pointer"><span style="font-weight:600">continent</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">der Kontinent</em></div>
+      <div class="wb" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;border-bottom:1px solid var(--color-accent-200);cursor:pointer"><span style="font-weight:600">coast</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">die Küste</em></div>
+      <div class="wb" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;border-bottom:1px solid var(--color-accent-200);cursor:pointer"><span style="font-weight:600">desert</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">die Wüste</em></div>
+      <div class="wb" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;border-bottom:1px solid var(--color-accent-200);cursor:pointer"><span style="font-weight:600">the outback</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">das Landesinnere</em></div>
+      <div class="wb" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;border-bottom:1px solid var(--color-accent-200);cursor:pointer"><span style="font-weight:600">wildlife</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">die Tierwelt</em></div>
+      <div class="wb" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;border-bottom:1px solid var(--color-accent-200);cursor:pointer"><span style="font-weight:600">reef</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">das Riff</em></div>
+      <div class="wb" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;cursor:pointer"><span style="font-weight:600">population</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">die Bevölkerung</em></div>
+      <div class="wb" style="display:flex;align-items:baseline;gap:.6em;padding:.45em 0;cursor:pointer"><span style="font-weight:600">Aboriginal people</span><em style="margin-left:auto;color:var(--color-neutral-700);font-size:14.5px;transition:opacity .2s">die Ureinwohner</em></div>
+    </div>
+  </div>
+</div>
+
+<div class="ex reveal" id="ex3" data-ex="3">
+  <span class="exnum">3</span>
+  <div>
+    <h2 class="instr">What do you see?</h2>
+    <p class="bd">Eight nouns. Easy words score 1 point, precise words 2, rare and exact words 3. <strong>Reach 15 points.</strong></p>
+    <img src="australia-photo.png" alt="Sydney harbour with a kangaroo on a rock" style="width:100%;border-radius:var(--radius-md);display:block;margin-bottom:var(--space-6)" />
+    <div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:var(--space-6);align-items:start">
+      <div class="pad" style="display:grid;gap:var(--space-2)">
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">1</span><input class="ink pic" data-k="pic-1" style="flex:1;font-size:17px" /><span data-pt="pic-1"></span></div>
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">2</span><input class="ink pic" data-k="pic-2" style="flex:1;font-size:17px" /><span data-pt="pic-2"></span></div>
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">3</span><input class="ink pic" data-k="pic-3" style="flex:1;font-size:17px" /><span data-pt="pic-3"></span></div>
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">4</span><input class="ink pic" data-k="pic-4" style="flex:1;font-size:17px" /><span data-pt="pic-4"></span></div>
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">5</span><input class="ink pic" data-k="pic-5" style="flex:1;font-size:17px" /><span data-pt="pic-5"></span></div>
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">6</span><input class="ink pic" data-k="pic-6" style="flex:1;font-size:17px" /><span data-pt="pic-6"></span></div>
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">7</span><input class="ink pic" data-k="pic-7" style="flex:1;font-size:17px" /><span data-pt="pic-7"></span></div>
+        <div style="display:flex;align-items:center;gap:.7em"><span style="font-size:13px;color:var(--color-accent-700);width:1em">8</span><input class="ink pic" data-k="pic-8" style="flex:1;font-size:17px" /><span data-pt="pic-8"></span></div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:baseline;gap:.4em;font-family:var(--font-heading);font-weight:600;line-height:1">
+          <span data-total="pic" style="font-size:76px;color:var(--color-accent-2)">0</span>
+          <span style="font-size:20px;color:var(--color-neutral-600)">/ 15</span>
+        </div>
+        <div style="height:8px;background:var(--color-accent-100);border-radius:999px;overflow:hidden;margin:var(--space-3) 0 var(--space-4)">
+          <div data-scorebar style="height:100%;width:0%;background:var(--color-accent-2);transition:width .5s cubic-bezier(.2,.7,.3,1)"></div>
+        </div>
+        <div style="font-size:13.5px;line-height:1.9;color:var(--color-neutral-700)">
+          <div><span class="pill" style="background:var(--color-neutral-200);color:var(--color-neutral-700)">+1</span> everyday word</div>
+          <div><span class="pill" style="background:var(--color-accent-200);color:var(--color-accent-900)">+2</span> precise word</div>
+          <div><span class="pill" style="background:var(--color-accent-2-200);color:var(--color-accent-2-900)">+3</span> rare and exact</div>
+        </div>
+        <p data-scoremsg style="font-family:var(--font-heading);font-size:15px;font-weight:600;color:var(--color-accent-700);margin:var(--space-4) 0 0;min-height:2.6em"></p>
+      </div>
+    </div>
+    <div style="margin-top:var(--space-6);font-size:16px">The picture makes me think of Australia because <input class="ink" data-k="e3-b" style="min-width:16em;width:55%" /></div>
+  </div>
+</div>
+
+<div class="ex reveal" id="ex4" data-ex="4">
+  <span class="exnum">4</span>
+  <div>
+    <div class="task">
+      <p class="sub"><span class="sublet">a</span> <span>Yes or no? Circle the answer.</span></p>
+      <ol class="qlist" style="line-height:2.4">
+        <li style="display:flex;align-items:center;gap:1em;flex-wrap:wrap"><span>Australia is a country and a continent at the same time.</span><span style="margin-left:auto;white-space:nowrap"><span class="yn" data-k="a1" data-v="yes">yes</span>/<span class="yn" data-k="a1" data-v="no">no</span></span></li>
+        <li style="display:flex;align-items:center;gap:1em;flex-wrap:wrap"><span>Canberra is the capital city of Australia.</span><span style="margin-left:auto;white-space:nowrap"><span class="yn" data-k="a2" data-v="yes">yes</span>/<span class="yn" data-k="a2" data-v="no">no</span></span></li>
+        <li style="display:flex;align-items:center;gap:1em;flex-wrap:wrap"><span>The Great Barrier Reef lies off the west coast.</span><span style="margin-left:auto;white-space:nowrap"><span class="yn" data-k="a3" data-v="yes">yes</span>/<span class="yn" data-k="a3" data-v="no">no</span></span></li>
+      </ol>
+    </div>
+
+    <div class="task">
+      <p class="sub"><span class="sublet">b</span> <span>Which answer is right? Tick one box.</span></p>
+      <ol class="qlist" style="line-height:1.6;display:grid;gap:var(--space-4)">
+        <li>The largest city in Australia is<div style="display:flex;flex-wrap:wrap;gap:.3em 1.6em;margin-top:.3em"><span class="ck" data-k="b1" data-v="Canberra"><span class="ckb"></span>Canberra</span><span class="ck" data-k="b1" data-v="Sydney"><span class="ckb"></span>Sydney</span><span class="ck" data-k="b1" data-v="Melbourne"><span class="ckb"></span>Melbourne</span><span class="ck" data-k="b1" data-v="Perth"><span class="ckb"></span>Perth</span></div></li>
+        <li>The dry region in the middle of the country is called<div style="display:flex;flex-wrap:wrap;gap:.3em 1.6em;margin-top:.3em"><span class="ck" data-k="b2" data-v="the prairie"><span class="ckb"></span>the prairie</span><span class="ck" data-k="b2" data-v="the highlands"><span class="ckb"></span>the highlands</span><span class="ck" data-k="b2" data-v="the outback"><span class="ckb"></span>the outback</span></div></li>
+        <li>Australia lies in the<div style="display:flex;flex-wrap:wrap;gap:.3em 1.6em;margin-top:.3em"><span class="ck" data-k="b3" data-v="northern hemisphere"><span class="ckb"></span>northern hemisphere</span><span class="ck" data-k="b3" data-v="southern hemisphere"><span class="ckb"></span>southern hemisphere</span></div></li>
+      </ol>
+    </div>
+
+    <div class="task">
+      <p class="sub"><span class="sublet">c</span> <span>Complete the sentences. Use the word bank.</span></p>
+      <ol class="qlist" style="line-height:2.8">
+        <li>Most Australians live near the <input class="ink" data-k="c1" style="min-width:8em" />, not in the middle of the country.</li>
+        <li>The first people of Australia are the <input class="ink" data-k="c2" style="min-width:8em" />.</li>
+        <li>Kangaroos, koalas and emus are part of the Australian <input class="ink" data-k="c3" style="min-width:8em" />.</li>
+      </ol>
+    </div>
+
+    <div class="task">
+      <p class="sub"><span class="sublet">d</span> <span>Find the mistake — one in every sentence. Write it correctly.</span></p>
+      <ol class="qlist" style="line-height:1.5;display:grid;gap:var(--space-4)">
+        <li>Australia are the smallest continent in the world.<input class="ink" data-k="d1" style="width:100%;margin-top:.4em;font-size:16px" /></li>
+        <li>Many peoples live on the east coast.<input class="ink" data-k="d2" style="width:100%;margin-top:.4em;font-size:16px" /></li>
+        <li>The Great Barrier Reef is more bigger than any other reef.<input class="ink" data-k="d3" style="width:100%;margin-top:.4em;font-size:16px" /></li>
+      </ol>
+    </div>
+
+    <div class="task">
+      <p class="sub"><span class="sublet">e</span> <span>Translate into English.</span></p>
+      <ol class="qlist" style="line-height:1.5;display:grid;gap:var(--space-4)">
+        <li><em>Australien liegt auf der Südhalbkugel.</em><input class="ink" data-k="e1" style="width:100%;margin-top:.4em;font-size:16px" /></li>
+        <li><em>Im Outback regnet es sehr selten.</em><input class="ink" data-k="e2" style="width:100%;margin-top:.4em;font-size:16px" /></li>
+        <li><em>Viele Tiere leben nur in Australien.</em><input class="ink" data-k="e3" style="width:100%;margin-top:.4em;font-size:16px" /></li>
+      </ol>
+    </div>
+
+    <div class="task" style="margin-bottom:0">
+      <p class="sub"><span class="sublet">f</span> <span>Choose the correct word.</span></p>
+      <ol class="qlist" style="line-height:2.4">
+        <li>Australia is <span class="yn" data-k="f1" data-v="smaller">smaller</span>/<span class="yn" data-k="f1" data-v="smallest">smallest</span> than Europe.</li>
+        <li>There <span class="yn" data-k="f2" data-v="is">is</span>/<span class="yn" data-k="f2" data-v="are">are</span> six states in Australia.</li>
+        <li>The Aboriginal people have lived here <span class="yn" data-k="f3" data-v="since">since</span>/<span class="yn" data-k="f3" data-v="for">for</span> thousands of years.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="ex reveal" id="ex5" data-ex="5">
+  <span class="exnum">5</span>
+  <div>
+    <div class="task">
+      <p class="sub"><span class="sublet">a</span> <span>Match the word. Drag the German word onto the box.</span></p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--space-6);font-size:16px">
+        <div style="display:grid;gap:var(--space-2)">
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">1</span><span style="font-weight:600">continent</span><span class="slot" data-slot="m1" style="margin-left:auto"></span></div>
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">2</span><span style="font-weight:600">desert</span><span class="slot" data-slot="m2" style="margin-left:auto"></span></div>
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">3</span><span style="font-weight:600">reef</span><span class="slot" data-slot="m3" style="margin-left:auto"></span></div>
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">4</span><span style="font-weight:600">coast</span><span class="slot" data-slot="m4" style="margin-left:auto"></span></div>
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">5</span><span style="font-weight:600">population</span><span class="slot" data-slot="m5" style="margin-left:auto"></span></div>
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">6</span><span style="font-weight:600">the outback</span><span class="slot" data-slot="m6" style="margin-left:auto"></span></div>
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">7</span><span style="font-weight:600">wildlife</span><span class="slot" data-slot="m7" style="margin-left:auto"></span></div>
+          <div style="display:flex;align-items:center;gap:.8em"><span style="font-size:13px;color:var(--color-neutral-600);width:1em">8</span><span style="font-weight:600">Aboriginal people</span><span class="slot" data-slot="m8" style="margin-left:auto"></span></div>
+        </div>
+        <div data-chips style="display:grid;gap:var(--space-2);align-content:start">
+          <span class="chip" data-letter="A"><strong style="color:var(--color-accent-2)">A</strong><em>die Tierwelt</em></span>
+          <span class="chip" data-letter="B"><strong style="color:var(--color-accent-2)">B</strong><em>der Kontinent</em></span>
+          <span class="chip" data-letter="C"><strong style="color:var(--color-accent-2)">C</strong><em>die Ureinwohner</em></span>
+          <span class="chip" data-letter="D"><strong style="color:var(--color-accent-2)">D</strong><em>die Küste</em></span>
+          <span class="chip" data-letter="E"><strong style="color:var(--color-accent-2)">E</strong><em>das Riff</em></span>
+          <span class="chip" data-letter="F"><strong style="color:var(--color-accent-2)">F</strong><em>die Wüste</em></span>
+          <span class="chip" data-letter="G"><strong style="color:var(--color-accent-2)">G</strong><em>die Bevölkerung</em></span>
+          <span class="chip" data-letter="H"><strong style="color:var(--color-accent-2)">H</strong><em>das Landesinnere</em></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <p class="sub"><span class="sublet">b</span> <span>Find the word. Swipe across a word to mark it.</span> <span data-wscount style="margin-left:auto;font-family:var(--font-body);font-size:13px;font-weight:400;color:var(--color-neutral-600)">0 / 8</span></p>
+      <div style="display:flex;gap:var(--space-6);flex-wrap:wrap;align-items:flex-start">
+        <div data-wswrap style="position:relative">
+          <svg data-wssvg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible"></svg>
+          <table class="ws" data-ws>
+            <tr><td>C</td><td>F</td><td>C</td><td>O</td><td>N</td><td>T</td><td>I</td><td>N</td><td>E</td><td>N</td><td>T</td><td>Q</td></tr>
+            <tr><td>O</td><td>K</td><td>B</td><td>W</td><td>C</td><td>J</td><td>J</td><td>R</td><td>E</td><td>E</td><td>F</td><td>N</td></tr>
+            <tr><td>A</td><td>Z</td><td>A</td><td>B</td><td>O</td><td>R</td><td>I</td><td>G</td><td>I</td><td>N</td><td>A</td><td>L</td></tr>
+            <tr><td>S</td><td>H</td><td>M</td><td>M</td><td>G</td><td>I</td><td>B</td><td>D</td><td>Z</td><td>B</td><td>J</td><td>T</td></tr>
+            <tr><td>T</td><td>T</td><td>P</td><td>B</td><td>N</td><td>C</td><td>D</td><td>E</td><td>S</td><td>E</td><td>R</td><td>T</td></tr>
+            <tr><td>W</td><td>N</td><td>E</td><td>W</td><td>Z</td><td>K</td><td>R</td><td>P</td><td>N</td><td>P</td><td>J</td><td>K</td></tr>
+            <tr><td>C</td><td>W</td><td>I</td><td>L</td><td>D</td><td>L</td><td>I</td><td>F</td><td>E</td><td>N</td><td>B</td><td>J</td></tr>
+            <tr><td>Y</td><td>W</td><td>T</td><td>I</td><td>U</td><td>M</td><td>L</td><td>Q</td><td>J</td><td>U</td><td>Q</td><td>I</td></tr>
+            <tr><td>B</td><td>C</td><td>D</td><td>R</td><td>N</td><td>R</td><td>U</td><td>X</td><td>L</td><td>G</td><td>A</td><td>R</td></tr>
+            <tr><td>O</td><td>Z</td><td>U</td><td>H</td><td>I</td><td>E</td><td>E</td><td>Y</td><td>Q</td><td>K</td><td>C</td><td>U</td></tr>
+            <tr><td>P</td><td>O</td><td>P</td><td>U</td><td>L</td><td>A</td><td>T</td><td>I</td><td>O</td><td>N</td><td>R</td><td>W</td></tr>
+            <tr><td>D</td><td>C</td><td>Y</td><td>O</td><td>X</td><td>O</td><td>U</td><td>T</td><td>B</td><td>A</td><td>C</td><td>K</td></tr>
+          </table>
+        </div>
+        <div style="font-size:16px;display:grid;gap:.55em;align-content:start">
+          <span class="wsw" data-word="CONTINENT">continent</span>
+          <span class="wsw" data-word="COAST">coast</span>
+          <span class="wsw" data-word="DESERT">desert</span>
+          <span class="wsw" data-word="OUTBACK">outback</span>
+          <span class="wsw" data-word="WILDLIFE">wildlife</span>
+          <span class="wsw" data-word="REEF">reef</span>
+          <span class="wsw" data-word="POPULATION">population</span>
+          <span class="wsw" data-word="ABORIGINAL">aboriginal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="task" style="margin-bottom:0">
+      <p class="sub"><span class="sublet">c</span> <span>Write the right form of the verb.</span></p>
+      <ol class="qlist" style="line-height:2.8">
+        <li>Australia <input class="ink" data-k="v1" style="min-width:7em" /> in the southern hemisphere. <em style="color:var(--color-neutral-600)">(to lie)</em></li>
+        <li>Last week we <input class="ink" data-k="v2" style="min-width:7em" /> a film about the outback. <em style="color:var(--color-neutral-600)">(to watch)</em></li>
+        <li>Aboriginal people <input class="ink" data-k="v3" style="min-width:7em" /> here for thousands of years. <em style="color:var(--color-neutral-600)">(to live)</em></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="ex reveal" id="ex6" data-ex="6">
+  <span class="exnum" style="color:var(--color-accent-2)">6</span>
+  <div>
+    <h2 class="instr" style="font-style:italic;max-width:26ch">400 kilometres from the nearest doctor.</h2>
+    <p class="bd">A school in the outback has 14 students. The nearest town with a doctor, a library and a supermarket is 400 kilometres away. Some students live so far from the school that they cannot come every day.</p>
+    <p class="bd"><strong>Your task:</strong> find one solution. Write three or four sentences. Say what you would do and why it would help.</p>
+    <div class="pad pad-m"><textarea class="ink" data-k="solution" rows="5" style="width:100%;border-bottom:none;font-size:17px;line-height:1.9;resize:vertical;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.9em - 1px),var(--color-accent-2-300) calc(1.9em - 1px),var(--color-accent-2-300) 1.9em)"></textarea></div>
+    <p data-count="solution" style="font-size:13px;color:var(--color-neutral-600);margin:var(--space-2) 0 0">0 words</p>
+  </div>
+</div>
+
+<div class="ex reveal" id="ex7" data-ex="7">
+  <span class="exnum">7</span>
+  <div>
+    <h2 class="instr" style="font-size:30px">What have you learned today?</h2>
+    <div class="pad" style="margin-bottom:var(--space-6)"><textarea class="ink" data-k="learned" rows="3" style="width:100%;border-bottom:none;font-size:17px;line-height:1.9;resize:vertical;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.9em - 1px),var(--color-accent-300) calc(1.9em - 1px),var(--color-accent-300) 1.9em)"></textarea></div>
+    <div style="font-size:17px">Australia is a country where <input class="ink" data-k="exit" style="min-width:14em;width:55%" /></div>
+  </div>
+</div>
+
+<div class="bar">
+  <button class="btn btn-primary" data-pdf>Save as PDF</button>
+  <button class="btn btn-ghost" data-clear>Start again</button>
+  <span data-progress style="font-family:var(--font-heading);font-size:15px;font-weight:600;color:var(--color-accent-700)">0 / 7 done</span>
+  <span data-stampwrap style="margin-left:auto"></span>
+  <span data-saved style="font-size:13px;color:var(--color-neutral-600)">Saved on this iPad</span>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+const KEY = 'australia-sheet-1';
+const PTS = {
+  1: ['sky','water','city','bird','tree','trees','boat','girl','hat','sun','sea','rock','rocks','grass','bush','bushes','woman','hair','bag','house','houses','flag','plant','plants','cloud','clouds','building','buildings','person','shirt','shorts','stone','leaf','leaves','island','town','light','man','flower','flowers'],
+  2: ['harbour','harbor','bridge','ferry','skyline','kangaroo','beach','backpack','cliff','cliffs','sail','sailboat','wave','waves','tourist','coastline','bay','shore','tower','ocean','hill','sand','traveller','traveler','yacht','shoreline','port','skyscrapers','wildlife','rucksack','sunset','landscape','coast'],
+  3: ['opera house','headland','skyscraper','shrub','shrubs','arch','eucalyptus','surfer','surfers','ridge','sandstone','viewpoint','vegetation','silhouette','horizon','jetty','marsupial','panorama','wilderness','promontory','ferry terminal','harbour bridge','opera','undergrowth','outcrop']
+};
+const WORDS = ['CONTINENT','COAST','DESERT','OUTBACK','WILDLIFE','REEF','POPULATION','ABORIGINAL'];
+const TIER = {
+  1: ['var(--color-neutral-200)', 'var(--color-neutral-700)'],
+  2: ['var(--color-accent-200)', 'var(--color-accent-900)'],
+  3: ['var(--color-accent-2-200)', 'var(--color-accent-2-900)']
+};
+const MSG = [
+  [0, 'Start with what you see first.'],
+  [1, 'Good. Now look for something smaller.'],
+  [8, 'Halfway. Try a rarer word — what is that building called?'],
+  [12, 'Almost at fifteen.'],
+  [15, 'Fifteen points. Strong vocabulary.']
+];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this.data = { text: {}, choice: {}, found: [], match: {}, marks: {} };
+    this.shown = 0;
+  }
+
+  renderVals() { return { rootRef: this.rootRef }; }
+
+  componentDidMount() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    this.root = root;
+    this.load();
+    this.wireInputs();
+    this.wireChoices();
+    this.wireWordBank();
+    this.wireWordSearch();
+    this.wireMatch();
+    this.wireReveal();
+    root.querySelector('[data-pdf]').addEventListener('click', () => this.pdf());
+    root.querySelector('[data-clear]').addEventListener('click', () => {
+      if (!window.confirm('Clear all answers on this sheet?')) return;
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      window.location.reload();
+    });
+    this._ro = () => this.drawMarks();
+    window.addEventListener('resize', this._ro);
+    const wrap = root.querySelector('[data-wswrap]');
+    if (wrap && window.ResizeObserver) { this._rz = new ResizeObserver(() => this.drawMarks()); this._rz.observe(wrap); }
+    const img = root.querySelector('img');
+    if (img && !img.complete) img.addEventListener('load', this._ro);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(this._ro);
+    setTimeout(this._ro, 600);
+    this.scorePicture(true);
+    this.progress();
+  }
+
+  componentWillUnmount() { window.removeEventListener('resize', this._ro); if (this._rz) this._rz.disconnect(); }
+
+  save() {
+    try { localStorage.setItem(KEY, JSON.stringify(this.data)); } catch (e) {}
+    const n = this.root.querySelector('[data-saved]');
+    if (n) { n.textContent = 'Saved'; n.style.color = 'var(--color-accent-700)'; clearTimeout(this._t); this._t = setTimeout(() => { n.textContent = 'Saved on this iPad'; n.style.color = 'var(--color-neutral-600)'; }, 1200); }
+    this.progress();
+  }
+
+  load() {
+    let d = null;
+    try { d = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    if (d) this.data = Object.assign({ text: {}, choice: {}, found: [], match: {}, marks: {} }, d);
+    const t = this.data.text;
+    this.root.querySelectorAll('[data-k]').forEach(el => { if (t[el.dataset.k] != null) el.value = t[el.dataset.k]; });
+    this.root.querySelectorAll('.yn,.ck').forEach(el => { el.dataset.on = this.data.choice[el.dataset.k] === el.dataset.v ? '1' : '0'; });
+    this.data.found = this.data.found.filter(w => {
+      if (!this.data.marks[w]) this.data.marks[w] = this.locate(w);
+      if (!this.data.marks[w]) return false;
+      const chip = this.root.querySelector('[data-word="' + w + '"]');
+      if (chip) chip.dataset.on = '1';
+      this.data.marks[w].forEach(p => { const td = this.cellAt(p[0], p[1]); if (td) td.dataset.found = '1'; });
+      return true;
+    });
+    Object.keys(this.data.match).forEach(s => this.paintMatch(s, this.data.match[s]));
+    this.wordCount();
+    requestAnimationFrame(() => this.drawMarks());
+  }
+
+  wireInputs() {
+    this.root.querySelectorAll('[data-k]').forEach(el => {
+      el.addEventListener('input', () => {
+        this.data.text[el.dataset.k] = el.value;
+        if (el.classList.contains('pic')) this.scorePicture();
+        if (el.dataset.k === 'solution') this.wordCount();
+        clearTimeout(this._s); this._s = setTimeout(() => this.save(), 300);
+        this.progress();
+      });
+    });
+  }
+
+  wordCount() {
+    const el = this.root.querySelector('[data-count="solution"]');
+    if (!el) return;
+    const n = (this.data.text.solution || '').trim().split(/\s+/).filter(Boolean).length;
+    el.textContent = n + (n === 1 ? ' word' : ' words');
+    el.style.color = n >= 25 ? 'var(--color-accent-700)' : 'var(--color-neutral-600)';
+  }
+
+  wireChoices() {
+    this.root.querySelectorAll('.yn,.ck').forEach(el => {
+      el.addEventListener('click', () => {
+        const k = el.dataset.k, v = el.dataset.v;
+        this.data.choice[k] = this.data.choice[k] === v ? null : v;
+        this.root.querySelectorAll('[data-k="' + k + '"]').forEach(sib => {
+          if (sib.classList.contains('yn') || sib.classList.contains('ck'))
+            sib.dataset.on = this.data.choice[k] === sib.dataset.v ? '1' : '0';
+        });
+        this.save();
+      });
+    });
+  }
+
+  wireWordBank() {
+    this.root.querySelectorAll('.wb').forEach(row => {
+      const de = row.querySelector('em');
+      row.addEventListener('click', () => { de.style.opacity = de.style.opacity === '0' ? '1' : '0'; });
+    });
+  }
+
+  wireReveal() {
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) { e.target.dataset.in = '1'; io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    this.root.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+
+  wordPoints(raw) {
+    const w = String(raw || '').trim().toLowerCase().replace(/^(a|an|the)\s+/, '');
+    if (!w) return 0;
+    if (PTS[3].indexOf(w) > -1) return 3;
+    if (PTS[2].indexOf(w) > -1) return 2;
+    if (PTS[1].indexOf(w) > -1) return 1;
+    return 1;
+  }
+
+  scorePicture(silent) {
+    let total = 0, seen = {};
+    for (let i = 1; i <= 8; i++) {
+      const k = 'pic-' + i;
+      const el = this.root.querySelector('[data-k="' + k + '"]');
+      const badge = this.root.querySelector('[data-pt="' + k + '"]');
+      const val = el ? el.value.trim().toLowerCase() : '';
+      let p = this.wordPoints(val);
+      const dup = val && seen[val];
+      if (dup) p = 0;
+      if (val) seen[val] = 1;
+      if (badge) {
+        const label = !val ? '' : (dup ? 'dup' : '+' + p);
+        if (badge.textContent !== label) {
+          badge.textContent = label;
+          badge.className = label ? 'pill' : '';
+          if (label) {
+            const c = dup ? ['var(--color-neutral-200)', 'var(--color-neutral-600)'] : TIER[p];
+            badge.style.background = c[0]; badge.style.color = c[1];
+            badge.style.animation = 'none'; void badge.offsetWidth; badge.style.animation = 'pillIn .3s cubic-bezier(.2,.9,.3,1)';
+          } else { badge.style.background = ''; badge.style.animation = ''; }
+        }
+      }
+      total += p;
+    }
+    const out = this.root.querySelector('[data-total="pic"]');
+    const bar = this.root.querySelector('[data-scorebar]');
+    if (bar) bar.style.width = Math.min(100, total / 15 * 100) + '%';
+    if (out) {
+      if (silent) { out.textContent = total; this.shown = total; }
+      else this.countTo(out, this.shown, total);
+      this.shown = total;
+    }
+    const msg = this.root.querySelector('[data-scoremsg]');
+    if (msg) { let m = ''; MSG.forEach(p => { if (total >= p[0]) m = p[1]; }); msg.textContent = m; }
+    this.picTotal = total;
+  }
+
+  countTo(el, from, to) {
+    if (from === to) { el.textContent = to; return; }
+    const t0 = performance.now(), d = 380;
+    const step = now => {
+      const k = Math.min(1, (now - t0) / d);
+      const e = 1 - Math.pow(1 - k, 3);
+      el.textContent = Math.round(from + (to - from) * e);
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  table() { return this.root.querySelector('[data-ws]'); }
+
+  rc(td) {
+    const tr = td.parentElement;
+    return { r: Array.prototype.indexOf.call(this.table().rows, tr), c: Array.prototype.indexOf.call(tr.children, td) };
+  }
+
+  cellAt(r, c) { const tr = this.table() && this.table().rows[r]; return tr ? tr.children[c] : null; }
+
+  locate(word) {
+    const table = this.table();
+    if (!table) return null;
+    const rows = table.rows.length, cols = table.rows[0] ? table.rows[0].children.length : 0;
+    const dirs = [[0, 1], [1, 0], [1, 1], [1, -1], [0, -1], [-1, 0], [-1, -1], [-1, 1]];
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) for (const d of dirs) {
+      const pts = [];
+      let ok = true;
+      for (let i = 0; i < word.length; i++) {
+        const td = this.cellAt(r + d[0] * i, c + d[1] * i);
+        if (!td || td.textContent !== word[i]) { ok = false; break; }
+        pts.push([r + d[0] * i, c + d[1] * i]);
+      }
+      if (ok) return pts;
+    }
+    return null;
+  }
+
+  lineCells(a, b) {
+    if (!(a.r === b.r || a.c === b.c || Math.abs(b.r - a.r) === Math.abs(b.c - a.c))) return null;
+    const dr = Math.sign(b.r - a.r), dc = Math.sign(b.c - a.c);
+    const len = Math.max(Math.abs(b.r - a.r), Math.abs(b.c - a.c)) + 1;
+    const out = [];
+    for (let i = 0; i < len; i++) out.push(this.cellAt(a.r + dr * i, a.c + dc * i));
+    return out.every(Boolean) ? out : null;
+  }
+
+  drawMarks(animateWord) {
+    const svg = this.root.querySelector('[data-wssvg]');
+    const wrap = this.root.querySelector('[data-wswrap]');
+    if (!svg || !wrap) return;
+    svg.innerHTML = '';
+    const wb = wrap.getBoundingClientRect();
+    this.root.querySelectorAll('[data-ws] td').forEach(td => { td.style.fontWeight = ''; td.style.color = ''; });
+    Object.keys(this.data.marks).forEach(w => (this.data.marks[w] || []).forEach(p => {
+      const td = this.cellAt(p[0], p[1]);
+      if (td) { td.style.fontWeight = '600'; td.style.color = 'var(--color-accent-2-900)'; }
+    }));
+    Object.keys(this.data.marks).forEach(word => {
+      const pts = this.data.marks[word];
+      if (!pts || !pts.length) return;
+      const a = this.cellAt(pts[0][0], pts[0][1]);
+      const b = this.cellAt(pts[pts.length - 1][0], pts[pts.length - 1][1]);
+      if (!a || !b) return;
+      const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+      const x1 = ra.left + ra.width / 2 - wb.left, y1 = ra.top + ra.height / 2 - wb.top;
+      const x2 = rb.left + rb.width / 2 - wb.left, y2 = rb.top + rb.height / 2 - wb.top;
+      const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+      l.setAttribute('stroke', 'var(--color-accent-2)');
+      l.setAttribute('stroke-width', Math.max(16, ra.height * .78));
+      l.setAttribute('stroke-linecap', 'round');
+      l.setAttribute('opacity', '.28');
+      svg.appendChild(l);
+      if (word === animateWord) {
+        const len = Math.hypot(x2 - x1, y2 - y1) + 1;
+        l.setAttribute('stroke-dasharray', len);
+        l.setAttribute('stroke-dashoffset', len);
+        l.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 320, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+      }
+    });
+  }
+
+  wireWordSearch() {
+    const table = this.table();
+    if (!table) return;
+    let start = null, current = [];
+    const clear = () => { current.forEach(td => td.dataset.sel = '0'); current = []; };
+    const pos = ev => {
+      const el = document.elementFromPoint(ev.clientX, ev.clientY);
+      return el && el.tagName === 'TD' && table.contains(el) ? this.rc(el) : null;
+    };
+    table.addEventListener('pointerdown', ev => {
+      const p = pos(ev); if (!p) return;
+      ev.preventDefault(); start = p; clear();
+      const td = this.cellAt(p.r, p.c); td.dataset.sel = '1'; current = [td];
+    });
+    table.addEventListener('pointermove', ev => {
+      if (!start) return;
+      const p = pos(ev); if (!p) return;
+      const line = this.lineCells(start, p); if (!line) return;
+      clear(); line.forEach(td => td.dataset.sel = '1'); current = line;
+    });
+    const end = () => {
+      if (!start) return;
+      const text = current.map(td => td.textContent).join('');
+      const rev = text.split('').reverse().join('');
+      const hit = WORDS.indexOf(text) > -1 ? text : (WORDS.indexOf(rev) > -1 ? rev : null);
+      if (hit && this.data.found.indexOf(hit) < 0) {
+        this.data.marks[hit] = current.map(td => { const p = this.rc(td); return [p.r, p.c]; });
+        this.data.found.push(hit);
+        current.forEach(td => td.dataset.found = '1');
+        const chip = this.root.querySelector('[data-word="' + hit + '"]');
+        if (chip) chip.dataset.on = '1';
+        this.drawMarks(hit);
+        const c = this.root.querySelector('[data-wscount]');
+        if (c) c.textContent = this.data.found.length + ' / 8';
+        this.save();
+      }
+      clear(); start = null;
+    };
+    table.addEventListener('pointerup', end);
+    table.addEventListener('pointercancel', end);
+    table.addEventListener('pointerleave', end);
+    const c = this.root.querySelector('[data-wscount]');
+    if (c) c.textContent = this.data.found.length + ' / 8';
+  }
+
+  paintMatch(slot, letter, pop) {
+    const el = this.root.querySelector('[data-slot="' + slot + '"]');
+    if (!el) return;
+    el.textContent = letter || '';
+    el.dataset.filled = letter ? '1' : '0';
+    if (pop) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = 'slotPop .32s cubic-bezier(.2,.9,.3,1)'; }
+    this.root.querySelectorAll('.chip').forEach(chip => {
+      const used = Object.keys(this.data.match).some(s => this.data.match[s] === chip.dataset.letter);
+      chip.style.display = used ? 'none' : '';
+    });
+  }
+
+  wireMatch() {
+    const chips = this.root.querySelectorAll('.chip');
+    const slots = this.root.querySelectorAll('[data-slot]');
+    chips.forEach(chip => {
+      chip.addEventListener('pointerdown', ev => {
+        ev.preventDefault();
+        const letter = chip.dataset.letter;
+        chip.dataset.drag = '1';
+        const ghost = chip.cloneNode(true);
+        Object.assign(ghost.style, { position: 'fixed', pointerEvents: 'none', zIndex: '999', opacity: '.95', background: 'var(--color-bg)', boxShadow: 'var(--shadow-md)', transform: 'rotate(-3deg)' });
+        document.body.appendChild(ghost);
+        const move = e => {
+          ghost.style.left = (e.clientX - 30) + 'px';
+          ghost.style.top = (e.clientY - 18) + 'px';
+          const el = document.elementFromPoint(e.clientX, e.clientY);
+          slots.forEach(s => s.dataset.over = (el && (s === el || s.contains(el))) ? '1' : '0');
+        };
+        const up = e => {
+          document.removeEventListener('pointermove', move);
+          document.removeEventListener('pointerup', up);
+          const el = document.elementFromPoint(e.clientX, e.clientY);
+          const slot = el && el.closest ? el.closest('[data-slot]') : null;
+          slots.forEach(s => s.dataset.over = '0');
+          chip.dataset.drag = '0';
+          ghost.remove();
+          if (slot) {
+            const name = slot.dataset.slot;
+            Object.keys(this.data.match).forEach(s => { if (this.data.match[s] === letter) delete this.data.match[s]; });
+            this.data.match[name] = letter;
+            Object.keys(this.data.match).forEach(s => this.paintMatch(s, this.data.match[s], s === name));
+            this.save();
+          }
+        };
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', up);
+        move(ev);
+      });
+    });
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        const name = slot.dataset.slot;
+        if (!this.data.match[name]) return;
+        delete this.data.match[name];
+        this.paintMatch(name, null);
+        this.save();
+      });
+    });
+  }
+
+  fractions() {
+    const t = this.data.text, ch = this.data.choice;
+    const f = s => (s && String(s).trim() ? 1 : 0);
+    const n = ks => ks.reduce((a, k) => a + f(t[k]), 0) / ks.length;
+    return {
+      1: n(['e1-1', 'e1-2', 'e1-3']),
+      2: 1,
+      3: (['pic-1','pic-2','pic-3','pic-4','pic-5','pic-6','pic-7','pic-8'].reduce((a, k) => a + f(t[k]), 0) + f(t['e3-b'])) / 9,
+      4: (['a1','a2','a3','b1','b2','b3','f1','f2','f3'].reduce((a, k) => a + (ch[k] ? 1 : 0), 0) + ['c1','c2','c3','d1','d2','d3','e1','e2','e3'].reduce((a, k) => a + f(t[k]), 0)) / 18,
+      5: (Object.keys(this.data.match).length + this.data.found.length + ['v1','v2','v3'].reduce((a, k) => a + f(t[k]), 0)) / 19,
+      6: f(t.solution),
+      7: (f(t.learned) + f(t.exit)) / 2
+    };
+  }
+
+  progress() {
+    const fr = this.fractions();
+    let done = 0;
+    Object.keys(fr).forEach(k => {
+      const p = this.root.querySelector('[data-jump="' + k + '"]');
+      if (!p) return;
+      const v = Math.min(1, fr[k]);
+      p.querySelector('i').style.height = (v * 100) + '%';
+      p.dataset.done = v >= .999 ? '1' : '0';
+      if (v >= .999) done++;
+    });
+    const lab = this.root.querySelector('[data-progress]');
+    if (lab) lab.textContent = done + ' / 7 done';
+    const wrap = this.root.querySelector('[data-stampwrap]');
+    if (wrap) {
+      if (done === 7 && !wrap.firstChild) {
+        const s = document.createElement('span');
+        s.className = 'stamp'; s.textContent = 'Sheet complete';
+        wrap.appendChild(s);
+      } else if (done < 7 && wrap.firstChild) wrap.innerHTML = '';
+    }
+  }
+
+  pdf() {
+    const J = window.jspdf && window.jspdf.jsPDF;
+    if (!J) { window.alert('PDF export needs an internet connection.'); return; }
+    const t = this.data.text, ch = this.data.choice, m = this.data.match;
+    const name = (t.name || '').trim();
+    const doc = new J({ unit: 'mm', format: 'a4' });
+    const L = 18, R = 192; let y = 20;
+    const empty = [];
+    const line = (label, val, group) => {
+      const has = val != null && String(val).trim() !== '';
+      if (!has && group) empty.push(group);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(120);
+      doc.text(label, L, y);
+      doc.setFontSize(10); doc.setTextColor(has ? 30 : 175);
+      const wrapped = doc.splitTextToSize(has ? String(val) : '—', R - L - 46);
+      doc.text(wrapped, L + 46, y);
+      y += Math.max(5, wrapped.length * 4.6);
+    };
+    const head = s => { y += 3; doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(30); doc.text(s.toUpperCase(), L, y); y += 1.5; doc.setDrawColor(200); doc.line(L, y, R, y); y += 5; };
+
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(19); doc.setTextColor(20);
+    doc.text('Australia — Arbeitsblatt 1', L, y); y += 7;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(90);
+    doc.text('Name: ' + (name || '—') + '     Klasse: ' + (t.klasse || '—') + '     Datum: ' + (t.datum || new Date().toLocaleDateString('de-DE')), L, y);
+    y += 3; doc.setDrawColor(30); doc.setLineWidth(.5); doc.line(L, y, R, y); doc.setLineWidth(.2); y += 7;
+
+    head('1 Entry ticket');
+    line('1', t['e1-1'], '1'); line('2', t['e1-2'], '1'); line('3', t['e1-3'], '1');
+
+    head('3 Picture');
+    const words = [];
+    for (let i = 1; i <= 8; i++) { const v = (t['pic-' + i] || '').trim(); if (v) words.push(v + ' (' + this.wordPoints(v) + ')'); }
+    if (!words.length) empty.push('3');
+    line('Words', words.join(', '), null);
+    line('Score', (this.picTotal || 0) + ' / 15', null);
+    line('Because', t['e3-b'], '3');
+
+    head('4 Quiz');
+    line('a) yes / no', ['a1', 'a2', 'a3'].map((k, i) => (i + 1) + ' ' + (ch[k] || '—')).join('   '), (ch.a1 && ch.a2 && ch.a3) ? null : '4a');
+    line('b) choice', ['b1', 'b2', 'b3'].map((k, i) => (i + 1) + ' ' + (ch[k] || '—')).join('   '), (ch.b1 && ch.b2 && ch.b3) ? null : '4b');
+    line('c) 1', t.c1, '4c'); line('c) 2', t.c2, '4c'); line('c) 3', t.c3, '4c');
+    line('d) 1', t.d1, '4d'); line('d) 2', t.d2, '4d'); line('d) 3', t.d3, '4d');
+    line('e) 1', t.e1, '4e'); line('e) 2', t.e2, '4e'); line('e) 3', t.e3, '4e');
+    line('f) choice', ['f1', 'f2', 'f3'].map((k, i) => (i + 1) + ' ' + (ch[k] || '—')).join('   '), (ch.f1 && ch.f2 && ch.f3) ? null : '4f');
+
+    head('5 Extra practice');
+    const pairs = [];
+    for (let i = 1; i <= 8; i++) pairs.push(i + '-' + (m['m' + i] || '—'));
+    line('a) match', pairs.join('  '), Object.keys(m).length === 8 ? null : '5a');
+    line('b) found', this.data.found.length ? this.data.found.join(', ').toLowerCase() + '  (' + this.data.found.length + '/8)' : '', '5b');
+    line('c) verbs', [t.v1, t.v2, t.v3].map(v => v || '—').join('   ·   '), (t.v1 && t.v2 && t.v3) ? null : '5c');
+
+    head('6 Find a solution');
+    line('Answer', t.solution, '6');
+
+    head('7 Exit ticket');
+    line('Learned', t.learned, '7');
+    line('A country where', t.exit, '7');
+
+    y += 4;
+    doc.setFontSize(8.5); doc.setTextColor(150);
+    doc.text(empty.length ? 'Nicht bearbeitet: ' + Array.from(new Set(empty)).join(', ') : 'Alle Aufgaben bearbeitet.', L, y);
+
+    const safe = (name || 'australia').replace(/[^\p{L}\p{N}_-]+/gu, '-').toLowerCase();
+    doc.save(safe + '-australia-1.pdf');
+  }
+}
+</script>
+</body>
+</html>

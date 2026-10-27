@@ -1,0 +1,15 @@
+:root{
+  --sw-shadow-card:0 1px 0 rgba(255,255,255,.55) inset, 0 6px 16px rgba(58,73,50,.09);
+  --sw-shadow-pop:0 10px 26px rgba(58,73,50,.16);
+  --sw-shadow-press:0 2px 0 var(--sw-leaf-dark);
+  --sw-shadow-sign:0 3px 0 rgba(60,42,20,.35);
+
+  --shadow-card:var(--sw-shadow-card);
+  --shadow-popover:var(--sw-shadow-pop);
+
+  --sw-ease:.16s; /* @kind other */
+  --sw-ease-fast:.1s; /* @kind other */
+
+  --sw-bg-page:radial-gradient(1200px 520px at 78% -8%, #F7F0DF 0%, rgba(247,240,223,0) 62%), radial-gradient(900px 600px at 4% 104%, #E3E4CD 0%, rgba(227,228,205,0) 58%), var(--sw-canvas);
+  --sw-bg-haze:radial-gradient(700px 300px at 80% -10%, #F7F0DF 0%, rgba(247,240,223,0) 60%), var(--sw-canvas-haze);
+}
