@@ -983,6 +983,8 @@ a:hover{color:var(--sw-forest-800)}
       <x-import component-from-global-scope="SherwoodIslandDesignSystem_d5beff.Pill" tone="done" hint-size="70px,24px">{{ levelLabel }}</x-import>
     </header>
 
+    <sc-if value="{{ isUP }}"><iframe src="lesson1-g/" title="Under pressure" style="position:fixed;left:0;right:0;bottom:0;top:84px;width:100%;height:calc(100dvh - 84px);border:0;background:#fff;z-index:5"></iframe></sc-if>
+    <sc-if value="{{ notUP }}">
     <section style="display:flex;flex-direction:column;gap:10px;padding:8px 0 4px">
       <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sw-sage)">Englisch · Klasse 9 · Unit 2 Respect · Lesson {{ lessonN }}</p>
       <h1 style="margin:0;font-family:var(--sw-font-display);font-size:42px;font-weight:600;letter-spacing:-.015em;line-height:1.08;color:var(--sw-ink-onDark)">{{ lessonTitle }}</h1>
@@ -1138,6 +1140,7 @@ a:hover{color:var(--sw-forest-800)}
       <sc-if value="{{ teacher }}"><x-import component-from-global-scope="SherwoodIslandDesignSystem_d5beff.Button" variant="wood" icon="✎" sc-camel-on-click="{{ onPdf }}" hint-size="140px,38px">Worksheet</x-import></sc-if>
       <span style="margin-left:auto;font-size:13.5px;color:var(--sw-sage)">{{ doneLabel }} · saved on this iPad</span>
     </div>
+    </sc-if>
     <div data-noprint="" style="display:flex;justify-content:flex-end;padding:4px 4px 16px">
       <a href="#" sc-camel-on-click="{{ openPw }}" style="font-size:12.5px;color:var(--sw-sage);text-decoration:none;display:flex;gap:6px;align-items:center" style-hover="color:var(--sw-wood-cream)"><span aria-hidden="true">⌂</span>Teacher</a>
     </div>
@@ -1630,7 +1633,7 @@ class Component extends DCLogic {
       entryItems: [0, 1, 2].map(i => Object.assign({ n: i + 1 }, this.inp(L + ':entry:' + i))),
       words: W[L].map(w => ({ en: w[0], de: w[1] })),
       picDe: D.picDe,
-      isL1: L === 1, isL2: L === 2, isL3: L === 3, isL4: L === 4,
+      isUP: L === 1 && lv === 'G', notUP: !(L === 1 && lv === 'G'), isL1: L === 1, isL2: L === 2, isL3: L === 3, isL4: L === 4,
       picWords: ps.items,
       picWordsNote: ps.found + ' of 10 words found in the list. 0 = not in the list, try another word.',
       picScore: ps.score, picGoal: 30,
