@@ -1,37 +1,26 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Racism and Discrimination Lesson</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Faustina:ital,wght@0,400..700;1,400..700&display=swap">
 <style>
 /* Layout: a 60-minute lesson in five timed phases. A sticky phase bar with a countdown sits on top,
    one phase is on screen at a time, and the reading text stands beside its questions on wide screens.
    Colours come from the classroom: royal-blue fountain-pen ink, highlighter yellow, red and green marking pens. */
+/* Sherwood Island look for the Lesson 2 page (same tokens as the Respect site).
+   Replaces the page's own colour tokens; light only, like the Respect site. */
 :root{
-  --paper:#F2F4FA; --surface:#FFFFFF; --ink:#131938; --ink-soft:#4B5378; --line:#D3D9EC;
-  --blue:#2337B5; --blue-soft:#E2E7FB; --on-blue:#FFFFFF;
-  --marker:#FFE04D; --marker-ink:#131938;
-  --red:#C22832; --red-soft:#FBE4E6; --green:#12734A; --green-soft:#DCF2E6;
-  --display:"Bricolage Grotesque","Trebuchet MS","Segoe UI",sans-serif;
-  --body:"Atkinson Hyperlegible",Verdana,"Segoe UI",sans-serif;
+  color-scheme:light;
+  --paper:#EFE6D2; --surface:#FBF6EA; --ink:#2F3020; --ink-soft:#6E6B58; --line:#DCD5BF;
+  --blue:#66754D; --blue-soft:#E6E8D3; --on-blue:#FBF6EA;
+  --marker:#F2D28C; --marker-ink:#2F3020;
+  --red:#A4462F; --red-soft:#F6DED4; --green:#4E6B35; --green-soft:#DDE8CC;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Faustina",Georgia,serif;
   --fs-xs:.8rem; --fs-s:.9rem; --fs-m:1rem; --fs-l:1.2rem; --fs-xl:1.5rem; --fs-2xl:clamp(2.1rem,5vw,3.4rem);
+  --r-sm:10px; --r-md:14px; --r-lg:20px;
+  --shadow-card:0 1px 0 rgba(255,255,255,.55) inset,0 6px 16px rgba(58,73,50,.09);
+  --shadow-press:0 2px 0 #4E5030;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0F1226; --surface:#191D38; --ink:#ECEEFA; --ink-soft:#A9AFD1; --line:#2F3559;
-    --blue:#93A4FF; --blue-soft:#232A55; --on-blue:#0F1226;
-    --marker:#F2D23C; --marker-ink:#131938;
-    --red:#FF8088; --red-soft:#45202A; --green:#6FD9A4; --green-soft:#173A2C;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0F1226; --surface:#191D38; --ink:#ECEEFA; --ink-soft:#A9AFD1; --line:#2F3559;
-  --blue:#93A4FF; --blue-soft:#232A55; --on-blue:#0F1226;
-  --marker:#F2D23C; --marker-ink:#131938;
-  --red:#FF8088; --red-soft:#45202A; --green:#6FD9A4; --green-soft:#173A2C;
-  color-scheme:dark;
-}
-
 *,*::before,*::after{box-sizing:border-box}
 html{font-size:clamp(16px,.5vw + 12.5px,21px)}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--fs-m);line-height:1.55}
@@ -244,6 +233,22 @@ h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);lin
 .bigscore{font-family:var(--display);font-weight:800;font-size:var(--fs-2xl);line-height:1;font-variant-numeric:tabular-nums}
 .takeaway{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem}
 .takeaway ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.3rem;font-style:italic}
+/* Sherwood Island shapes: soft cream cards, rounded corners, pill buttons with a pressed edge */
+body{background:radial-gradient(1200px 520px at 78% -8%,#F7F0DF 0%,rgba(247,240,223,0) 62%),radial-gradient(900px 600px at 4% 104%,#E3E4CD 0%,rgba(227,228,205,0) 58%),var(--paper) fixed}
+.bar{background:rgba(239,230,210,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.bcard,.checks,.think,.tcard,.before{border-radius:var(--r-md);box-shadow:var(--shadow-card)}
+.topic,.vlist{border-radius:var(--r-md);border-width:1px;border-color:var(--line);box-shadow:var(--shadow-card)}
+.decide{border-radius:var(--r-lg);box-shadow:0 10px 26px rgba(58,73,50,.16)}
+.btn{border-radius:999px;border-width:1.5px;font-weight:600}
+.btn.primary{box-shadow:var(--shadow-press)}
+.btn.primary:hover{background:#4E5030;border-color:#4E5030;color:var(--on-blue)}
+.opt{border-radius:var(--r-sm)}
+.mw,.md,.de,.fb,.gap{border-radius:var(--r-sm)}
+.step,.q-n{background:var(--blue);color:var(--on-blue)}
+h1,h2,h3,.vword,.topic dt,.clock{font-weight:600;letter-spacing:-.015em}
+.phrases .icon-btn{background:var(--surface);color:var(--ink);border-color:var(--ink)}
+.vhead{background:#3A4932;color:#F5EEE1}
+.scorebox{background:#3A4932;color:#F5EEE1;border-radius:var(--r-lg);box-shadow:0 10px 26px rgba(58,73,50,.16)}
 </style>
 
 <header class="bar">
@@ -269,7 +274,7 @@ h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);lin
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 9.5A7.3 7.3 0 1 1 4.7 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M4 4.5v5.2h5.2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
-      <button type="button" class="btn small" id="notes-btn" aria-pressed="false">Teacher notes</button>
+      
     </div>
   </div>
 </header>
@@ -283,16 +288,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);lin
     <h1>Fair or <mark>unfair</mark>?</h1>
     <p class="lead">Last lesson was about peer pressure. Today we look at what happens when people are treated badly because of who they are. Read each situation. Vote with your thumb, then tap.</p>
   </header>
-
-  <aside class="tn" hidden>
-    <h3>Teacher notes</h3>
-    <ul>
-      <li><b>Lesson aims:</b> students can use twelve words to talk about racism and discrimination, understand a short story (level A2) and say what they would do.</li>
-      <li>Students vote with thumbs up (fair) or down (unfair) before you tap. Ask one student “Why?” each time.</li>
-      <li>The three unfair cards lead to the key words. Finish with “Show today’s topic”.</li>
-      <li>The timer in the top bar is set for each phase. Press play when you start.</li>
-    </ul>
-  </aside>
 
   <div class="block">
     <div class="bgrid" id="warm-cards"></div>
@@ -324,15 +319,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);lin
     <h1>Twelve <mark>words</mark> for today</h1>
     <p class="lead">You need these words to talk about racism and discrimination, and to understand the story.</p>
   </header>
-
-  <aside class="tn" hidden>
-    <h3>Teacher notes</h3>
-    <ul>
-      <li><b>A:</b> say the word together, let students guess the German, then tap to check. Tricky sounds: <i>prejudice</i>, <i>stereotype</i>, <i>equal</i>.</li>
-      <li><b>B and C:</b> students come to the board, or work in pairs on tablets. In B, tap a word and then its meaning.</li>
-      <li>Fast finishers write two sentences of their own with words from the list.</li>
-    </ul>
-  </aside>
 
   <div class="block">
     <h2><span class="step">A</span> Meet the words <span class="mins">5 min</span></h2>
@@ -370,16 +356,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);lin
     <h1>Just a <mark>joke</mark>?</h1>
     <p class="lead">A story about a football team in Leeds, told by Ben.</p>
   </header>
-
-  <aside class="tn" hidden>
-    <h3>Teacher notes</h3>
-    <ul>
-      <li>Read each part aloud, play “Listen”, or let pairs read. Numbers in the margin are paragraph numbers, so students can say “Look at paragraph 5”.</li>
-      <li>Yellow words are today’s vocabulary. Dotted words show the German when you tap them.</li>
-      <li>Stop at the blue box and collect ideas before you read the ending.</li>
-      <li>Do not ask students to share their own experiences of racism in front of the class. Let them choose.</li>
-    </ul>
-  </aside>
 
   <div class="before">
     <h3>Before you read</h3>
@@ -497,15 +473,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);lin
     <p class="lead">A bystander sees something bad and does nothing. An upstander does something to help. For two months Ben was a bystander. Then he became an upstander.</p>
   </header>
 
-  <aside class="tn" hidden>
-    <h3>Teacher notes</h3>
-    <ul>
-      <li><b>A:</b> class vote, then tap. Point out that there is more than one way to help.</li>
-      <li><b>B:</b> say the phrases together. Students practise them as answers only; nobody should act out the insult.</li>
-      <li><b>C:</b> think, pair, share. Students who need help use the sentence starters. There is no single right answer.</li>
-    </ul>
-  </aside>
-
   <div class="block">
     <h2><span class="step">A</span> Who is who? <span class="mins">3 min</span></h2>
     <p class="how">Somebody tells a racist “joke” in class. What do the others do? Decide for each person.</p>
@@ -552,14 +519,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);lin
     <h1>Exit <mark>check</mark></h1>
     <p class="lead">Eight quick questions about today’s words and the story.</p>
   </header>
-
-  <aside class="tn" hidden>
-    <h3>Teacher notes</h3>
-    <ul>
-      <li>On tablets, students work alone. On the board, students show one, two or three fingers for A, B or C.</li>
-      <li><b>Homework idea:</b> “What would you do in Ben’s place?” Write five or six sentences and use at least three of today’s words.</li>
-    </ul>
-  </aside>
 
   <div class="exit">
     <div class="checks" id="exit-quiz"></div>
@@ -918,16 +877,6 @@ $('#topic-btn').addEventListener('click', e => {
   box.hidden = !open; e.currentTarget.setAttribute('aria-expanded', String(open));
   if (open) box.scrollIntoView({ behavior: smooth(), block: 'nearest' });
 });
-
-/* ================= teacher notes ================= */
-const notesBtn = $('#notes-btn');
-function setNotes(on) {
-  notesBtn.setAttribute('aria-pressed', String(on));
-  $$('.tn').forEach(n => { n.hidden = !on; });
-  try { localStorage.setItem('rd-lesson-notes', on ? '1' : '0'); } catch (e) {}
-}
-notesBtn.addEventListener('click', () => setNotes(notesBtn.getAttribute('aria-pressed') !== 'true'));
-try { if (localStorage.getItem('rd-lesson-notes') === '1') setNotes(true); } catch (e) {}
 
 /* ================= phase timer ================= */
 const clock = $('#clock'), tBox = $('#timer'), tGo = $('#t-go');
