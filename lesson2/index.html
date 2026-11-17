@@ -1,0 +1,979 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Racism and Discrimination Lesson</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600..800&display=swap">
+<style>
+/* Layout: a 60-minute lesson in five timed phases. A sticky phase bar with a countdown sits on top,
+   one phase is on screen at a time, and the reading text stands beside its questions on wide screens.
+   Colours come from the classroom: royal-blue fountain-pen ink, highlighter yellow, red and green marking pens. */
+:root{
+  --paper:#F2F4FA; --surface:#FFFFFF; --ink:#131938; --ink-soft:#4B5378; --line:#D3D9EC;
+  --blue:#2337B5; --blue-soft:#E2E7FB; --on-blue:#FFFFFF;
+  --marker:#FFE04D; --marker-ink:#131938;
+  --red:#C22832; --red-soft:#FBE4E6; --green:#12734A; --green-soft:#DCF2E6;
+  --display:"Bricolage Grotesque","Trebuchet MS","Segoe UI",sans-serif;
+  --body:"Atkinson Hyperlegible",Verdana,"Segoe UI",sans-serif;
+  --fs-xs:.8rem; --fs-s:.9rem; --fs-m:1rem; --fs-l:1.2rem; --fs-xl:1.5rem; --fs-2xl:clamp(2.1rem,5vw,3.4rem);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1226; --surface:#191D38; --ink:#ECEEFA; --ink-soft:#A9AFD1; --line:#2F3559;
+    --blue:#93A4FF; --blue-soft:#232A55; --on-blue:#0F1226;
+    --marker:#F2D23C; --marker-ink:#131938;
+    --red:#FF8088; --red-soft:#45202A; --green:#6FD9A4; --green-soft:#173A2C;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1226; --surface:#191D38; --ink:#ECEEFA; --ink-soft:#A9AFD1; --line:#2F3559;
+  --blue:#93A4FF; --blue-soft:#232A55; --on-blue:#0F1226;
+  --marker:#F2D23C; --marker-ink:#131938;
+  --red:#FF8088; --red-soft:#45202A; --green:#6FD9A4; --green-soft:#173A2C;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:clamp(16px,.5vw + 12.5px,21px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--fs-m);line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:74rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+p{margin:0}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+mark{background:var(--marker);color:var(--marker-ink);padding:0 .14em;border-radius:.14em}
+
+/* ---------- top bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--paper);border-bottom:2px solid var(--ink)}
+.bar-in{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .9rem;padding-block:.55rem}
+.brand{font-family:var(--display);font-weight:600;font-size:var(--fs-s);white-space:nowrap}
+.phases{display:flex;gap:.2rem;list-style:none;margin:0;padding:0}
+.bar nav{flex:1 1 auto;min-width:0}
+.ph{display:flex;align-items:center;gap:.4rem;padding:.3rem .7rem .3rem .3rem;border-radius:999px;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:600;font-size:var(--fs-s);white-space:nowrap}
+.ph .n{display:grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--surface);border:2px solid var(--ink);font-size:var(--fs-xs);font-variant-numeric:tabular-nums}
+.ph:hover{background:var(--blue-soft)}
+.ph[aria-current]{background:var(--blue);color:var(--on-blue)}
+.ph[aria-current] .n{background:var(--marker);border-color:var(--marker);color:var(--marker-ink)}
+.tools{display:flex;align-items:center;gap:.9rem;margin-left:auto}
+.timer{display:flex;align-items:center;gap:.35rem}
+.clock{font-family:var(--display);font-weight:800;font-size:var(--fs-xl);line-height:1;font-variant-numeric:tabular-nums;min-width:3.4em;text-align:right}
+.timer.up .clock{color:var(--red);animation:blink 1s steps(2) 6}
+@keyframes blink{50%{opacity:.25}}
+.timer .i-pause{display:none}
+.timer.running .i-pause{display:block}
+.timer.running .i-play{display:none}
+@media (max-width:68rem){.brand{display:none}}
+@media (max-width:56rem){
+  .ph{padding:.3rem}
+  .ph .name{display:none}
+  .ph[aria-current]{padding-right:.7rem}
+  .ph[aria-current] .name{display:inline}
+}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;font-family:var(--display);font-weight:700;font-size:var(--fs-m);line-height:1.25;padding:.55rem 1rem;border-radius:.5rem;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--blue-soft)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.btn.primary:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.small{font-size:var(--fs-s);padding:.35rem .7rem}
+.btn.ghost{border-color:var(--line);font-weight:600}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.btn:disabled{cursor:default}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;flex:none;width:2.2rem;height:2.2rem;padding:0;border-radius:50%;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
+.icon-btn:hover{background:var(--blue-soft)}
+.icon-btn svg{width:1.05rem;height:1.05rem}
+.listen{display:none!important}
+body.can-speak .listen{display:inline-flex!important}
+.listen .l-stop{display:none}
+.listen.playing .l-stop{display:inline}
+.listen.playing .l-go{display:none}
+
+/* answer states (shape + colour) */
+.opt{text-align:left;justify-content:flex-start;font-family:var(--body);font-weight:700}
+.opt:disabled:not(.correct):not(.wrong){opacity:.5}
+.opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--ink)}
+.opt.correct::after{content:"✓";margin-left:auto;padding-left:.5rem;color:var(--green);font-weight:700}
+.opt.wrong{background:var(--red-soft);border-color:var(--red);color:var(--ink)}
+.opt.wrong::after{content:"✗";margin-left:auto;padding-left:.5rem;color:var(--red);font-weight:700}
+.fb{font-size:var(--fs-s);padding:.5rem .7rem;border-radius:.4rem;background:var(--blue-soft)}
+.fb.ok{background:var(--green-soft)}
+.fb.no{background:var(--red-soft)}
+.score{font-weight:700}
+
+/* ---------- phase layout ---------- */
+.stage{display:flex;flex-direction:column;gap:2rem;padding-block:1.75rem 3rem}
+.st-head{display:flex;flex-direction:column;gap:.6rem}
+.eyebrow{font-size:var(--fs-xs);font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+h1{margin:0;font-family:var(--display);font-weight:800;font-size:var(--fs-2xl);line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+h2{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-xl);line-height:1.15;text-wrap:balance;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+h3{margin:0;font-family:var(--display);font-weight:700;font-size:var(--fs-l);line-height:1.2}
+.lead{font-size:var(--fs-l);line-height:1.45;max-width:62ch}
+.step{display:inline-grid;place-items:center;flex:none;min-width:1.9rem;height:1.9rem;padding-inline:.35rem;border-radius:.4rem;background:var(--ink);color:var(--paper);font-size:var(--fs-m)}
+.mins{font-family:var(--body);font-weight:400;font-size:var(--fs-s);color:var(--ink-soft)}
+.block{display:flex;flex-direction:column;gap:.9rem}
+.how{max-width:62ch;color:var(--ink-soft)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem .9rem}
+.st-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem;border-top:1px solid var(--line);padding-top:1.25rem}
+.tn{border:2px dashed var(--blue);background:var(--blue-soft);border-radius:.6rem;padding:.9rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;font-size:var(--fs-s)}
+.tn h3{font-size:var(--fs-s);letter-spacing:.09em;text-transform:uppercase;color:var(--blue)}
+.tn ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.3rem;max-width:80ch}
+
+/* ---------- two-choice cards (warm-up, bystander sort) ---------- */
+.bgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem}
+@media (max-width:60rem){.bgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:36rem){.bgrid{grid-template-columns:minmax(0,1fr)}}
+.bcard{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem;display:flex;flex-direction:column;gap:.75rem;min-width:0}
+.bcard-t{flex:1;font-size:var(--fs-l);line-height:1.35}
+.bcard-btns{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.bcard-btns .opt{font-family:var(--display);justify-content:center}
+.bcard-btns .opt::after{margin-left:0}
+.topic{background:var(--surface);border:2px solid var(--ink);border-radius:.6rem;padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.9rem;max-width:52rem}
+.topic p{font-size:var(--fs-l);line-height:1.4}
+.topic dl{margin:0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.6rem 1rem;align-items:baseline}
+.topic dt{font-family:var(--display);font-weight:800;font-size:var(--fs-l)}
+.topic dd{margin:0}
+@media (max-width:36rem){.topic dl{grid-template-columns:minmax(0,1fr);gap:.2rem}.topic dd{margin-bottom:.5rem}}
+
+/* ---------- vocabulary book ---------- */
+.vlist{background:var(--surface);border:2px solid var(--ink);border-radius:.6rem;overflow:hidden}
+.vrow{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,8fr) minmax(0,4fr)}
+.vrow+.vrow{border-top:1px solid var(--line)}
+.vrow>*{padding:.6rem .85rem;min-width:0}
+.vrow>*+*{border-left:1px solid var(--line)}
+.vhead{background:var(--ink);color:var(--paper);font-size:var(--fs-xs);font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+.vhead>*+*{border-left-color:transparent}
+.vw{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.1rem .5rem;align-items:center}
+.vword{font-family:var(--display);font-weight:700;font-size:var(--fs-l);line-height:1.2;overflow-wrap:anywhere}
+.ipa{grid-column:1/-1;font-size:var(--fs-s);color:var(--ink-soft)}
+.vm{display:flex;flex-direction:column;gap:.15rem}
+.ex{font-style:italic;color:var(--ink-soft)}
+.vd{display:flex;align-items:center}
+.de{font:inherit;font-size:var(--fs-s);width:100%;text-align:left;padding:.4rem .6rem;border-radius:.4rem;border:2px dashed var(--line);background:transparent;color:var(--ink-soft);cursor:pointer}
+.de:hover{border-color:var(--blue);color:var(--ink)}
+.de.open{border:2px solid transparent;background:var(--marker);color:var(--marker-ink);font-size:var(--fs-m);font-weight:700}
+@media (max-width:46rem){
+  .vhead{display:none}
+  .vrow{grid-template-columns:minmax(0,1fr)}
+  .vrow>*+*{border-left:0;padding-top:0}
+}
+
+/* ---------- matching ---------- */
+.mrounds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
+@media (max-width:64rem){.mrounds{grid-template-columns:minmax(0,1fr)}}
+.mround{display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.mgrid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:.45rem}
+.mw,.md{font:inherit;text-align:left;padding:.5rem .65rem;border-radius:.45rem;border:2px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;min-width:0;overflow-wrap:anywhere;line-height:1.3}
+.mw{grid-column:1;font-family:var(--display);font-weight:700}
+.md{grid-column:2;font-size:var(--fs-s);border-color:var(--line)}
+.mw:hover,.md:hover{background:var(--blue-soft)}
+.mw[aria-pressed="true"],.md[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.mw.matched,.md.matched{background:var(--green-soft);border-color:var(--green);color:var(--ink);cursor:default}
+.mw.miss,.md.miss{background:var(--red-soft);border-color:var(--red);color:var(--ink);animation:shake .3s 2}
+@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+/* ---------- gap fill ---------- */
+.gapbox{display:flex;flex-direction:column;gap:1rem}
+.bank{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{font-family:var(--display);font-weight:700;font-size:var(--fs-m);padding:.4rem .9rem;border-radius:999px;border:2px solid var(--ink);background:var(--marker);color:var(--marker-ink);cursor:pointer}
+.chip:hover{filter:brightness(.94)}
+.chip:disabled{background:transparent;border-style:dashed;border-color:var(--line);color:var(--ink-soft);opacity:.6;cursor:default;text-decoration:line-through}
+.gaps{margin:0;padding-left:1.6rem;display:flex;flex-direction:column;gap:.7rem;font-size:var(--fs-l);line-height:1.5;max-width:68ch}
+.gap{font:inherit;font-weight:700;min-width:7.5rem;min-height:1.75em;margin-inline:.25rem;padding:0 .5rem;border:0;border-bottom:3px solid var(--ink);border-radius:.3rem .3rem 0 0;background:var(--surface);color:var(--ink);cursor:pointer;vertical-align:baseline}
+.gap.active{background:var(--blue-soft);border-bottom-color:var(--blue)}
+.gap.ok{background:var(--green-soft);border-bottom-color:var(--green)}
+.gap.no{background:var(--red-soft);border-bottom-color:var(--red)}
+
+/* ---------- reading ---------- */
+.before{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem 1.2rem;display:flex;flex-direction:column;gap:.6rem;max-width:52rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0;padding:0}
+.tags li{padding:.15rem .7rem;border-radius:999px;border:2px solid var(--ink);font-weight:700;font-size:var(--fs-s)}
+.legend{font-size:var(--fs-s);color:var(--ink-soft)}
+.legend .gl-demo{border-bottom:2px dotted var(--blue);color:var(--ink)}
+.part{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:1.25rem 2.5rem;align-items:start}
+@media (max-width:62rem){.part{grid-template-columns:minmax(0,1fr)}}
+.story-col{display:flex;flex-direction:column;gap:.9rem;min-width:0}
+.part-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem}
+.story{display:flex;flex-direction:column;gap:.8rem;font-size:var(--fs-l);line-height:1.7;max-width:62ch}
+.story p{position:relative;padding-left:2.1rem}
+.story p::before{content:attr(data-n);position:absolute;left:0;top:.45em;width:1.4rem;text-align:right;font-size:var(--fs-xs);line-height:1.4;font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.kw,.gl{cursor:pointer;border-radius:.14em}
+.kw{background:var(--marker);color:var(--marker-ink);padding:0 .14em;font-weight:700;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.gl{border-bottom:2px dotted var(--blue)}
+.kw[aria-expanded="true"]::after,.gl[aria-expanded="true"]::after{content:" = " attr(data-de);font-style:italic;font-weight:400}
+.gl[aria-expanded="true"]::after{color:var(--blue)}
+.checks{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:1.1rem;min-width:0}
+.checks>[id^="quiz-"]{display:flex;flex-direction:column;gap:1.1rem}
+.q{display:flex;flex-direction:column;gap:.5rem;min-width:0}
+.q-t{font-weight:700;line-height:1.35;display:flex;gap:.6rem;align-items:baseline}
+.q-n{flex:none;display:inline-grid;place-items:center;min-width:1.6rem;height:1.6rem;border-radius:50%;background:var(--ink);color:var(--paper);font-size:var(--fs-xs);font-variant-numeric:tabular-nums}
+.q-opts{display:flex;flex-wrap:wrap;gap:.45rem}
+.q-opts.col{flex-direction:column;align-items:stretch}
+.q-opts .opt{font-size:var(--fs-s);padding:.45rem .75rem}
+.ltr{flex:none;display:inline-grid;place-items:center;width:1.45rem;height:1.45rem;border-radius:.3rem;border:2px solid currentColor;font-family:var(--display);font-size:var(--fs-xs);line-height:1}
+.think{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem}
+.decide{background:var(--blue);color:var(--on-blue);border-radius:.8rem;padding:1.4rem;display:flex;flex-direction:column;gap:1rem}
+.decide h2{font-size:var(--fs-2xl);font-weight:800;line-height:1.05}
+.decide .sub{font-size:var(--fs-l);max-width:55ch}
+.decide-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+@media (max-width:46rem){.decide-opts{grid-template-columns:minmax(0,1fr)}}
+.decide-opts .btn{justify-content:flex-start;text-align:left;font-family:var(--body);border-color:var(--surface)}
+.decide .fb,.decide .starters{background:var(--surface);color:var(--ink);font-size:var(--fs-m);padding:.7rem .9rem;border-radius:.5rem}
+.decide :focus-visible{outline-color:var(--marker)}
+.starters{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem}
+.starters b{font-family:var(--display)}
+
+/* ---------- talk ---------- */
+.phrases{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}
+@media (max-width:60rem){.phrases{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:36rem){.phrases{grid-template-columns:minmax(0,1fr)}}
+.phrases li{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.6rem .8rem;border-radius:.5rem;background:var(--marker);color:var(--marker-ink);font-family:var(--display);font-weight:700;font-size:var(--fs-l);line-height:1.2;min-width:0}
+.phrases .icon-btn{background:#fff;color:#131938;border-color:#131938}
+.tcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem}
+@media (max-width:60rem){.tcards{grid-template-columns:minmax(0,1fr)}}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem;display:flex;flex-direction:column;gap:.6rem;min-width:0}
+.tcard ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.3rem;color:var(--ink-soft);font-style:italic}
+.useful{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0;padding:0}
+.useful li{padding:.2rem .7rem;border-radius:999px;border:2px solid var(--line);font-size:var(--fs-s)}
+
+/* ---------- exit check ---------- */
+.exit{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:1.5rem 2.5rem;align-items:start}
+@media (max-width:62rem){.exit{grid-template-columns:minmax(0,1fr)}}
+.exit-side{display:flex;flex-direction:column;gap:1.25rem;position:sticky;top:calc(env(safe-area-inset-top,0px) + 5rem)}
+@media (max-width:62rem){.exit-side{position:static}}
+.scorebox{background:var(--ink);color:var(--paper);border-radius:.8rem;padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.3rem}
+.scorebox .eyebrow{color:inherit;opacity:.75}
+.bigscore{font-family:var(--display);font-weight:800;font-size:var(--fs-2xl);line-height:1;font-variant-numeric:tabular-nums}
+.takeaway{background:var(--surface);border:1px solid var(--line);border-radius:.6rem;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.6rem}
+.takeaway ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.3rem;font-style:italic}
+</style>
+
+<header class="bar">
+  <div class="wrap bar-in">
+    <p class="brand">Unit “Respect” · Lesson 2</p>
+    <nav aria-label="Lesson phases">
+      <ol class="phases">
+        <li><a class="ph" href="#warm-up" data-s="warm-up" aria-current="step"><span class="n">1</span><span class="name">Warm-up</span></a></li>
+        <li><a class="ph" href="#words" data-s="words"><span class="n">2</span><span class="name">Words</span></a></li>
+        <li><a class="ph" href="#reading" data-s="reading"><span class="n">3</span><span class="name">Reading</span></a></li>
+        <li><a class="ph" href="#talk" data-s="talk"><span class="n">4</span><span class="name">Talk</span></a></li>
+        <li><a class="ph" href="#check" data-s="check"><span class="n">5</span><span class="name">Check</span></a></li>
+      </ol>
+    </nav>
+    <div class="tools">
+      <div class="timer" id="timer">
+        <span class="clock" id="clock" role="timer" aria-label="Time left in this phase">05:00</span>
+        <button type="button" class="icon-btn" id="t-go" aria-label="Start timer">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4.5v14H6zM13.5 5H18v14h-4.5z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="icon-btn" id="t-reset" aria-label="Reset timer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 9.5A7.3 7.3 0 1 1 4.7 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M4 4.5v5.2h5.2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <button type="button" class="btn small" id="notes-btn" aria-pressed="false">Teacher notes</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= PHASE 1 ================= -->
+<section class="stage" data-s="warm-up">
+  <header class="st-head">
+    <p class="eyebrow">Phase 1 of 5 · 5 minutes</p>
+    <h1>Fair or <mark>unfair</mark>?</h1>
+    <p class="lead">Last lesson was about peer pressure. Today we look at what happens when people are treated badly because of who they are. Read each situation. Vote with your thumb, then tap.</p>
+  </header>
+
+  <aside class="tn" hidden>
+    <h3>Teacher notes</h3>
+    <ul>
+      <li><b>Lesson aims:</b> students can use twelve words to talk about racism and discrimination, understand a short story (level A2) and say what they would do.</li>
+      <li>Students vote with thumbs up (fair) or down (unfair) before you tap. Ask one student “Why?” each time.</li>
+      <li>The three unfair cards lead to the key words. Finish with “Show today’s topic”.</li>
+      <li>The timer in the top bar is set for each phase. Press play when you start.</li>
+    </ul>
+  </aside>
+
+  <div class="block">
+    <div class="bgrid" id="warm-cards"></div>
+    <div class="row">
+      <button type="button" class="btn primary" id="topic-btn" aria-expanded="false" aria-controls="topic">Show today’s topic</button>
+      <button type="button" class="btn ghost small" data-reset="warm">Start again</button>
+    </div>
+    <div class="topic" id="topic" hidden>
+      <p>Three situations were unfair for the same reason. The people did nothing wrong. They were treated badly because of <strong>who they are</strong>.</p>
+      <dl>
+        <dt><mark>discrimination</mark></dt>
+        <dd>People are treated worse because of who they are: their religion, their language, their gender, their skin colour …</dd>
+        <dt><mark>racism</mark></dt>
+        <dd>Discrimination because of a person’s skin colour or where their family comes from.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <nav class="st-nav" aria-label="Phase navigation">
+    <span></span>
+    <a class="btn primary" href="#words">Next: Words</a>
+  </nav>
+</section>
+
+<!-- ================= PHASE 2 ================= -->
+<section class="stage" data-s="words" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Phase 2 of 5 · 15 minutes</p>
+    <h1>Twelve <mark>words</mark> for today</h1>
+    <p class="lead">You need these words to talk about racism and discrimination, and to understand the story.</p>
+  </header>
+
+  <aside class="tn" hidden>
+    <h3>Teacher notes</h3>
+    <ul>
+      <li><b>A:</b> say the word together, let students guess the German, then tap to check. Tricky sounds: <i>prejudice</i>, <i>stereotype</i>, <i>equal</i>.</li>
+      <li><b>B and C:</b> students come to the board, or work in pairs on tablets. In B, tap a word and then its meaning.</li>
+      <li>Fast finishers write two sentences of their own with words from the list.</li>
+    </ul>
+  </aside>
+
+  <div class="block">
+    <h2><span class="step">A</span> Meet the words <span class="mins">5 min</span></h2>
+    <p class="how">Say the word. Guess the German. Then tap to check.</p>
+    <div class="row"><button type="button" class="btn small" id="de-all" aria-pressed="false">Show all German words</button></div>
+    <div class="vlist" id="vlist"></div>
+  </div>
+
+  <div class="block">
+    <h2><span class="step">B</span> Match word and meaning <span class="mins">5 min</span></h2>
+    <p class="how">Tap a word. Then tap the meaning that fits.</p>
+    <div class="mrounds">
+      <div class="mround"><h3>Round 1</h3><div id="match-1"></div></div>
+      <div class="mround"><h3>Round 2</h3><div id="match-2"></div></div>
+    </div>
+    <div class="row"><button type="button" class="btn ghost small" data-reset="match">Start again</button></div>
+  </div>
+
+  <div class="block">
+    <h2><span class="step">C</span> Fill the gaps <span class="mins">5 min</span></h2>
+    <p class="how">Tap a yellow word to put it in the blue gap. Tap a gap to choose it or to take a word out.</p>
+    <div class="gapbox" id="gaps"></div>
+  </div>
+
+  <nav class="st-nav" aria-label="Phase navigation">
+    <a class="btn" href="#warm-up">Back</a>
+    <a class="btn primary" href="#reading">Next: Reading</a>
+  </nav>
+</section>
+
+<!-- ================= PHASE 3 ================= -->
+<section class="stage" data-s="reading" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Phase 3 of 5 · 20 minutes</p>
+    <h1>Just a <mark>joke</mark>?</h1>
+    <p class="lead">A story about a football team in Leeds, told by Ben.</p>
+  </header>
+
+  <aside class="tn" hidden>
+    <h3>Teacher notes</h3>
+    <ul>
+      <li>Read each part aloud, play “Listen”, or let pairs read. Numbers in the margin are paragraph numbers, so students can say “Look at paragraph 5”.</li>
+      <li>Yellow words are today’s vocabulary. Dotted words show the German when you tap them.</li>
+      <li>Stop at the blue box and collect ideas before you read the ending.</li>
+      <li>Do not ask students to share their own experiences of racism in front of the class. Let them choose.</li>
+    </ul>
+  </aside>
+
+  <div class="before">
+    <h3>Before you read</h3>
+    <p>Look at the title and these three words. What do you think happens in the story? Tell your partner: <i>“I think the story is about …”</i></p>
+    <ul class="tags"><li>football team</li><li>new player</li><li>changing room</li></ul>
+    <p class="legend"><mark>Yellow words</mark> are today’s words. <span class="gl-demo">Dotted words</span>: tap them to see the German.</p>
+  </div>
+
+  <!-- Part 1 -->
+  <div class="part" id="part-1">
+    <div class="story-col">
+      <div class="part-head">
+        <h2><span class="step">1</span> The new player</h2>
+        <button type="button" class="btn small listen" data-read="st-1" aria-pressed="false"><span class="l-go">Listen</span><span class="l-stop">Stop</span></button>
+      </div>
+      <div class="story" id="st-1">
+        <p data-n="1">My name is Ben. I’m 15 and I play football for Leeds Park Rangers. In September, a new boy <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="kam dazu">joined</span> our team. His name was Kofi. He was a great player – fast and clever with the ball.</p>
+        <p data-n="2">After the first training, our <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="Kapitän">captain</span> Tyler asked him, “Where are you from?”<br>“From Leeds,” Kofi said.<br>“No, where are you <em>really</em> from?”</p>
+        <p data-n="3">Kofi looked tired. “I was born here. My grandparents came from Ghana.”</p>
+        <p data-n="4">“So you’re from Africa!” Tyler laughed. “That’s why you’re so fast. Did you run away from <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="Löwen">lions</span>?”</p>
+        <p data-n="5">Everybody laughed. I laughed too. I didn’t think it was funny, but I didn’t want to be different.</p>
+      </div>
+    </div>
+    <div class="checks">
+      <h3>Check part 1</h3>
+      <div id="quiz-1"></div>
+    </div>
+  </div>
+  <div class="row" id="go-2"><button type="button" class="btn primary" data-show="part-2" data-hide="go-2">Read part 2</button></div>
+
+  <!-- Part 2 -->
+  <div class="part" id="part-2" hidden>
+    <div class="story-col">
+      <div class="part-head">
+        <h2><span class="step">2</span> Not in the group</h2>
+        <button type="button" class="btn small listen" data-read="st-2" aria-pressed="false"><span class="l-go">Listen</span><span class="l-stop">Stop</span></button>
+      </div>
+      <div class="story" id="st-2">
+        <p data-n="6">The “jokes” didn’t stop. Tyler didn’t really know Kofi, but he <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="urteilte über">judged</span> him. He had a <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="Vorurteil">prejudice</span>. “All Africans are fast” – Tyler thought this was funny. But it is a <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="Klischee">stereotype</span>. It puts millions of different people in one box.</p>
+        <p data-n="7">Soon some boys didn’t <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="den Ball zuspielen">pass the ball</span> to Kofi. Nobody added him to our team chat. We <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="schlossen aus">excluded</span> him.</p>
+        <p data-n="8">Kofi stopped talking in the <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="Umkleidekabine">changing room</span>. He came, played and went home.</p>
+        <p data-n="9">I felt bad. Kofi was <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="ungerecht behandelt">treated unfairly</span> only because of his <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="Hautfarbe">skin colour</span>. That is <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="Rassismus">racism</span>. But I was <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="hatte Angst">afraid</span>. Tyler was the captain. What if the team laughed at me next? So I was a <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="Zuschauer, der nicht eingreift">bystander</span>: I saw everything and did nothing.</p>
+      </div>
+    </div>
+    <div class="checks">
+      <h3>Check part 2</h3>
+      <div id="quiz-2"></div>
+    </div>
+  </div>
+  <div class="row" id="go-3" hidden><button type="button" class="btn primary" data-show="part-3" data-hide="go-3">Read part 3</button></div>
+
+  <!-- Part 3 -->
+  <div id="part-3" class="block" hidden>
+    <div class="part">
+      <div class="story-col">
+        <div class="part-head">
+          <h2><span class="step">3</span> After the match</h2>
+          <button type="button" class="btn small listen" data-read="st-3" aria-pressed="false"><span class="l-go">Listen</span><span class="l-stop">Stop</span></button>
+        </div>
+        <div class="story" id="st-3">
+          <p data-n="10">In November we lost an important match 2–1. Kofi missed a <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="Elfmeter">penalty</span> in the last minute. In the changing room, Tyler was angry. He <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="beleidigte">insulted</span> Kofi. “This is your <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="Schuld">fault</span>!” he shouted. “Go back to where you came from!”</p>
+          <p data-n="11">The room was <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="still">silent</span>. Kofi looked at the floor. My heart was beating fast.</p>
+        </div>
+      </div>
+      <div class="think">
+        <h3>Stop and think</h3>
+        <p>How does Kofi feel now? How does Ben feel?</p>
+        <ul class="useful"><li>angry</li><li>hurt</li><li>alone</li><li>afraid</li><li>ashamed (beschämt)</li></ul>
+      </div>
+    </div>
+
+    <div class="decide">
+      <h2>What would you do?</h2>
+      <p class="sub">You are Ben. The room is silent. Choose one idea and say why. Then tap the others.</p>
+      <div class="decide-opts" id="decide-opts"></div>
+      <p class="fb" id="decide-fb" hidden></p>
+      <p class="starters"><span><b>I would</b> … because …</span><span><b>I wouldn’t</b> … because …</span><span><b>It’s hard because</b> …</span></p>
+      <div class="row" id="go-end"><button type="button" class="btn" data-show="part-end" data-hide="go-end">Read the ending</button></div>
+    </div>
+
+    <div class="part" id="part-end" hidden>
+      <div class="story-col">
+        <div class="part-head">
+          <h2>What Ben did</h2>
+          <button type="button" class="btn small listen" data-read="st-4" aria-pressed="false"><span class="l-go">Listen</span><span class="l-stop">Stop</span></button>
+        </div>
+        <div class="story" id="st-4">
+          <p data-n="12">Then I stood up. “Stop it, Tyler. Kofi comes from Leeds, like you and me. And everybody misses a penalty sometimes.”</p>
+          <p data-n="13">For a moment nobody moved. Then Sam said, “Ben is right.” Two other boys <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="nickten">nodded</span>.</p>
+          <p data-n="14">Our <span class="gl" role="button" tabindex="0" aria-expanded="false" data-de="Trainer">coach</span> heard everything. “There is no place for <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="Diskriminierung">discrimination</span> in this club,” he said. “In this team, everybody is <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="gleich">equal</span>.” Tyler didn’t play in the next match. Later he said sorry to Kofi.</p>
+          <p data-n="15">After training, Kofi walked home with me. “Thanks for <span class="kw" role="button" tabindex="0" aria-expanded="false" data-de="sich einsetzen für">standing up for</span> me,” he said. “But Ben – next time, don’t wait two months.”</p>
+          <p data-n="16">He was right. Now I don’t wait.</p>
+        </div>
+      </div>
+      <div class="checks">
+        <h3>Check part 3</h3>
+        <div id="quiz-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row"><button type="button" class="btn ghost small" data-reset="reading">Start the reading again</button></div>
+
+  <nav class="st-nav" aria-label="Phase navigation">
+    <a class="btn" href="#words">Back</a>
+    <a class="btn primary" href="#talk">Next: Talk</a>
+  </nav>
+</section>
+
+<!-- ================= PHASE 4 ================= -->
+<section class="stage" data-s="talk" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Phase 4 of 5 · 12 minutes</p>
+    <h1>Bystander or <mark>upstander</mark>?</h1>
+    <p class="lead">A bystander sees something bad and does nothing. An upstander does something to help. For two months Ben was a bystander. Then he became an upstander.</p>
+  </header>
+
+  <aside class="tn" hidden>
+    <h3>Teacher notes</h3>
+    <ul>
+      <li><b>A:</b> class vote, then tap. Point out that there is more than one way to help.</li>
+      <li><b>B:</b> say the phrases together. Students practise them as answers only; nobody should act out the insult.</li>
+      <li><b>C:</b> think, pair, share. Students who need help use the sentence starters. There is no single right answer.</li>
+    </ul>
+  </aside>
+
+  <div class="block">
+    <h2><span class="step">A</span> Who is who? <span class="mins">3 min</span></h2>
+    <p class="how">Somebody tells a racist “joke” in class. What do the others do? Decide for each person.</p>
+    <div class="bgrid" id="sort-cards"></div>
+    <div class="row"><button type="button" class="btn ghost small" data-reset="sort">Start again</button></div>
+  </div>
+
+  <div class="block">
+    <h2><span class="step">B</span> Speak-up phrases <span class="mins">3 min</span></h2>
+    <p class="how">Say them aloud. Which one is easy to say? Which one is hard?</p>
+    <ul class="phrases" id="phrases"></ul>
+  </div>
+
+  <div class="block">
+    <h2><span class="step">C</span> Talk in pairs <span class="mins">6 min</span></h2>
+    <p class="how">Take two minutes for each question. Use the sentence starters.</p>
+    <div class="tcards">
+      <article class="tcard">
+        <h3>Was it “just a joke”?</h3>
+        <ul><li>I think it was just a joke because …</li><li>I think it wasn’t a joke because …</li></ul>
+      </article>
+      <article class="tcard">
+        <h3>Why is it hard to stand up for somebody?</h3>
+        <ul><li>It is hard because …</li><li>People are afraid that …</li></ul>
+      </article>
+      <article class="tcard">
+        <h3>What can our class do so that nobody is excluded?</h3>
+        <ul><li>We can …</li><li>We shouldn’t …</li></ul>
+      </article>
+    </div>
+    <ul class="useful"><li>I agree.</li><li>I don’t agree because …</li><li>For example, …</li><li>What do you think?</li></ul>
+  </div>
+
+  <nav class="st-nav" aria-label="Phase navigation">
+    <a class="btn" href="#reading">Back</a>
+    <a class="btn primary" href="#check">Next: Check</a>
+  </nav>
+</section>
+
+<!-- ================= PHASE 5 ================= -->
+<section class="stage" data-s="check" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Phase 5 of 5 · 8 minutes</p>
+    <h1>Exit <mark>check</mark></h1>
+    <p class="lead">Eight quick questions about today’s words and the story.</p>
+  </header>
+
+  <aside class="tn" hidden>
+    <h3>Teacher notes</h3>
+    <ul>
+      <li>On tablets, students work alone. On the board, students show one, two or three fingers for A, B or C.</li>
+      <li><b>Homework idea:</b> “What would you do in Ben’s place?” Write five or six sentences and use at least three of today’s words.</li>
+    </ul>
+  </aside>
+
+  <div class="exit">
+    <div class="checks" id="exit-quiz"></div>
+    <div class="exit-side">
+      <div class="scorebox">
+        <p class="eyebrow">Your score</p>
+        <p class="bigscore"><span id="score-n">0</span> / 8</p>
+        <p id="score-msg" aria-live="polite">Answer all eight questions.</p>
+      </div>
+      <div class="takeaway">
+        <h3>Take it with you</h3>
+        <p>Finish these two sentences in your exercise book:</p>
+        <ul><li>Today I learned that …</li><li>When I see that somebody is treated unfairly, I can …</li></ul>
+      </div>
+      <div class="row"><button type="button" class="btn ghost small" data-reset="exit">Try again</button></div>
+    </div>
+  </div>
+
+  <nav class="st-nav" aria-label="Phase navigation">
+    <a class="btn" href="#talk">Back</a>
+    <a class="btn" href="#warm-up">Back to the start</a>
+  </nav>
+</section>
+
+</main>
+
+<script>
+(() => {
+'use strict';
+document.documentElement.lang = 'en';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const SPK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+
+/* ================= lesson content ================= */
+const WARM = [
+  { t: 'Only good swimmers can join the school swimming team.', a: 'fair', why: 'This rule is about what you can <b>do</b>. Everybody can train and try again.' },
+  { t: 'A girl doesn’t get a weekend job in a bakery because she wears a headscarf.', a: 'unfair', why: 'She can do the job. The owner says no because of <b>who she is</b>.' },
+  { t: 'A student gets a bad mark because he didn’t learn for the test.', a: 'fair', why: 'The mark is about his work, not about who he is.' },
+  { t: 'A security guard always follows Jamal in the shop, but never his white friends.', a: 'unfair', why: 'Jamal did nothing wrong. The guard only looks at his <b>skin colour</b>.' },
+  { t: 'Lena can’t sit at the lunch table because she speaks with an accent.', a: 'unfair', why: 'The group shuts her out because of <b>how she speaks</b>.' },
+  { t: 'Everybody in the team has to come to training on time.', a: 'fair', why: 'It is the same rule for everybody.' }
+];
+
+const VOCAB = [
+  { en: 'racism', ipa: '/ˈreɪsɪzəm/', de: 'der Rassismus', def: 'treating people badly because of their skin colour or where their family comes from', ex: 'Racism is a problem in many countries.' },
+  { en: 'prejudice', ipa: '/ˈpredʒədɪs/', de: 'das Vorurteil', def: 'an opinion about people before you know them', ex: 'He has a prejudice against new students.' },
+  { en: 'to treat sb. unfairly', say: 'to treat somebody unfairly', ipa: '/triːt ʌnˈfeəli/', de: 'jdn. ungerecht behandeln', def: 'to be worse to one person than to others, for no good reason', ex: 'The teacher treated him unfairly.' },
+  { en: 'skin colour', ipa: '/ˈskɪn kʌlə/', de: 'die Hautfarbe', def: 'the colour of a person’s skin', ex: 'Skin colour says nothing about a person.' },
+  { en: 'to exclude sb.', say: 'to exclude somebody', ipa: '/ɪkˈskluːd/', de: 'jdn. ausschließen', def: 'to not let somebody be part of a group', ex: 'They excluded her from the game.' },
+  { en: 'bystander', ipa: '/ˈbaɪstændə/', de: 'Zuschauer/in (greift nicht ein)', def: 'a person who sees something bad but does nothing', ex: 'Three bystanders watched and said nothing.' },
+  { en: 'discrimination', ipa: '/dɪˌskrɪmɪˈneɪʃn/', de: 'die Diskriminierung', def: 'when people are treated worse because of who they are', ex: 'Not giving her the job was discrimination.' },
+  { en: 'stereotype', ipa: '/ˈsteriətaɪp/', de: 'das Klischee, das Stereotyp', def: 'one fixed idea about a whole group: “All … are …”', ex: '“All girls love pink” is a stereotype.' },
+  { en: 'to insult sb.', say: 'to insult somebody', ipa: '/ɪnˈsʌlt/', de: 'jdn. beleidigen', def: 'to say something rude that hurts a person', ex: 'He insulted me in front of the class.' },
+  { en: 'to judge sb.', say: 'to judge somebody', ipa: '/dʒʌdʒ/', de: 'über jdn. urteilen', def: 'to decide what you think about a person', ex: 'Don’t judge people by their clothes.' },
+  { en: 'to stand up for sb.', say: 'to stand up for somebody', ipa: '/stænd ˈʌp fɔː/', de: 'sich für jdn. einsetzen', def: 'to help a person when others are unfair to them', ex: 'She stood up for her friend.' },
+  { en: 'equal', ipa: '/ˈiːkwəl/', de: 'gleich, gleichberechtigt', def: 'the same in value and in rights', ex: 'All people are equal.' }
+];
+
+const GAPS = [
+  { pre: '“All boys are bad at languages” is a ', post: '.', a: 'stereotype' },
+  { pre: 'Nobody talked to the new girl. The class ', post: ' her.', a: 'excluded' },
+  { pre: 'Mia saw the fight but did nothing. She was a ', post: '.', a: 'bystander' },
+  { pre: 'You don’t know him! Don’t ', post: ' him by his name.', a: 'judge' },
+  { pre: 'Women and men should get ', post: ' pay for the same job.', a: 'equal' },
+  { pre: 'He didn’t get the flat because of his name. That is ', post: '.', a: 'discrimination' }
+];
+
+const NAMES = ['Ben', 'Kofi', 'Sam', 'Tyler', 'The coach'];
+const QUIZ1 = [
+  { q: 'Kofi was born in Ghana.', tf: true, a: false, fb: 'He was born in Leeds. His grandparents came from Ghana (paragraph 3).' },
+  { q: 'Kofi is a good football player.', tf: true, a: true, fb: 'He is “a great player – fast and clever with the ball” (paragraph 1).' },
+  { q: 'Why did Ben laugh?', opts: ['He didn’t want to be different.', 'He thought the joke was funny.', 'He didn’t like Kofi.'], a: 0, fb: 'Ben didn’t think it was funny (paragraph 5). Do you remember last lesson? This is peer pressure.' }
+];
+const QUIZ2 = [
+  { q: 'How did the team exclude Kofi?', opts: ['Nobody added him to the team chat.', 'They took his football boots.', 'They told him to leave the club.'], a: 0, fb: 'They also didn’t pass the ball to him (paragraph 7).' },
+  { q: 'Ben told Tyler to stop.', tf: true, a: false, fb: 'Ben was a bystander. He saw everything and did nothing (paragraph 9).' },
+  { q: 'Why was Ben afraid?', opts: ['He thought the team would laugh at him next.', 'He thought the coach would be angry.', 'He thought Kofi didn’t like him.'], a: 0, fb: '“What if the team laughed at me next?” (paragraph 9)' }
+];
+const QUIZ3 = [
+  { q: 'Who said it? “Ben is right.”', row: true, opts: NAMES, a: 2, fb: 'Sam was the first boy who agreed with Ben (paragraph 13).' },
+  { q: 'Who said it? “In this team, everybody is equal.”', row: true, opts: NAMES, a: 4, fb: 'The coach heard everything (paragraph 14).' },
+  { q: 'Who said it? “Next time, don’t wait two months.”', row: true, opts: NAMES, a: 1, fb: 'Kofi said thank you, but he also told Ben the truth (paragraph 15).' },
+  { q: 'Tyler played in the next match.', tf: true, a: false, fb: 'Tyler didn’t play, and later he said sorry to Kofi (paragraph 14).' }
+];
+
+const DECIDE = [
+  { t: 'Say nothing and look at the floor.', fb: 'Many people do this, because speaking up is scary. But when everybody is silent, Tyler thinks the team agrees with him. And Kofi feels alone.' },
+  { t: 'Say “Stop it, Tyler” in front of the team.', fb: 'That is brave. Kofi sees that he is not alone, and the others see that not everybody agrees with Tyler.' },
+  { t: 'Talk to Kofi later and ask, “Are you OK?”', fb: 'A good step. Kofi feels less alone. But Tyler doesn’t hear that his words were wrong.' },
+  { t: 'Tell the coach after training.', fb: 'A smart step. Adults can help when a problem is too big for one student.' }
+];
+
+const SORT = [
+  { t: 'Jo laughs at the “joke” with the others.', a: 'by', why: 'Laughing tells the joker: go on.' },
+  { t: 'Maya says, “That’s not funny.”', a: 'up', why: 'Three short words can stop a “joke”.' },
+  { t: 'Luca looks at his phone and says nothing.', a: 'by', why: 'Looking away doesn’t help anybody.' },
+  { t: 'Ali asks later, “Are you OK? Come and sit with us.”', a: 'up', why: 'Helping the person is also standing up.' },
+  { t: 'Emma thinks, “It’s not my problem.”', a: 'by', why: 'If nobody does anything, nothing changes.' },
+  { t: 'Noah tells a teacher what happened.', a: 'up', why: 'Getting help from an adult is a strong step.' }
+];
+
+const PHRASES = ['That’s not funny.', 'Stop it. That’s racist.', 'Leave him alone.', 'How would you feel?', 'Are you OK?', 'Come and sit with us.'];
+
+const EXIT = [
+  { q: 'Racism means …', opts: ['treating people badly because of their skin colour or where their family comes from.', 'being bad at sport.', 'telling a funny joke.'], a: 0 },
+  { q: 'What is a prejudice?', opts: ['An opinion about people before you know them.', 'A present for a friend.', 'A rule in football.'], a: 0 },
+  { q: '“All teenagers are lazy.” This is a …', opts: ['stereotype.', 'bystander.', 'penalty.'], a: 0 },
+  { q: 'A bystander …', opts: ['sees something bad and does nothing.', 'starts the problem.', 'helps the person.'], a: 0 },
+  { q: 'Where was Kofi born?', opts: ['In Leeds.', 'In Ghana.', 'In London.'], a: 0 },
+  { q: 'Why did Ben laugh at Tyler’s “joke”?', opts: ['He didn’t want to be different.', 'He thought it was funny.', 'He didn’t like Kofi.'], a: 0 },
+  { q: 'What did the coach say?', opts: ['“In this team, everybody is equal.”', '“It was just a joke.”', '“Kofi has to leave the team.”'], a: 0 },
+  { q: 'Which is a way to stand up for somebody?', opts: ['Say “Stop it. That’s not funny.”', 'Laugh with the others.', 'Look at your phone.'], a: 0 }
+];
+
+/* ================= speech (shown only when an English voice exists) ================= */
+const synth = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+let voice = null, playing = null;
+function pickVoice() {
+  let vs = [];
+  try { vs = synth.getVoices() || []; } catch (e) {}
+  voice = vs.find(v => /^en[-_]GB/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null;
+  document.body.classList.toggle('can-speak', !!voice);
+}
+if (synth) {
+  pickVoice();
+  try { synth.addEventListener('voiceschanged', pickVoice); } catch (e) { synth.onvoiceschanged = pickVoice; }
+}
+function stopSpeak() {
+  if (synth) { try { synth.cancel(); } catch (e) {} }
+  if (playing) { playing.classList.remove('playing'); playing.setAttribute('aria-pressed', 'false'); playing = null; }
+}
+function say(texts, btn) {
+  if (!synth || !voice) return;
+  const wasThis = btn && playing === btn;
+  stopSpeak();
+  if (wasThis) return;
+  const list = [].concat(texts);
+  if (btn) { playing = btn; btn.classList.add('playing'); btn.setAttribute('aria-pressed', 'true'); }
+  list.forEach((t, i) => {
+    const u = new SpeechSynthesisUtterance(t);
+    u.voice = voice; u.lang = voice.lang; u.rate = 0.88;
+    if (i === list.length - 1) u.onend = () => { if (btn && playing === btn) { btn.classList.remove('playing'); btn.setAttribute('aria-pressed', 'false'); playing = null; } };
+    try { synth.speak(u); } catch (e) {}
+  });
+}
+
+/* ================= activity builders ================= */
+function binary(root, items, labels) {
+  const draw = () => {
+    root.innerHTML = items.map((it, i) => `
+      <article class="bcard" data-i="${i}">
+        <p class="bcard-t">${it.t}</p>
+        <div class="bcard-btns">${labels.map(([k, lab]) => `<button type="button" class="btn opt" data-v="${k}">${lab}</button>`).join('')}</div>
+        <p class="fb" hidden></p>
+      </article>`).join('');
+  };
+  root.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled) return;
+    const card = b.closest('.bcard'), it = items[+card.dataset.i], ok = b.dataset.v === it.a;
+    $$('.opt', card).forEach(o => { o.disabled = true; if (o.dataset.v === it.a) o.classList.add('correct'); else if (o === b) o.classList.add('wrong'); });
+    const fb = $('.fb', card), lab = labels.find(x => x[0] === it.a)[1].toLowerCase();
+    fb.hidden = false; fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.innerHTML = `<strong>${ok ? 'Right' : 'Look again'}: ${lab}.</strong> ${it.why}`;
+  });
+  draw();
+  return draw;
+}
+
+function quiz(root, qs, o = {}) {
+  let right = 0, answered = 0;
+  const report = () => { if (o.onScore) o.onScore(right, answered, qs.length); };
+  const draw = () => {
+    right = 0; answered = 0;
+    root.innerHTML = qs.map((q, i) => {
+      const opts = q.tf ? ['True', 'False'] : q.opts;
+      const plain = q.tf || q.row;
+      const idx = plain ? opts.map((_, k) => k) : shuffle(opts.map((_, k) => k));
+      return `<div class="q" role="group" aria-labelledby="${root.id}-t${i}" data-i="${i}">
+        <p class="q-t" id="${root.id}-t${i}">${o.numbered ? `<span class="q-n">${i + 1}</span>` : ''}<span>${q.q}</span></p>
+        <div class="q-opts${plain ? '' : ' col'}">${idx.map((k, pos) => `<button type="button" class="btn opt" data-k="${k}">${plain ? '' : `<span class="ltr">${'ABC'[pos]}</span>`}<span>${opts[k]}</span></button>`).join('')}</div>
+        <p class="fb" hidden></p>
+      </div>`;
+    }).join('');
+    report();
+  };
+  root.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b || b.disabled) return;
+    const box = b.closest('.q'), q = qs[+box.dataset.i];
+    const a = q.tf ? (q.a ? 0 : 1) : q.a, ok = +b.dataset.k === a;
+    answered++; if (ok) right++;
+    $$('.opt', box).forEach(x => { x.disabled = true; if (+x.dataset.k === a) x.classList.add('correct'); else if (x === b) x.classList.add('wrong'); });
+    const fb = $('.fb', box);
+    fb.hidden = false; fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.innerHTML = `<strong>${ok ? 'Right.' : 'Not quite.'}</strong> ${q.fb || ''}`;
+    report();
+  });
+  draw();
+  return draw;
+}
+
+function matchGame(root, pairs) {
+  const n = pairs.length;
+  let order, selW, selD, done;
+  const place = () => $$('.md', root).forEach(b => { b.style.gridRow = String(order.indexOf(+b.dataset.d) + 1); });
+  const status = () => { $('.score', root).textContent = done.size === n ? 'All matched. Well done.' : `${done.size} of ${n} matched`; };
+  const marks = () => {
+    $$('.mw', root).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.w === selW)));
+    $$('.md', root).forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.d === selD)));
+  };
+  const draw = () => {
+    do { order = shuffle([...Array(n).keys()]); } while (order.every((d, r) => d === r));
+    selW = null; selD = null; done = new Set();
+    root.innerHTML = `<div class="mgrid">${pairs.map((p, i) => `<button type="button" class="mw" data-w="${i}" style="grid-row:${i + 1}" aria-pressed="false">${p.w}</button>`).join('')}${pairs.map((p, i) => `<button type="button" class="md" data-d="${i}" aria-pressed="false">${p.d}</button>`).join('')}</div><p class="score" aria-live="polite"></p>`;
+    place(); status();
+  };
+  root.addEventListener('click', e => {
+    const w = e.target.closest('.mw'), d = e.target.closest('.md');
+    if (w && !w.disabled) selW = selW === +w.dataset.w ? null : +w.dataset.w;
+    else if (d && !d.disabled) selD = selD === +d.dataset.d ? null : +d.dataset.d;
+    else return;
+    if (selW !== null && selD !== null) {
+      const wb = $(`.mw[data-w="${selW}"]`, root), db = $(`.md[data-d="${selD}"]`, root);
+      if (selW === selD) {
+        const i = selW, r = order.indexOf(i), j = order[i];
+        order[r] = j; order[i] = i; done.add(i);
+        wb.disabled = true; db.disabled = true; wb.classList.add('matched'); db.classList.add('matched');
+        place(); status();
+      } else {
+        [wb, db].forEach(b => { b.classList.add('miss'); setTimeout(() => b.classList.remove('miss'), 650); });
+      }
+      selW = null; selD = null;
+    }
+    marks();
+  });
+  draw();
+  return draw;
+}
+
+function gapFill(root, items) {
+  let bank, fills, active, checked;
+  const draw = () => {
+    if (active === null || fills[active] !== null) active = fills.indexOf(null);
+    const nRight = fills.filter((f, i) => f !== null && bank[f] === items[i].a).length;
+    const msg = !checked ? '' : nRight === items.length ? `${nRight} of ${items.length} correct. Well done.` : `${nRight} of ${items.length} correct. Tap a red word to take it out.`;
+    root.innerHTML = `
+      <div class="bank" role="group" aria-label="Word bank">${bank.map((w, i) => `<button type="button" class="chip" data-w="${i}"${fills.includes(i) ? ' disabled' : ''}>${w}</button>`).join('')}</div>
+      <ol class="gaps">${items.map((it, i) => {
+        const f = fills[i], st = checked && f !== null ? (bank[f] === it.a ? ' ok' : ' no') : '';
+        return `<li>${it.pre}<button type="button" class="gap${i === active ? ' active' : ''}${st}" data-g="${i}" aria-label="Gap ${i + 1}: ${f !== null ? bank[f] : 'empty'}">${f !== null ? bank[f] : ' '}</button>${it.post}</li>`;
+      }).join('')}</ol>
+      <div class="row"><button type="button" class="btn primary" data-act="check">Check</button><button type="button" class="btn ghost small" data-act="reset">Start again</button><p class="score" aria-live="polite">${msg}</p></div>`;
+  };
+  const reset = () => { bank = shuffle(items.map(it => it.a)); fills = items.map(() => null); active = 0; checked = false; draw(); };
+  root.addEventListener('click', e => {
+    const chip = e.target.closest('.chip'), gap = e.target.closest('.gap'), act = e.target.closest('[data-act]');
+    if (chip && !chip.disabled) { if (active === null || active < 0) return; fills[active] = +chip.dataset.w; active = null; draw(); }
+    else if (gap) { const g = +gap.dataset.g; if (fills[g] !== null) fills[g] = null; active = g; draw(); }
+    else if (act) { if (act.dataset.act === 'check') { checked = true; draw(); } else reset(); }
+  });
+  reset();
+}
+
+/* ================= build the page ================= */
+const resetWarm = binary($('#warm-cards'), WARM, [['fair', 'Fair'], ['unfair', 'Unfair']]);
+const resetSort = binary($('#sort-cards'), SORT, [['by', 'Bystander'], ['up', 'Upstander']]);
+
+$('#vlist').innerHTML = '<div class="vrow vhead"><span>English</span><span>Meaning and example</span><span>German</span></div>' + VOCAB.map((v, i) => `
+  <div class="vrow">
+    <div class="vw"><span class="vword">${v.en}</span><button type="button" class="icon-btn listen" data-say="${v.say || v.en}" aria-label="Listen: ${v.say || v.en}">${SPK}</button><span class="ipa">${v.ipa}</span></div>
+    <div class="vm"><span>${v.def}</span><span class="ex">${v.ex}</span></div>
+    <div class="vd"><button type="button" class="de" id="de-${i}" aria-expanded="false" data-de="${v.de}">Show German</button></div>
+  </div>`).join('');
+const setDe = (b, open) => { b.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open)); b.textContent = open ? b.dataset.de : 'Show German'; };
+$('#vlist').addEventListener('click', e => { const b = e.target.closest('.de'); if (b) setDe(b, !b.classList.contains('open')); });
+$('#de-all').addEventListener('click', e => {
+  const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+  e.currentTarget.setAttribute('aria-pressed', String(on));
+  e.currentTarget.textContent = on ? 'Hide all German words' : 'Show all German words';
+  $$('.de').forEach(b => setDe(b, on));
+});
+
+const pairs = VOCAB.map(v => ({ w: v.en, d: v.def }));
+const resetM1 = matchGame($('#match-1'), pairs.slice(0, 6));
+const resetM2 = matchGame($('#match-2'), pairs.slice(6));
+gapFill($('#gaps'), GAPS);
+
+const resetQ1 = quiz($('#quiz-1'), QUIZ1);
+const resetQ2 = quiz($('#quiz-2'), QUIZ2);
+const resetQ3 = quiz($('#quiz-3'), QUIZ3);
+
+const dOpts = $('#decide-opts'), dFb = $('#decide-fb');
+dOpts.innerHTML = DECIDE.map((d, i) => `<button type="button" class="btn" data-d="${i}" aria-pressed="false"><span class="ltr">${'ABCD'[i]}</span><span>${d.t}</span></button>`).join('');
+dOpts.addEventListener('click', e => {
+  const b = e.target.closest('[data-d]'); if (!b) return;
+  $$('[data-d]', dOpts).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  dFb.hidden = false;
+  dFb.innerHTML = `<strong>${'ABCD'[+b.dataset.d]}:</strong> ${DECIDE[+b.dataset.d].fb} <em>B, C and D are three different ways to stand up for somebody.</em>`;
+});
+
+$('#phrases').innerHTML = PHRASES.map(p => `<li><span>${p}</span><button type="button" class="icon-btn listen" data-say="${p}" aria-label="Listen: ${p}">${SPK}</button></li>`).join('');
+
+const scoreN = $('#score-n'), scoreMsg = $('#score-msg');
+const resetExit = quiz($('#exit-quiz'), EXIT, {
+  numbered: true,
+  onScore: (r, done, n) => {
+    scoreN.textContent = r;
+    scoreMsg.textContent = done < n ? `${done} of ${n} answered.` : r === n ? 'Perfect. You know today’s words.' : r >= 6 ? 'Well done.' : r >= 4 ? 'A good start. Look at the word list again.' : 'Look at the word list again, then try once more.';
+  }
+});
+
+/* ================= shared clicks ================= */
+const smooth = () => (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'auto' : 'smooth';
+function resetReading() {
+  resetQ1(); resetQ2(); resetQ3();
+  ['part-2', 'go-3', 'part-3', 'part-end'].forEach(id => { $('#' + id).hidden = true; });
+  ['go-2', 'go-end'].forEach(id => { $('#' + id).hidden = false; });
+  $$('[data-d]', dOpts).forEach(x => x.setAttribute('aria-pressed', 'false'));
+  dFb.hidden = true;
+  $$('.kw,.gl').forEach(x => x.setAttribute('aria-expanded', 'false'));
+}
+const toggleGloss = el => el.setAttribute('aria-expanded', String(el.getAttribute('aria-expanded') !== 'true'));
+
+document.addEventListener('click', e => {
+  const t = e.target;
+  const g = t.closest('.kw,.gl'); if (g) { toggleGloss(g); return; }
+  const s = t.closest('[data-say]'); if (s) { say(s.dataset.say); return; }
+  const r = t.closest('[data-read]'); if (r) { say($$('p', $('#' + r.dataset.read)).map(p => p.textContent), r); return; }
+  const sh = t.closest('[data-show]');
+  if (sh) {
+    const target = $('#' + sh.dataset.show);
+    target.hidden = false;
+    $('#' + sh.dataset.hide).hidden = true;
+    if (sh.dataset.show === 'part-2') $('#go-3').hidden = false;
+    target.scrollIntoView({ behavior: smooth(), block: 'start' });
+    return;
+  }
+  const rs = t.closest('[data-reset]');
+  if (rs) {
+    const k = rs.dataset.reset;
+    if (k === 'warm') { resetWarm(); $('#topic').hidden = true; $('#topic-btn').setAttribute('aria-expanded', 'false'); }
+    else if (k === 'sort') resetSort();
+    else if (k === 'match') { resetM1(); resetM2(); }
+    else if (k === 'reading') { stopSpeak(); resetReading(); window.scrollTo(0, 0); }
+    else if (k === 'exit') resetExit();
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const g = e.target.closest && e.target.closest('.kw,.gl');
+  if (g) { e.preventDefault(); toggleGloss(g); }
+});
+$('#topic-btn').addEventListener('click', e => {
+  const box = $('#topic'), open = box.hidden;
+  box.hidden = !open; e.currentTarget.setAttribute('aria-expanded', String(open));
+  if (open) box.scrollIntoView({ behavior: smooth(), block: 'nearest' });
+});
+
+/* ================= teacher notes ================= */
+const notesBtn = $('#notes-btn');
+function setNotes(on) {
+  notesBtn.setAttribute('aria-pressed', String(on));
+  $$('.tn').forEach(n => { n.hidden = !on; });
+  try { localStorage.setItem('rd-lesson-notes', on ? '1' : '0'); } catch (e) {}
+}
+notesBtn.addEventListener('click', () => setNotes(notesBtn.getAttribute('aria-pressed') !== 'true'));
+try { if (localStorage.getItem('rd-lesson-notes') === '1') setNotes(true); } catch (e) {}
+
+/* ================= phase timer ================= */
+const clock = $('#clock'), tBox = $('#timer'), tGo = $('#t-go');
+let total = 300, left = 300, tick = null, endAt = 0;
+const drawT = () => { clock.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); };
+function beep() {
+  try {
+    const C = window.AudioContext || window.webkitAudioContext, ctx = new C();
+    [0, 0.4, 0.8].forEach(t => {
+      const o = ctx.createOscillator(), g = ctx.createGain(), t0 = ctx.currentTime + t;
+      o.frequency.value = 880; o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.25, t0 + 0.03); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.28);
+      o.start(t0); o.stop(t0 + 0.3);
+    });
+    setTimeout(() => { try { ctx.close(); } catch (e) {} }, 1800);
+  } catch (e) {}
+}
+function tStop() { if (tick) { clearInterval(tick); tick = null; } tBox.classList.remove('running'); tGo.setAttribute('aria-label', 'Start timer'); }
+function tSet(min) { tStop(); total = left = min * 60; tBox.classList.remove('up'); drawT(); }
+function tStart() {
+  if (left <= 0) left = total;
+  tBox.classList.remove('up'); tBox.classList.add('running'); tGo.setAttribute('aria-label', 'Pause timer');
+  endAt = Date.now() + left * 1000;
+  tick = setInterval(() => {
+    left = Math.max(0, Math.ceil((endAt - Date.now()) / 1000)); drawT();
+    if (left === 0) { tStop(); tBox.classList.add('up'); beep(); }
+  }, 250);
+}
+tGo.addEventListener('click', () => (tick ? tStop() : tStart()));
+$('#t-reset').addEventListener('click', () => tSet(total / 60));
+
+/* ================= phase routing ================= */
+const STAGES = [{ id: 'warm-up', min: 5 }, { id: 'words', min: 15 }, { id: 'reading', min: 20 }, { id: 'talk', min: 12 }, { id: 'check', min: 8 }];
+let cur = null;
+function route() {
+  const h = (location.hash || '').slice(1);
+  const s = STAGES.find(x => x.id === h) || STAGES[0];
+  if (cur === s.id) return;
+  cur = s.id;
+  $$('.stage').forEach(x => { x.hidden = x.dataset.s !== s.id; });
+  $$('.ph').forEach(a => { if (a.dataset.s === s.id) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current'); });
+  stopSpeak(); tSet(s.min); window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+route();
+})();
+</script>
+
+</body></html>
