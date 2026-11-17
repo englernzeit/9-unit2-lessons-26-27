@@ -249,6 +249,31 @@ h1,h2,h3,.vword,.topic dt,.clock{font-weight:600;letter-spacing:-.015em}
 .phrases .icon-btn{background:var(--surface);color:var(--ink);border-color:var(--ink)}
 .vhead{background:#3A4932;color:#F5EEE1}
 .scorebox{background:#3A4932;color:#F5EEE1;border-radius:var(--r-lg);box-shadow:0 10px 26px rgba(58,73,50,.16)}
+/* Word Master tab (added by _build) */
+.ph .n.star{background:var(--marker);border-color:var(--marker)}
+.wm-de{font-size:var(--fs-s);color:var(--ink-soft);max-width:60ch}
+.wm-de b{display:inline-block;margin-right:.4rem;padding:0 .4rem;border-radius:6px;background:var(--blue-soft);color:var(--blue);font-size:var(--fs-xs)}
+.wm-name{display:flex;flex-direction:column;gap:.3rem;max-width:22rem;margin:1.2rem 0;font-size:var(--fs-xs);font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.wm-name input,.wm-gap{font:inherit;font-size:var(--fs-m);letter-spacing:0;text-transform:none;font-weight:400;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.45rem .7rem}
+.wm-name input:focus,.wm-gap:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft)}
+.wm-list{list-style:none;margin:0 0 1.4rem;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,30rem),1fr));gap:.9rem}
+.wm-row{display:flex;gap:.8rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow-card);padding:1rem 1.1rem}
+.wm-row .q-n{margin-top:.15rem}
+.wm-body{display:flex;flex-direction:column;gap:.45rem;min-width:0;flex:1}
+.wm-ger{color:var(--ink-soft);font-size:var(--fs-s)}
+.wm-en{font-size:var(--fs-l);line-height:2}
+.wm-gap{display:inline-block;width:9.5rem;max-width:100%;margin:0 .3rem;padding:.15rem .55rem;font-weight:700;border-width:0 0 2.5px;border-color:var(--blue);border-radius:var(--r-sm) var(--r-sm) 0 0;background:var(--blue-soft)}
+.wm-gap.is-right,.wm-name input.is-right{background:var(--green-soft);border-color:var(--green)}
+.wm-gap.is-wrong,.wm-name input.is-wrong{background:var(--red-soft);border-color:var(--red)}
+.wm-solution{display:none;font-weight:700;color:var(--green)}
+.wm-list.show-sol .wm-solution{display:block}
+.wm-bar{position:sticky;bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem .8rem;padding:.75rem 1rem;margin-bottom:1.2rem;border-radius:var(--r-lg);background:rgba(58,73,50,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 10px 26px rgba(58,73,50,.16)}
+.wm-bar .btn:not(.primary){background:transparent;color:#F5EEE1;border-color:rgba(245,238,225,.55)}
+.wm-bar .btn:not(.primary):hover{background:rgba(245,238,225,.12)}
+.wm-bar .btn.primary{background:#F2D28C;border-color:#F2D28C;color:#2F3020;box-shadow:0 2px 0 #B08A57}
+.wm-res{margin-left:auto;font-family:var(--display);font-weight:600;color:#F5EEE1}
+.wm-res.ok{color:#C9E3A8}
+.wm-res.warn{color:#F2D28C}
 </style>
 
 <header class="bar">
@@ -261,6 +286,7 @@ h1,h2,h3,.vword,.topic dt,.clock{font-weight:600;letter-spacing:-.015em}
         <li><a class="ph" href="#reading" data-s="reading"><span class="n">3</span><span class="name">Reading</span></a></li>
         <li><a class="ph" href="#talk" data-s="talk"><span class="n">4</span><span class="name">Talk</span></a></li>
         <li><a class="ph" href="#check" data-s="check"><span class="n">5</span><span class="name">Check</span></a></li>
+        <li><a class="ph" href="#wordmaster" data-s="wordmaster"><span class="n star">★</span><span class="name">Word Master</span></a></li>
       </ol>
     </nav>
     <div class="tools">
@@ -539,9 +565,37 @@ h1,h2,h3,.vword,.topic dt,.clock{font-weight:600;letter-spacing:-.015em}
 
   <nav class="st-nav" aria-label="Phase navigation">
     <a class="btn" href="#talk">Back</a>
+    <a class="btn primary" href="#wordmaster">Next: Word Master</a>
     <a class="btn" href="#warm-up">Back to the start</a>
   </nav>
 </section>
+
+<!-- ================= WORD MASTER (added by _build) ================= -->
+<section class="stage" data-s="wordmaster" hidden>
+  <header class="st-head">
+    <p class="eyebrow">Word Master · 15 minutes</p>
+    <h1>Word <mark>Master</mark></h1>
+    <p class="lead">Read the German sentence, then fill the gap in the English one. Tap <b>Check all</b> when you are finished.</p>
+    <p class="wm-de"><b>DE</b> Lies den deutschen Satz. Schreibe das fehlende englische Wort. Dann auf „Check all“ tippen.</p>
+  </header>
+
+  <label class="wm-name"><span>Your name</span><input type="text" id="wm-name" placeholder="first name + class" autocomplete="off" autocapitalize="words" spellcheck="false"></label>
+
+  <ol class="wm-list" id="wm-list"></ol>
+
+  <div class="wm-bar">
+    <button type="button" class="btn primary" id="wm-check">Check all</button>
+    <button type="button" class="btn" id="wm-sol">Show solutions</button>
+    <button type="button" class="btn" id="wm-pdf">Save as PDF</button>
+    <p class="wm-res" id="wm-res" aria-live="polite"></p>
+  </div>
+
+  <nav class="st-nav" aria-label="Phase navigation">
+    <a class="btn" href="#check">Back</a>
+    <button type="button" class="btn ghost small" id="wm-reset">Start again</button>
+  </nav>
+</section>
+
 
 </main>
 
@@ -908,8 +962,126 @@ function tStart() {
 tGo.addEventListener('click', () => (tick ? tStop() : tStart()));
 $('#t-reset').addEventListener('click', () => tSet(total / 60));
 
+/* ================= Word Master (added by _build) ================= */
+// [German before, German word, German after, English before, English after, accepted answers]
+const WM = [
+  ['', 'Rassismus', ' ist in vielen Ländern ein Problem.', '', ' is a problem in many countries.', ['racism']],
+  ['Er hat ein ', 'Vorurteil', ' gegen neue Schüler.', 'He has a ', ' against new students.', ['prejudice']],
+  ['Der Kapitän hat Kofi ', 'ungerecht', ' behandelt.', 'The captain treated Kofi ', '.', ['unfairly']],
+  ['Die ', 'Hautfarbe', ' sagt nichts über einen Menschen.', 'Skin ', ' says nothing about a person.', ['colour', 'color']],
+  ['Sie haben Kofi aus dem Team-Chat ', 'ausgeschlossen', '.', 'They ', ' Kofi from the team chat.', ['excluded']],
+  ['Ben war ein ', 'Zuschauer', ': Er hat alles gesehen und nichts getan.', 'Ben was a ', ': he saw everything and did nothing.', ['bystander']],
+  ['In diesem Verein gibt es keinen Platz für ', 'Diskriminierung', '.', 'There is no place for ', ' in this club.', ['discrimination']],
+  ['„Alle Mädchen lieben Rosa“ ist ein ', 'Klischee', '.', '“All girls love pink” is a ', '.', ['stereotype']],
+  ['Tyler hat Kofi in der Umkleide ', 'beleidigt', '.', 'Tyler ', ' Kofi in the changing room.', ['insulted']],
+  ['', 'Beurteile', ' Menschen nicht nach ihrer Kleidung.', 'Don’t ', ' people by their clothes.', ['judge']],
+  ['Danke, dass du dich für mich ', 'eingesetzt', ' hast.', 'Thanks for ', ' up for me.', ['standing']],
+  ['In diesem Team sind alle ', 'gleich', '.', 'In this team, everybody is ', '.', ['equal']]
+];
+const WM_KEY = 'rd-wordmaster';
+let wmState = {};
+try { wmState = JSON.parse(localStorage.getItem(WM_KEY) || '{}') || {}; } catch (e) {}
+const wmSave = () => { try { localStorage.setItem(WM_KEY, JSON.stringify(wmState)); } catch (e) {} };
+const wmNorm = v => String(v || '').trim().toLowerCase().replace(/[’`]/g, "'").replace(/\s+/g, ' ').replace(/[.,!?;:]+$/, '');
+const wmEsc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const wmList = $('#wm-list'), wmRes = $('#wm-res'), wmName = $('#wm-name');
+wmList.innerHTML = WM.map((w, i) => `<li class="wm-row"><span class="q-n">${i + 1}</span><div class="wm-body">
+  <p class="wm-ger">${wmEsc(w[0])}<mark>${wmEsc(w[1])}</mark>${wmEsc(w[2])}</p>
+  <p class="wm-en">${wmEsc(w[3])}<input class="wm-gap" type="text" data-i="${i}" aria-label="Missing word ${i + 1}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">${wmEsc(w[4])}</p>
+  <p class="wm-solution">→ ${wmEsc(w[5][0])}</p></div></li>`).join('');
+const wmGaps = $$('.wm-gap', wmList);
+wmGaps.forEach(g => {
+  g.value = wmState['g' + g.dataset.i] || '';
+  g.addEventListener('input', () => { wmState['g' + g.dataset.i] = g.value; g.classList.remove('is-right', 'is-wrong'); wmSave(); });
+});
+wmName.value = wmState.name || '';
+wmName.addEventListener('input', () => { wmState.name = wmName.value; wmName.classList.remove('is-wrong'); wmSave(); });
+const wmHit = i => WM[i][5].includes(wmNorm(wmState['g' + i]));
+function wmCheck() {
+  let ok = 0, done = 0;
+  wmGaps.forEach(g => {
+    const i = +g.dataset.i, filled = wmNorm(g.value) !== '', hit = wmHit(i);
+    if (filled) done++;
+    if (hit) ok++;
+    g.classList.toggle('is-right', hit); g.classList.toggle('is-wrong', filled && !hit);
+  });
+  if (!done) { wmRes.textContent = 'Fill in the gaps first.'; wmRes.className = 'wm-res warn'; return; }
+  wmRes.textContent = ok + '/' + WM.length + (ok === WM.length ? ' — perfect!' : ok >= WM.length * 0.75 ? ' — almost there!' : ' — keep going!');
+  wmRes.className = 'wm-res ' + (ok === WM.length ? 'ok' : 'warn');
+}
+$('#wm-check').addEventListener('click', wmCheck);
+// Show solutions: tap twice instead of a browser pop-up
+let wmSolT = null, wmSolArm = false;
+const wmSolBtn = $('#wm-sol');
+wmSolBtn.addEventListener('click', () => {
+  clearTimeout(wmSolT);
+  if (!wmSolArm) {
+    wmSolArm = true; wmSolBtn.textContent = 'Sure? Tap again to show them';
+    wmSolT = setTimeout(() => { wmSolArm = false; wmSolBtn.textContent = 'Show solutions'; }, 5000);
+    return;
+  }
+  wmSolArm = false; wmSolBtn.textContent = 'Show solutions';
+  wmList.classList.add('show-sol');
+});
+$('#wm-reset').addEventListener('click', () => {
+  wmState = { name: wmState.name }; wmSave();
+  wmGaps.forEach(g => { g.value = ''; g.classList.remove('is-right', 'is-wrong'); });
+  wmList.classList.remove('show-sol'); wmRes.textContent = ''; wmRes.className = 'wm-res';
+});
+
+// PDF work report, one A4 page; the PDF library is the Respect site's own copy, loaded on first use
+let wmPdfLib = null;
+const wmLoadPdf = () => wmPdfLib || (wmPdfLib = new Promise((res, rej) => {
+  if (window.jspdf) return res(window.jspdf);
+  const s = document.createElement('script'); s.src = '../assets/5acc4bca-8930-44db-a4ed-c4d0b72c04fa.js';
+  s.onload = () => res(window.jspdf); s.onerror = () => { wmPdfLib = null; rej(); };
+  document.head.appendChild(s);
+}));
+$('#wm-pdf').addEventListener('click', async () => {
+  const name = (wmState.name || '').trim();
+  if (!name) { wmName.classList.add('is-wrong'); wmName.focus(); wmName.scrollIntoView({ block: 'center', behavior: smooth() }); wmRes.textContent = 'Write your name first.'; wmRes.className = 'wm-res warn'; return; }
+  let lib;
+  try { lib = await wmLoadPdf(); } catch (e) { wmRes.textContent = 'PDF needs an internet connection.'; wmRes.className = 'wm-res warn'; return; }
+  const san = s => String(s).replace(/[‘’]/g, "'").replace(/[“”„]/g, '"').replace(/[–—]/g, '-').replace(/…/g, '...').replace(/→/g, '->').replace(/[^\x00-\xFF]/g, '');
+  const doc = new lib.jsPDF({ unit: 'mm', format: 'a4' });
+  const M = 16, W = 178;
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.setTextColor(0);
+  doc.text('Word Master - Racism and discrimination', M, 20);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(70);
+  doc.text(san('Unit 2 Respect - Lesson 2  |  ' + name + '  |  ' + new Date().toLocaleDateString('de-DE')), M, 27);
+  doc.setDrawColor(0); doc.setLineWidth(.35); doc.line(M, 31, M + W, 31);
+  let y = 39, ok = 0, missing = 0;
+  WM.forEach((w, i) => {
+    const val = String(wmState['g' + i] || '').trim(), hit = wmHit(i);
+    if (hit) ok++;
+    if (!val) missing++;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(110);
+    doc.text(san((i + 1) + '.  ' + w[0] + w[1] + w[2]), M, y);
+    y += 5.2;
+    doc.setFontSize(10.5); doc.setTextColor(0);
+    let x = M + 5;
+    doc.text(san(w[3]), x, y); x += doc.getTextWidth(san(w[3]));
+    const shown = val || '_____';
+    doc.setFont('helvetica', 'bold');
+    if (val) { doc.setFillColor(hit ? 221 : 246, hit ? 232 : 222, hit ? 204 : 212); doc.rect(x + .3, y - 3.9, doc.getTextWidth(san(shown)) + 1.4, 5.1, 'F'); }
+    doc.setTextColor(hit ? 40 : val ? 150 : 150, hit ? 90 : 40, hit ? 40 : 30);
+    doc.text(san(shown), x + 1, y); x += doc.getTextWidth(san(shown)) + 2;
+    doc.setFont('helvetica', 'normal'); doc.setTextColor(0);
+    doc.text(san(w[4]), x, y);
+    doc.setFontSize(9);
+    if (hit) { doc.setTextColor(40, 110, 50); doc.text('correct', M + W, y, { align: 'right' }); }
+    else { doc.setTextColor(170, 40, 30); doc.text(val ? 'right: ' + san(w[5][0]) : 'not answered', M + W, y, { align: 'right' }); }
+    y += 9.6;
+  });
+  doc.setDrawColor(0); doc.line(M, y - 3, M + W, y - 3);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.setTextColor(0);
+  doc.text('RESULT:  ' + ok + ' / ' + WM.length + ' correct' + (missing ? '   (' + missing + ' not answered)' : ''), M, y + 5);
+  const safe = name.replace(/[^\p{L}\p{N}_-]+/gu, '-').toLowerCase();
+  doc.save('wordmaster-racism-' + safe + '.pdf');
+});
+
 /* ================= phase routing ================= */
-const STAGES = [{ id: 'warm-up', min: 5 }, { id: 'words', min: 15 }, { id: 'reading', min: 20 }, { id: 'talk', min: 12 }, { id: 'check', min: 8 }];
+const STAGES = [{ id: 'warm-up', min: 5 }, { id: 'words', min: 15 }, { id: 'reading', min: 20 }, { id: 'talk', min: 12 }, { id: 'check', min: 8 }, { id: 'wordmaster', min: 15 }];
 let cur = null;
 function route() {
   const h = (location.hash || '').slice(1);
