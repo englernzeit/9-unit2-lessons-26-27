@@ -265,8 +265,6 @@ h1,h2,h3,.vword,.topic dt,.clock{font-weight:600;letter-spacing:-.015em}
 .wm-gap{display:inline-block;width:9.5rem;max-width:100%;margin:0 .3rem;padding:.15rem .55rem;font-weight:700;border-width:0 0 2.5px;border-color:var(--blue);border-radius:var(--r-sm) var(--r-sm) 0 0;background:var(--blue-soft)}
 .wm-gap.is-right,.wm-name input.is-right{background:var(--green-soft);border-color:var(--green)}
 .wm-gap.is-wrong,.wm-name input.is-wrong{background:var(--red-soft);border-color:var(--red)}
-.wm-solution{display:none;font-weight:700;color:var(--green)}
-.wm-list.show-sol .wm-solution{display:block}
 .wm-bar{position:sticky;bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem .8rem;padding:.75rem 1rem;margin-bottom:1.2rem;border-radius:var(--r-lg);background:rgba(58,73,50,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 10px 26px rgba(58,73,50,.16)}
 .wm-bar .btn:not(.primary){background:transparent;color:#F5EEE1;border-color:rgba(245,238,225,.55)}
 .wm-bar .btn:not(.primary):hover{background:rgba(245,238,225,.12)}
@@ -585,7 +583,6 @@ h1,h2,h3,.vword,.topic dt,.clock{font-weight:600;letter-spacing:-.015em}
 
   <div class="wm-bar">
     <button type="button" class="btn primary" id="wm-check">Check all</button>
-    <button type="button" class="btn" id="wm-sol">Show solutions</button>
     <button type="button" class="btn" id="wm-pdf">Save as PDF</button>
     <p class="wm-res" id="wm-res" aria-live="polite"></p>
   </div>
@@ -987,8 +984,7 @@ const wmEsc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;
 const wmList = $('#wm-list'), wmRes = $('#wm-res'), wmName = $('#wm-name');
 wmList.innerHTML = WM.map((w, i) => `<li class="wm-row"><span class="q-n">${i + 1}</span><div class="wm-body">
   <p class="wm-ger">${wmEsc(w[0])}<mark>${wmEsc(w[1])}</mark>${wmEsc(w[2])}</p>
-  <p class="wm-en">${wmEsc(w[3])}<input class="wm-gap" type="text" data-i="${i}" aria-label="Missing word ${i + 1}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">${wmEsc(w[4])}</p>
-  <p class="wm-solution">→ ${wmEsc(w[5][0])}</p></div></li>`).join('');
+  <p class="wm-en">${wmEsc(w[3])}<input class="wm-gap" type="text" data-i="${i}" aria-label="Missing word ${i + 1}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">${wmEsc(w[4])}</p></div></li>`).join('');
 const wmGaps = $$('.wm-gap', wmList);
 wmGaps.forEach(g => {
   g.value = wmState['g' + g.dataset.i] || '';
@@ -1010,23 +1006,10 @@ function wmCheck() {
   wmRes.className = 'wm-res ' + (ok === WM.length ? 'ok' : 'warn');
 }
 $('#wm-check').addEventListener('click', wmCheck);
-// Show solutions: tap twice instead of a browser pop-up
-let wmSolT = null, wmSolArm = false;
-const wmSolBtn = $('#wm-sol');
-wmSolBtn.addEventListener('click', () => {
-  clearTimeout(wmSolT);
-  if (!wmSolArm) {
-    wmSolArm = true; wmSolBtn.textContent = 'Sure? Tap again to show them';
-    wmSolT = setTimeout(() => { wmSolArm = false; wmSolBtn.textContent = 'Show solutions'; }, 5000);
-    return;
-  }
-  wmSolArm = false; wmSolBtn.textContent = 'Show solutions';
-  wmList.classList.add('show-sol');
-});
 $('#wm-reset').addEventListener('click', () => {
   wmState = { name: wmState.name }; wmSave();
   wmGaps.forEach(g => { g.value = ''; g.classList.remove('is-right', 'is-wrong'); });
-  wmList.classList.remove('show-sol'); wmRes.textContent = ''; wmRes.className = 'wm-res';
+  wmRes.textContent = ''; wmRes.className = 'wm-res';
 });
 
 // PDF work report, one A4 page; the PDF library is the Respect site's own copy, loaded on first use
@@ -1070,7 +1053,7 @@ $('#wm-pdf').addEventListener('click', async () => {
     doc.text(san(w[4]), x, y);
     doc.setFontSize(9);
     if (hit) { doc.setTextColor(40, 110, 50); doc.text('correct', M + W, y, { align: 'right' }); }
-    else { doc.setTextColor(170, 40, 30); doc.text(val ? 'right: ' + san(w[5][0]) : 'not answered', M + W, y, { align: 'right' }); }
+    else { doc.setTextColor(170, 40, 30); doc.text(val ? 'wrong' : 'not answered', M + W, y, { align: 'right' }); }
     y += 9.6;
   });
   doc.setDrawColor(0); doc.line(M, y - 3, M + W, y - 3);
