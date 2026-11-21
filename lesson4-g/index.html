@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <script>
 /* Classroom sound limit: all audio, video (music included) and read-aloud voices play at
-   most 15 %. iPad Safari ignores media.volume, so media is routed through a Web Audio gain
+   most 5 %. iPad Safari ignores media.volume, so media is routed through a Web Audio gain
    node; the AudioContext is unlocked on the first tap. Without Web Audio, volume is clamped. */
 (() => {
-  const CAP = 0.15;
+  const CAP = 0.05;
   const AC = window.AudioContext || window.webkitAudioContext;
   let ctx = null;
   const routed = new WeakSet();
