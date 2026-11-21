@@ -117,11 +117,57 @@
     <img src="media/e-hero.jpg" alt="Drawing: Anna in the rain, her words “I am hungry today!” in quotation marks" width="1280" height="720">
   </div>
   <header class="st-head">
-    <p class="eyebrow">Phase 1 · 5 minutes</p>
-    <h1>Spot the <mark>changes</mark></h1>
+    <p class="eyebrow">Phase 1 · 10 minutes</p>
+    <h1>What is reported <mark>speech</mark>?</h1>
+    <p class="lead">First the idea, then the changes.</p>
+  </header>
+
+  <div class="sub">
+    <h2><span class="step">A</span> Passing on what someone said</h2>
+    <div class="case">
+      <p class="tag">The situation</p>
+      <p>Monday, English lesson. Your friend Mia is ill at home. Mr Hall tells the class: <b>“The test is on Friday.”</b></p>
+      <p>In the evening Mia texts you: <i>“What did Mr Hall say?”</i> You can’t send her his voice – so you pass on his words in <b>your own sentence</b>:</p>
+      <p style="font-family:var(--display);font-size:1.2rem">“He <b>said</b> the test <b>was</b> on Friday.”</p>
+      <p>That is <b>reported speech</b>: you tell somebody <b>later</b> what another person said.</p>
+    </div>
+    <div class="two">
+      <div class="card">
+        <p class="eyebrow">Direct speech · wörtliche Rede</p>
+        <p style="font-family:var(--display);font-size:1.25rem">Mr Hall: <b>“</b>The test is on Friday.<b>”</b></p>
+        <ul>
+          <li>the <b>exact words</b></li>
+          <li>always in <b>“ ”</b></li>
+          <li>like a recording</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="eyebrow">Reported speech · indirekte Rede</p>
+        <p style="font-family:var(--display);font-size:1.25rem">Mr Hall <b>said</b> (that) the test <b>was</b> on Friday.</p>
+        <ul>
+          <li>the <b>message</b>, not the recording</li>
+          <li><b>no “ ”</b></li>
+          <li>starts with <i>said / told / asked</i></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Where do we need it?</h3>
+      <ul>
+        <li>telling a friend what someone said · in a chat</li>
+        <li>news and newspaper articles: <i>The minister said …</i></li>
+        <li>reports and witness statements: <i>He told me …</i> – you will write some today</li>
+      </ul>
+      <p class="tip"><b>German does it too.</b> <i>Herr Hall sagte, der Test sei am Freitag.</i> German uses the Konjunktiv (<i>sei</i>). English doesn’t – it moves the verb <b>one step back</b> into the past: <i>is → was</i>.</p>
+    </div>
+    <div class="card"><h3>Check: did you get the idea?</h3><div id="intro-quiz" class="sub"></div></div>
+  </div>
+
+  <div class="sub">
+    <h2><span class="step">B</span> Spot the <mark>changes</mark></h2>
     <p class="lead">A school newspaper reports what people said. Compare the exact words with the article. Tap every word that has <b>changed</b>, then check.</p>
     <p class="de"><b>DE</b>Tippe alle Wörter an, die sich im Bericht verändert haben.</p>
-  </header>
+  </div>
   <div class="card" id="spot"></div>
   <nav class="st-nav"><span></span><a class="btn primary" href="#watch">Next: Watch the explainer</a></nav>
 </section>
@@ -382,6 +428,12 @@ $('#spot-check').addEventListener('click', () => {
 });
 
 /* ================= quizzes ================= */
+quiz($('#intro-quiz'), [
+  { t: 'Which sentence is <b>reported speech</b>?', o: ['Sam: “I like pizza.”', 'Sam said he liked pizza.'], a: 1, why: 'No “ ”, it starts with <i>said</i>.' },
+  { t: 'Which sentence is <b>direct speech</b>?', o: ['Lea told me she was late.', 'Lea: “I am late.”'], a: 1, why: 'The exact words in “ ”.' },
+  { t: 'When do we use reported speech?', o: ['when we pass on later what someone said', 'only when we write a letter', 'when we read out the exact words'], a: 0, why: 'We tell somebody what another person said.' },
+  { t: 'What does English use instead of the German Konjunktiv (<i>er sei</i>)?', o: ['the verb goes one step back: is → was', 'nothing changes', 'would + verb: he would be'], a: 0, why: '<i>er sei krank</i> → <i>he was ill</i>' }
+]);
 quiz($('#watch-quiz'), [
   { t: `Anna: “I <span class="vb">am</span> hungry today.”<br>Anna said she ${G} hungry that day.`, o: ['is', 'was', 'were'], a: 1, why: 'Backshift: <span class="vb">am → was</span>.' },
   { t: `Anna: “I am hungry <b>today</b>.”<br>The next day: Anna said she was hungry ${G}.`, o: ['today', 'that day', 'tomorrow'], a: 1, why: '<span class="tm">today → that day</span>' },
