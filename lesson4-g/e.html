@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-level="E">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <script>
@@ -41,163 +41,43 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Reported speech · Unit 2 Respect · Lesson 4</title>
+<title>Reported speech · Unit 2 Respect · Lesson 4 · E-Kurs</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Faustina:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="style.css">
 <style>
-/* Lesson 4 G-Kurs: reported speech. Five timed phases in a sticky bar, like Lesson 2.
-   Sherwood Island tokens (same as the Respect site). Colour code from the booklet and the video:
-   purple = person (pronoun), orange = verb (tense), grey = no change. */
-:root{
-  color-scheme:light;
-  --paper:#EFE6D2; --surface:#FBF6EA; --ink:#2F3020; --ink-soft:#6E6B58; --line:#DCD5BF;
-  --leaf:#66754D; --leaf-soft:#E6E8D3; --on-leaf:#FBF6EA; --moss:#3A4932;
-  --gold:#F2D28C; --gold-dark:#B08A57;
-  --red:#A4462F; --red-soft:#F6DED4; --green:#4E6B35; --green-soft:#DDE8CC;
-  --person:#6B4FA0; --person-soft:#ECE5F6; --verb:#C2571A; --verb-soft:#FBE3D3;
-  --display:"Fraunces",Georgia,"Times New Roman",serif;
-  --body:"Faustina",Georgia,serif;
-  --r-sm:10px; --r-md:14px; --r-lg:20px;
-  --shadow-card:0 1px 0 rgba(255,255,255,.55) inset,0 6px 16px rgba(58,73,50,.09);
-}
-*,*::before,*::after{box-sizing:border-box}
-html{font-size:clamp(16px,.5vw + 12.5px,20px)}
-body{margin:0;color:var(--ink);font-family:var(--body);line-height:1.55;
-  background:radial-gradient(1200px 520px at 78% -8%,#F7F0DF 0%,rgba(247,240,223,0) 62%),radial-gradient(900px 600px at 4% 104%,#E3E4CD 0%,rgba(227,228,205,0) 58%),var(--paper) fixed}
-p{margin:0}
-h1,h2,h3{margin:0;font-family:var(--display);font-weight:600;letter-spacing:-.015em;line-height:1.12;text-wrap:balance}
-h1{font-size:clamp(2rem,4.6vw,3.2rem)}
-h2{font-size:1.5rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-h3{font-size:1.2rem}
-mark{background:var(--gold);color:var(--ink);padding:0 .14em;border-radius:.14em}
-button{font:inherit}
-:focus-visible{outline:3px solid var(--leaf);outline-offset:2px}
-.wrap{max-width:68rem;margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left,0px))}
-/* One source, two builds: G-Kurs and E-Kurs differ only in the Watch phase */
-[data-level="G"] .e-only,[data-level="E"] .g-only{display:none!important}
-.pr{color:var(--person);font-weight:700}
-.vb{color:var(--verb);font-weight:700}
-.x{text-decoration:line-through;text-decoration-thickness:2px;color:var(--red);opacity:.85}
-.de{font-size:.9rem;color:var(--ink-soft)}
-.de b{display:inline-block;margin-right:.35rem;padding:0 .4rem;border-radius:6px;background:var(--leaf-soft);color:var(--leaf);font-size:.75rem}
-
-/* ---------- top bar ---------- */
-.bar{position:sticky;top:0;z-index:9;background:rgba(239,230,210,.94);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.bar-in{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .9rem;padding-block:.55rem}
-.phases{display:flex;gap:.2rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
-.ph{display:flex;align-items:center;gap:.4rem;padding:.3rem .7rem .3rem .3rem;border-radius:999px;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:600;font-size:.9rem;white-space:nowrap}
-.ph .n{display:grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--surface);border:2px solid var(--ink);font-size:.8rem}
-.ph:hover{background:var(--leaf-soft)}
-.ph[aria-current]{background:var(--leaf);color:var(--on-leaf)}
-.ph[aria-current] .n{background:var(--gold);border-color:var(--gold);color:var(--ink)}
-.tools{display:flex;align-items:center;gap:.6rem;margin-left:auto}
-.clock{font-family:var(--display);font-weight:700;font-size:1.4rem;line-height:1;font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right}
-.timer{display:flex;align-items:center;gap:.35rem}
-.timer.up .clock{color:var(--red)}
-.timer .i-pause{display:none}.timer.running .i-pause{display:block}.timer.running .i-play{display:none}
-@media (max-width:56rem){.ph{padding:.3rem}.ph .name{display:none}.ph[aria-current]{padding-right:.7rem}.ph[aria-current] .name{display:inline}}
-
-/* ---------- buttons ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;font-family:var(--display);font-weight:600;font-size:1rem;line-height:1.25;padding:.5rem 1.05rem;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none}
-.btn:hover{background:var(--leaf-soft)}
-.btn.primary{background:var(--leaf);border-color:var(--leaf);color:var(--on-leaf);box-shadow:0 2px 0 #4E5030}
-.btn.primary:hover{background:#4E5030;border-color:#4E5030}
-.btn.small{font-size:.88rem;padding:.32rem .8rem}
-.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--ink);box-shadow:0 2px 0 var(--gold-dark)}
-.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;padding:0;border-radius:50%;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
-.icon-btn svg{width:1rem;height:1rem}
-
-/* ---------- stages ---------- */
-main{padding-block:1.6rem 3rem}
-.stage{display:flex;flex-direction:column;gap:1.6rem}
-.st-head{display:flex;flex-direction:column;gap:.55rem;max-width:52rem}
-.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
-.lead{font-size:1.08rem;max-width:60ch}
-.step{display:inline-grid;place-items:center;min-width:1.9rem;height:1.9rem;padding-inline:.35rem;border-radius:.45rem;background:var(--leaf);color:var(--on-leaf);font-size:1rem}
-.mins{font-family:var(--body);font-weight:400;font-size:.9rem;color:var(--ink-soft)}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow-card);padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.8rem;min-width:0}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:1.1rem;align-items:start}
-.st-nav{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between;padding-top:.6rem;border-top:1px solid var(--line)}
-.tip{border-left:4px solid var(--gold-dark);background:#F8EDD2;border-radius:var(--r-sm);padding:.75rem 1rem;font-size:.95rem}
-.sub{display:flex;flex-direction:column;gap:1rem;padding-top:.4rem}
-
-/* ---------- pictures with speech bubbles ---------- */
-.pic{position:relative;container-type:inline-size;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-card);border:1px solid var(--line);background:#fff}
-.pic img{display:block;width:100%;height:auto}
-.bub{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--display);font-weight:600;line-height:1.15;color:var(--ink);font-size:2.3cqw;padding:.2em}
-.sq .bub{font-size:4.6cqw}
-.bub.sm{font-size:1.8cqw}
-.lbl{position:absolute;font-family:var(--display);font-weight:700;font-size:2.4cqw;line-height:1.25;padding:.4em .8em;border-radius:.6em;background:rgba(251,246,234,.95);border:2px solid var(--ink);box-shadow:0 3px 0 rgba(47,48,32,.25)}
-.lbl small{display:block;font-family:var(--body);font-weight:600;font-size:.75em}
-
-/* ---------- direct → reported diagram ---------- */
-.flow{display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem;align-items:center}
-.flow .tag{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
-.toks{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;font-size:1.1rem}
-.tok{padding:.25rem .6rem;border-radius:.5rem;border:2px solid var(--line);background:#fff;font-family:var(--display);font-weight:600}
-.tok.p{border-color:var(--person);background:var(--person-soft);color:var(--person)}
-.tok.v{border-color:var(--verb);background:var(--verb-soft);color:var(--verb)}
-.tok.g{border-style:dashed;color:var(--ink-soft)}
-.tok.gone{border-color:var(--red);color:var(--red);text-decoration:line-through;text-decoration-thickness:2px;background:var(--red-soft)}
-.arrows{grid-column:2;font-size:.82rem;color:var(--ink-soft);display:flex;gap:1rem;flex-wrap:wrap}
-.arrows .p{color:var(--person);font-weight:700}.arrows .v{color:var(--verb);font-weight:700}
-.recipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.6rem;list-style:none;margin:0;padding:0}
-.recipe li{border-radius:var(--r-sm);padding:.7rem .85rem;background:var(--surface);border:1px solid var(--line)}
-.recipe li b{display:block;margin:.25rem 0 .1rem;font-family:var(--display);font-size:1.02rem}
-.recipe .num{display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--ink);color:var(--paper);font-size:.8rem;font-weight:700;margin-bottom:.2rem}
-.recipe .p{background:var(--person-soft);border-color:var(--person)} .recipe .p .num{background:var(--person)}
-.recipe .v{background:var(--verb-soft);border-color:var(--verb)} .recipe .v .num{background:var(--verb)}
-table.t{border-collapse:separate;border-spacing:0;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;font-size:1.02rem}
-.t th{background:var(--moss);color:#F5EEE1;text-align:left;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;padding:.55rem .8rem}
-.t td{padding:.55rem .8rem;border-top:1px solid var(--line)}
-.t td:first-child{color:var(--ink-soft)}
-
-/* ---------- questions ---------- */
-.q{display:flex;flex-direction:column;gap:.5rem}
-.q-text{font-weight:700;font-size:1.05rem}
-.q-text .gap-line{display:inline-block;min-width:3.5em;border-bottom:2.5px solid var(--leaf);margin-inline:.2em}
-.opts{display:flex;flex-wrap:wrap;gap:.45rem}
-.opt{font:inherit;font-weight:700;text-align:left;padding:.45rem .9rem;border-radius:var(--r-sm);border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer}
-.opt:hover:not(:disabled){background:var(--leaf-soft)}
-.opt:disabled{cursor:default}
-.opt:disabled:not(.right):not(.wrong){opacity:.5}
-.opt.right{background:var(--green-soft);border-color:var(--green)}
-.opt.right::after{content:" ✓";color:var(--green)}
-.opt.wrong{background:var(--red-soft);border-color:var(--red)}
-.opt.wrong::after{content:" ✗";color:var(--red)}
-.fb{font-size:.95rem;padding:.5rem .75rem;border-radius:var(--r-sm);background:var(--leaf-soft)}
-.fb.ok{background:var(--green-soft)}.fb.no{background:var(--red-soft)}
-.fb:empty{display:none}
-
-/* ---------- typed answers ---------- */
-.write{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .5rem;font-size:1.1rem}
-.write .start{font-weight:700}
-.in{font:inherit;font-size:1.05rem;flex:1 1 14rem;min-width:0;padding:.4rem .65rem;color:var(--ink);background:var(--leaf-soft);border:0;border-bottom:2.5px solid var(--leaf);border-radius:var(--r-sm) var(--r-sm) 0 0}
-.in:focus{outline:none;box-shadow:0 0 0 3px rgba(102,117,77,.25)}
-.in.is-right{background:var(--green-soft);border-color:var(--green)}
-.in.is-wrong{background:var(--red-soft);border-color:var(--red)}
-.quote{font-family:var(--display);font-weight:600;font-size:1.05rem}
-.quote .who{color:var(--ink-soft);font-family:var(--body);font-weight:700}
-.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,19rem),1fr));gap:1.1rem}
-.pcard{padding:0;overflow:hidden;gap:0}
-.pcard .pic{border:0;border-radius:0;box-shadow:none}
-.pcard .body{padding:.9rem 1rem 1rem;display:flex;flex-direction:column;gap:.6rem}
-
-/* ---------- word master ---------- */
-.name{display:flex;flex-direction:column;gap:.3rem;max-width:22rem;font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
-.name input{font:inherit;font-size:1rem;letter-spacing:0;text-transform:none;font-weight:400;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.45rem .7rem}
-.name input.is-wrong{background:var(--red-soft);border-color:var(--red)}
-.wm{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,30rem),1fr));gap:.9rem}
-.wm li{display:flex;gap:.8rem;align-items:flex-start}
-.qn{flex:none;display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--leaf);color:var(--on-leaf);font-size:.85rem;font-weight:700;margin-top:.15rem}
-.wm .card{flex:1;padding:.9rem 1rem;gap:.5rem}
-.dock{position:sticky;bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem .8rem;padding:.75rem 1rem;border-radius:var(--r-lg);background:rgba(58,73,50,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 10px 26px rgba(58,73,50,.16)}
-.dock .btn:not(.gold){background:transparent;color:#F5EEE1;border-color:rgba(245,238,225,.55)}
-.dock .btn:not(.gold):hover{background:rgba(245,238,225,.12)}
-.dock .res{margin-left:auto;font-family:var(--display);font-weight:600;color:#F5EEE1}
-.dock .res.ok{color:#C9E3A8}.dock .res.warn{color:var(--gold)}
-video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-shadow:var(--shadow-card)}
-.hero{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card);border:1px solid var(--line)}
-.hero img{display:block;width:100%;height:auto;max-height:22rem;object-fit:cover}
+/* E-Kurs: the whole booklet, a serious real-life context (a class-chat incident) and no comic pictures.
+   Colour code as in G-Kurs: purple = person, orange = verb, green = time & place. */
+:root{--time:#2E7D5B;--time-soft:#DDEFE5}
+.tm{color:var(--time);font-weight:700}
+.tok.t{border-color:var(--time);background:var(--time-soft);color:var(--time)}
+.arrows .t{color:var(--time);font-weight:700}
+.recipe .t{background:var(--time-soft);border-color:var(--time)} .recipe .t .num{background:var(--time)}
+.banner{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--moss);color:#F5EEE1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);box-shadow:var(--shadow-card)}
+.banner .txt{padding:clamp(1.2rem,3vw,2.2rem);display:flex;flex-direction:column;gap:.7rem;justify-content:center}
+.banner .q{font-family:var(--display);font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.1}
+.banner .q span{color:var(--gold)}
+.banner img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:48rem){.banner{grid-template-columns:1fr}}
+.still{border-radius:var(--r-md);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-card);background:#fff}
+.still img{display:block;width:100%;height:auto}
+.tree{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.7rem}
+.tree .node{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:.8rem .9rem;display:flex;flex-direction:column;gap:.35rem}
+.tree .node h3{font-size:1.05rem}
+.tree .node .pat{font-family:var(--display);font-weight:600;color:var(--leaf)}
+.tree .node .ex{font-size:.95rem;border-top:1px dashed var(--line);padding-top:.4rem}
+.case{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--moss);border-radius:var(--r-md);padding:1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;max-width:56rem}
+.case .tag{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.spot{display:flex;flex-direction:column;gap:.55rem}
+.spot .direct{font-family:var(--display);font-size:1.05rem;color:var(--ink-soft)}
+.spot .words{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center}
+.wbtn{font:inherit;font-size:1.05rem;padding:.2rem .5rem;border-radius:.45rem;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.wbtn[aria-pressed="true"]{background:var(--gold);border-color:var(--gold-dark)}
+.wbtn.right{background:var(--green-soft);border-color:var(--green)}
+.wbtn.wrong{background:var(--red-soft);border-color:var(--red)}
+.wbtn.fixed{border-color:transparent;background:transparent;cursor:default;padding-inline:.15rem}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.stmt{display:flex;flex-direction:column;gap:.55rem}
+.stmt .meta{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
 </style>
 </head>
 <body>
@@ -209,7 +89,7 @@ video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-
         <li><a class="ph" href="#warm-up" data-s="warm-up"><span class="n">1</span><span class="name">Warm-up</span></a></li>
         <li><a class="ph" href="#watch" data-s="watch"><span class="n">2</span><span class="name">Watch</span></a></li>
         <li><a class="ph" href="#rules" data-s="rules"><span class="n">3</span><span class="name">The rules</span></a></li>
-        <li><a class="ph" href="#practice" data-s="practice"><span class="n">4</span><span class="name">Practice</span></a></li>
+        <li><a class="ph" href="#practice" data-s="practice"><span class="n">4</span><span class="name">The report</span></a></li>
         <li><a class="ph" href="#wordmaster" data-s="wordmaster"><span class="n">★</span><span class="name">Word Master</span></a></li>
       </ol>
     </nav>
@@ -228,39 +108,34 @@ video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-
 
 <!-- ================= 1 WARM-UP ================= -->
 <section class="stage" data-s="warm-up">
-  <div class="hero"><img src="media/cover.jpg" alt="Leo whispers a secret to Mia while Max listens" width="1600" height="893"></div>
+  <div class="banner">
+    <div class="txt">
+      <p class="eyebrow" style="color:#C9D3B8">Unit 2 Respect · Lesson 4 · E-Kurs</p>
+      <p class="q">“I am hungry today.”<br><span>→ She said she was hungry that day.</span></p>
+      <p>Every day we pass on what other people said: in a chat, at school, in a report. In English, three things change.</p>
+    </div>
+    <img src="media/e-hero.jpg" alt="Drawing: Anna in the rain, her words “I am hungry today!” in quotation marks" width="1280" height="720">
+  </div>
   <header class="st-head">
     <p class="eyebrow">Phase 1 · 5 minutes</p>
-    <h1>While you <mark>were</mark> out</h1>
-    <p class="lead">Leo was at football camp all day. His little sister Mia heard everything. In the evening she tells him. Watch the clip, then read the comic.</p>
+    <h1>Spot the <mark>changes</mark></h1>
+    <p class="lead">A school newspaper reports what people said. Compare the exact words with the article. Tap every word that has <b>changed</b>, then check.</p>
+    <p class="de"><b>DE</b>Tippe alle Wörter an, die sich im Bericht verändert haben.</p>
   </header>
-  <div class="two">
-    <div class="card">
-      <video src="media/leo-mia-clip.mp4" poster="media/leo-mia-clip.jpg" controls playsinline preload="none"></video>
-      <h3>What changes in the evening?</h3>
-      <p>Read what the people said <b>in the morning</b>. Then choose what Mia says <b>in the evening</b>.</p>
-      <div id="warm-quiz" class="sub"></div>
-      <p class="tip">We tell people later what somebody said. So the verb goes <b>one step back</b>: <span class="vb">will → would</span>, <span class="vb">am → was</span>, <span class="vb">have → had</span>.<br><span class="de"><b>DE</b>Wir erzählen später weiter, was jemand gesagt hat. Darum geht das Verb einen Schritt zurück.</span></p>
-    </div>
-    <div class="pic"><img src="media/comic.jpg" alt="Comic: in the morning people say things, in the evening Mia tells Leo" width="1100" height="1473"></div>
-  </div>
-  <nav class="st-nav"><span></span><a class="btn primary" href="#watch">Next: Watch the video</a></nav>
+  <div class="card" id="spot"></div>
+  <nav class="st-nav"><span></span><a class="btn primary" href="#watch">Next: Watch the explainer</a></nav>
 </section>
 
 <!-- ================= 2 WATCH ================= -->
 <section class="stage" data-s="watch" hidden>
   <header class="st-head">
-    <p class="eyebrow">Phase 2 · 10 minutes</p>
-    <h1 class="g-only">The night <mark>messenger</mark></h1>
-    <p class="lead g-only">An owl carries Grandma's messages to Mia. Watch carefully: which words change when the owl tells Mia?</p>
-    <p class="de g-only"><b>DE</b>Achte auf die farbigen Wörter: <span class="pr">lila = Person</span>, <span class="vb">orange = Verb</span>.</p>
-    <h1 class="e-only">How reported speech <mark>works</mark></h1>
-    <p class="lead e-only">Anna says, “I am hungry today.” What changes when somebody tells her words the next day? Watch the explainer and look for the three things that change.</p>
-    <p class="de e-only"><b>DE</b>Achte darauf, was sich ändert: die Person, die Zeit (das Verb) und Zeit- und Ortsangaben.</p>
+    <p class="eyebrow">Phase 2 · 12 minutes</p>
+    <h1>How reported speech <mark>works</mark></h1>
+    <p class="lead">Watch the explainer. Note down the three things that change and the three kinds of sentences we can report.</p>
+    <p class="de"><b>DE</b>Achte auf: Person, Zeitform, Zeit- und Ortsangaben – und auf Aussagen, Fragen und Aufforderungen.</p>
   </header>
   <div class="two">
-    <video class="g-only" src="media/night-messenger.mp4" poster="media/night-messenger.jpg" controls playsinline preload="none"></video>
-    <video class="e-only" src="media/explainer-e.mp4" poster="media/explainer-e.jpg" controls playsinline preload="none"></video>
+    <video src="media/explainer-e.mp4" poster="media/explainer-e.jpg" controls playsinline preload="none"></video>
     <div class="card"><h3>After the video</h3><div id="watch-quiz" class="sub"></div></div>
   </div>
   <nav class="st-nav"><a class="btn" href="#warm-up">Back</a><a class="btn primary" href="#rules">Next: The rules</a></nav>
@@ -269,213 +144,155 @@ video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-
 <!-- ================= 3 RULES ================= -->
 <section class="stage" data-s="rules" hidden>
   <header class="st-head">
-    <p class="eyebrow">Phase 3 · 15 minutes</p>
+    <p class="eyebrow">Phase 3 · 18 minutes</p>
     <h1>The <mark>rules</mark></h1>
-    <p class="lead">Five short rules, each with a picture. Read, look, then answer the question under each rule.</p>
+    <p class="lead">Six rules. Read each one and answer the questions underneath before you go on.</p>
   </header>
 
-  <!-- A -->
+  <!-- A recipe -->
   <div class="sub">
-    <h2><span class="step">A</span> Direct speech or reported speech?</h2>
-    <div class="two">
-      <div class="pic">
-        <img src="media/pronoun-who.jpg" alt="Morning: Mum talks to Mia. Evening: Mia tells Leo." width="1500" height="837">
-        <span class="bub" style="left:24.5%;top:5%;width:18%;height:18%">“<span class="pr">I</span>’<span class="vb">m</span> tired.”</span>
-        <span class="bub" style="left:59.5%;top:19%;width:17%;height:14%">Mum said <span class="pr">she</span> <span class="vb">was</span> tired.</span>
+    <h2><span class="step">A</span> The five-step recipe</h2>
+    <div class="card">
+      <div class="flow">
+        <span class="tag">Direct</span>
+        <div class="toks"><span>Lena:</span><span class="tok gone">“</span><span class="tok p">I</span><span class="tok v">am</span><span class="tok g">happy</span><span class="tok t">today</span><span class="tok gone">.”</span></div>
+        <span></span>
+        <div class="arrows"><span class="p">↓ person</span><span class="v">↓ tense</span><span>↓ no change</span><span class="t">↓ time</span></div>
+        <span class="tag">Reported</span>
+        <div class="toks"><span>Lena said (that)</span><span class="tok p">she</span><span class="tok v">was</span><span class="tok g">happy</span><span class="tok t">that day.</span></div>
       </div>
-      <div class="card">
-        <p><b>Direct speech</b> = the exact words, with “ ”. <b>Reported speech</b> = we tell somebody <b>later</b> what another person said. No “ ”.</p>
-        <div class="flow">
-          <span class="tag">Direct</span>
-          <div class="toks"><span>Mum:</span><span class="tok p">“I</span><span class="tok v">am</span><span class="tok g">tired.”</span></div>
-          <span></span>
-          <div class="arrows"><span class="p">↓ person</span><span class="v">↓ verb</span><span>↓ no change</span></div>
-          <span class="tag">Reported</span>
-          <div class="toks"><span>Mum said (that)</span><span class="tok p">she</span><span class="tok v">was</span><span class="tok g">tired.</span></div>
-        </div>
-        <ol class="recipe">
-          <li><span class="num">1</span><b>Take away “ ”</b>No quotation marks.</li>
-          <li><span class="num">2</span><b>said (that)</b>Start with the person + <i>said</i>.</li>
-          <li class="p"><span class="num">3</span><b>Change the person</b>I → he / she</li>
-          <li class="v"><span class="num">4</span><b>One step back</b>am → was</li>
-        </ol>
-        <p class="tip"><b>No comma before <i>that</i>!</b> Mum said that she was tired. <span class="x">Mum said, that</span><br><span class="de"><b>DE</b>Kein Konjunktiv im Englischen: <i>Sie sagte, sie sei müde</i> → <i>She said she <span class="vb">was</span> tired.</i></span></p>
-      </div>
+      <ol class="recipe">
+        <li><span class="num">1</span><b>Take away “ ”</b>No quotation marks.</li>
+        <li><span class="num">2</span><b>Choose the verb</b>said · told + person · asked</li>
+        <li class="p"><span class="num">3</span><b>Change pronouns</b>I → he / she</li>
+        <li class="v"><span class="num">4</span><b>One step back</b>am → was</li>
+        <li class="t"><span class="num">5</span><b>Time &amp; place</b>today → that day</li>
+      </ol>
+      <p class="tip"><b>English is different from German.</b> German uses the Konjunktiv: <i>Tom sagte, er spiele gern Fußball.</i> English has no Konjunktiv here: the verb goes one step back. <i>Tom said he <span class="vb">liked</span> football.</i></p>
     </div>
-    <div class="card" id="rq-a"></div>
   </div>
 
-  <!-- B -->
+  <!-- B say / tell -->
   <div class="sub">
-    <h2><span class="step">B</span> Change the <span class="pr">person</span></h2>
+    <h2><span class="step">B</span> <i>say</i> or <i>tell</i>?</h2>
     <div class="two">
-      <div class="pic">
-        <img src="media/pronoun-chart.jpg" alt="A girl pointing at herself, three friends hugging, a boy pointing at you" width="1500" height="837">
-        <span class="lbl" style="left:1.5%;top:4%"><span class="pr">I · me · my</span><small>→ he / she · him / her · his / her</small></span>
-        <span class="lbl" style="left:33%;top:79%"><span class="pr">we · us · our</span><small>→ they · them · their</small></span>
-        <span class="lbl" style="left:70%;top:4%"><span class="pr">you · your</span><small>→ I · me · my (if you mean me)</small></span>
-      </div>
+      <div class="still"><img src="media/e-saytell.jpg" alt="TOLD goes to an ear, SAID goes to a speech bubble" width="1280" height="720"></div>
       <div class="card">
-        <p>Ask yourself: <b>who is talking now – and about whom?</b></p>
         <table class="t">
-          <thead><tr><th>Direct speech</th><th>Reported speech</th></tr></thead>
+          <thead><tr><th>Verb</th><th>Pattern</th></tr></thead>
           <tbody>
-            <tr><td>Tom: “<span class="pr">I</span> love <span class="pr">my</span> dog.”</td><td>Tom said <span class="pr">he</span> <span class="vb">loved</span> <span class="pr">his</span> dog.</td></tr>
-            <tr><td>Lisa: “<span class="pr">We</span> are late.”</td><td>Lisa said <span class="pr">they</span> <span class="vb">were</span> late.</td></tr>
-            <tr><td>Max (to me): “<span class="pr">You</span> are funny.”</td><td>Max said <span class="pr">I</span> <span class="vb">was</span> funny.</td></tr>
+            <tr><td><b>said</b></td><td>said (that) + sentence<br><i>Tom said (that) he was tired.</i></td></tr>
+            <tr><td><b>told</b></td><td>told + <b>person</b> + (that) + sentence<br><i>Tom told <b>me</b> (that) he was tired.</i></td></tr>
           </tbody>
         </table>
-        <p class="de"><b>DE</b>Wer spricht jetzt? Aus <i>ich</i> wird <i>er/sie</i>, aus <i>wir</i> wird <i>sie</i>.</p>
+        <p><b>told</b> always needs a listener: told me, told us, told his mum. <b>said</b> never has a person after it: <span class="x">She said me …</span></p>
+        <p class="tip"><b>No comma before <i>that</i>.</b> German: <i>Sie sagte, dass …</i> – English: <i>She said that …</i></p>
       </div>
     </div>
     <div class="card" id="rq-b"></div>
   </div>
 
-  <!-- C -->
+  <!-- C backshift -->
   <div class="sub">
-    <h2><span class="step">C</span> One step <span class="vb">back</span></h2>
-    <div class="two">
-      <div class="pic">
-        <img src="media/step-back.jpg" alt="A happy arrow walks one step back on wooden stairs" width="1500" height="837">
-        <span class="lbl" style="left:3%;top:6%">LATER · past<small><span class="vb">was · liked · played</span></small></span>
-        <span class="lbl" style="left:64%;top:12%">NOW · present<small><span class="vb">am · like · play</span></small></span>
-      </div>
-      <div class="card">
-        <p>The person said the words <b>before</b>. So when we report them, the verb goes <b>one step back into the past</b>.</p>
-        <table class="t">
-          <thead><tr><th>Now</th><th>One step back</th></tr></thead>
-          <tbody>
-            <tr><td>am · is</td><td class="vb">was</td></tr>
-            <tr><td>are</td><td class="vb">were</td></tr>
-            <tr><td>like · play · love</td><td class="vb">liked · played · loved</td></tr>
-            <tr><td>have · go · eat</td><td class="vb">had · went · ate</td></tr>
-          </tbody>
-        </table>
-        <p class="de"><b>DE</b>Das ist die wichtigste Regel: Das Verb geht einen Schritt zurück.</p>
+    <h2><span class="step">C</span> Tenses: one step back</h2>
+    <div class="card">
+      <table class="t">
+        <thead><tr><th>Direct speech</th><th>Reported speech</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>present simple: “I <span class="vb">like</span> pizza.”</td><td class="vb">past simple</td><td>He said he <span class="vb">liked</span> pizza.</td></tr>
+          <tr><td>present progressive: “I <span class="vb">am watching</span> TV.”</td><td class="vb">past progressive</td><td>She said she <span class="vb">was watching</span> TV.</td></tr>
+          <tr><td>past simple: “I <span class="vb">saw</span> a film.”</td><td class="vb">past perfect</td><td>He said he <span class="vb">had seen</span> a film.</td></tr>
+          <tr><td>present perfect: “I <span class="vb">have finished</span>.”</td><td class="vb">past perfect</td><td>She said she <span class="vb">had finished</span>.</td></tr>
+          <tr><td>will: “I <span class="vb">will</span> help you.”</td><td class="vb">would</td><td>He said he <span class="vb">would</span> help me.</td></tr>
+          <tr><td>can: “I <span class="vb">can</span> swim.”</td><td class="vb">could</td><td>She said she <span class="vb">could</span> swim.</td></tr>
+          <tr><td>must / have to: “I <span class="vb">must</span> go.”</td><td class="vb">had to</td><td>He said he <span class="vb">had to</span> go.</td></tr>
+          <tr><td>going to: “We <span class="vb">are going to</span> win.”</td><td class="vb">was / were going to</td><td>They said they <span class="vb">were going to</span> win.</td></tr>
+        </tbody>
+      </table>
+      <div class="two">
+        <p class="tip"><b>Past perfect</b> = had + 3rd form (had seen, had gone). In everyday English the past simple is OK too: <i>He said he saw a film.</i></p>
+        <p class="tip"><b>No change</b> when you report right now (<i>Mum says dinner is ready.</i>) or when it is still true (<i>He said the Earth goes around the sun.</i>).</p>
       </div>
     </div>
+    <div class="card" id="rq-c"></div>
   </div>
 
-  <!-- D -->
+  <!-- D time & place -->
   <div class="sub">
-    <h2><span class="step">D</span> Simple present → <span class="vb">simple past</span></h2>
+    <h2><span class="step">D</span> <span class="tm">Time and place</span> words</h2>
     <div class="two">
-      <div class="pic">
-        <img src="media/rule-simple.jpg" alt="Max on the phone in the park, later Mia tells Leo" width="1500" height="837">
-        <span class="bub" style="left:3.5%;top:6%;width:16%;height:19%">“<span class="pr">I</span> <span class="vb">play</span> football every day.”</span>
-        <span class="bub" style="left:60%;top:6%;width:18.5%;height:20%">Max said <span class="pr">he</span> <span class="vb">played</span> football every day.</span>
-      </div>
+      <div class="still"><img src="media/e-time.jpg" alt="Timeline: Monday direct speech, Tuesday reported speech" width="1280" height="720"></div>
       <div class="card">
-        <div class="flow">
-          <span class="tag">Direct</span>
-          <div class="toks"><span>Max:</span><span class="tok p">“I</span><span class="tok v">play</span><span class="tok g">football every day.”</span></div>
-          <span class="tag">Reported</span>
-          <div class="toks"><span>Max said</span><span class="tok p">he</span><span class="tok v">played</span><span class="tok g">football every day.</span></div>
-        </div>
-        <p>Simple present (<i>play, likes, have</i>) → simple past (<i>played, liked, had</i>).</p>
-        <p class="tip">Careful with <b>he / she / it</b>: “Ben <span class="vb">likes</span> pizza.” → She said Ben <span class="vb">liked</span> pizza. The <b>-s</b> goes away.</p>
+        <table class="t">
+          <thead><tr><th>Direct</th><th>Reported</th><th>Direct</th><th>Reported</th></tr></thead>
+          <tbody>
+            <tr><td>now</td><td class="tm">then</td><td>tomorrow</td><td class="tm">the next day</td></tr>
+            <tr><td>today</td><td class="tm">that day</td><td>last week</td><td class="tm">the week before</td></tr>
+            <tr><td>tonight</td><td class="tm">that night</td><td>next week</td><td class="tm">the following week</td></tr>
+            <tr><td>yesterday</td><td class="tm">the day before</td><td>two days ago</td><td class="tm">two days before</td></tr>
+            <tr><td>here</td><td class="tm">there</td><td>this / these</td><td class="tm">that / those</td></tr>
+          </tbody>
+        </table>
+        <p>Change them only when the time or place is really different. On the same day, <i>today</i> stays <i>today</i>.</p>
       </div>
     </div>
     <div class="card" id="rq-d"></div>
   </div>
 
-  <!-- E -->
+  <!-- E questions & commands -->
   <div class="sub">
-    <h2><span class="step">E</span> Present progressive → <span class="vb">past progressive</span></h2>
+    <h2><span class="step">E</span> Questions and commands</h2>
     <div class="two">
-      <div class="pic">
-        <img src="media/rule-progressive.jpg" alt="Mum is cooking, later Mia tells Leo at the door" width="1500" height="837">
-        <span class="bub" style="left:3%;top:7%;width:20%;height:20%">“<span class="pr">I</span>’<span class="vb">m cooking</span> dinner.”</span>
-        <span class="bub sm" style="left:70.5%;top:32%;width:11%;height:15%">Mum said <span class="pr">she</span> <span class="vb">was cooking</span> dinner.</span>
-        <span class="bub" style="left:72.5%;top:67%;width:10%;height:13%">Yum!</span>
+      <div class="still"><img src="media/e-structure.jpg" alt="Statement, question, command: the reported speech structure" width="1280" height="720"></div>
+      <div class="tree">
+        <div class="node"><h3>Statement</h3><p class="de" style="font-style:italic">“I’m tired.”</p><p class="pat">said (that) …<br>told me (that) …</p><p class="ex">She said she <span class="vb">was</span> tired.</p></div>
+        <div class="node"><h3>Yes/no question</h3><p class="de" style="font-style:italic">“Are you OK?”</p><p class="pat">asked (me) if …</p><p class="ex">She asked me if I <span class="vb">was</span> OK.</p></div>
+        <div class="node"><h3>Wh-question</h3><p class="de" style="font-style:italic">“Where do you live?”</p><p class="pat">asked (me) where / what / who / when …</p><p class="ex">She asked me where I <span class="vb">lived</span>.</p></div>
+        <div class="node"><h3>Command</h3><p class="de" style="font-style:italic">“Sit down!” · “Don’t shout!”</p><p class="pat">told me to … / told me not to …</p><p class="ex">He told us to sit down.</p></div>
       </div>
-      <div class="card">
-        <p>Something <b>was happening</b> at that moment, like a photo of the action.</p>
-        <div class="flow">
-          <span class="tag">Direct</span>
-          <div class="toks"><span>Mum:</span><span class="tok p">“I</span><span class="tok v">am cooking</span><span class="tok g">dinner.”</span></div>
-          <span class="tag">Reported</span>
-          <div class="toks"><span>Mum said</span><span class="tok p">she</span><span class="tok v">was cooking</span><span class="tok g">dinner.</span></div>
-        </div>
-        <table class="t">
-          <thead><tr><th>Now</th><th>One step back</th></tr></thead>
-          <tbody>
-            <tr><td>I am · he/she is + -ing</td><td class="vb">was + -ing</td></tr>
-            <tr><td>we/you/they are + -ing</td><td class="vb">were + -ing</td></tr>
-          </tbody>
-        </table>
-      </div>
+    </div>
+    <div class="card">
+      <p><b>Reported questions are not real questions:</b> normal word order (<i>where I lived</i>, <span class="x">where did I live</span>), no <i>do / does / did</i>, no “?”.</p>
+      <p><b>Requests:</b> “Please help me.” → She asked me <b>to help</b> her.</p>
+      <p class="de"><b>DE</b><i>Er sagte mir, ich solle das Fenster öffnen.</i> → He told me <b>to open</b> the window.</p>
     </div>
     <div class="card" id="rq-e"></div>
   </div>
 
-  <!-- F -->
+  <!-- F mistakes -->
   <div class="sub">
-    <h2><span class="step">F</span> Questions: “Do you …?” → <span class="vb">asked if</span></h2>
-    <div class="two">
-      <div class="pic">
-        <img src="media/rule-question.jpg" alt="Grandma asks on a video call, later Mia tells Leo" width="1500" height="837">
-        <span class="bub sm" style="left:27%;top:8%;width:17.5%;height:14%">“Do <span class="pr">you</span> <span class="vb">like</span> strawberries?”</span>
-        <span class="bub sm" style="left:61%;top:7%;width:16.5%;height:17%">Grandma asked if <span class="pr">you</span> <span class="vb">liked</span> strawberries.</span>
-      </div>
-      <div class="card">
-        <div class="flow">
-          <span class="tag">Direct</span>
-          <div class="toks"><span>Grandma:</span><span class="tok gone">“Do</span><span class="tok p">you</span><span class="tok v">like</span><span class="tok g">strawberries</span><span class="tok gone">?”</span></div>
-          <span class="tag">Reported</span>
-          <div class="toks"><span>Grandma asked</span><span class="tok">if</span><span class="tok p">you</span><span class="tok v">liked</span><span class="tok g">strawberries.</span></div>
-        </div>
-        <ol class="recipe">
-          <li><span class="num">1</span><b>asked (me) if</b>not <i>said</i></li>
-          <li><span class="num">2</span><b>No <span class="x">do</span> / <span class="x">does</span></b>and no “?”</li>
-          <li class="p"><span class="num">3</span><b>Change the person</b>you → I / he / she …</li>
-          <li class="v"><span class="num">4</span><b>One step back</b>like → liked</li>
-        </ol>
-        <p>Also: “<b>Are</b> you OK?” → She asked me <b>if</b> I <span class="vb">was</span> OK.</p>
-        <p class="de"><b>DE</b>„if“ heißt hier „ob“: <i>Sie fragte, ob ich Erdbeeren mag.</i></p>
-      </div>
-    </div>
+    <h2><span class="step">F</span> Watch out! Typical mistakes of German speakers</h2>
     <div class="card" id="rq-f"></div>
   </div>
 
-  <nav class="st-nav"><a class="btn" href="#watch">Back</a><a class="btn primary" href="#practice">Next: Practice</a></nav>
+  <nav class="st-nav"><a class="btn" href="#watch">Back</a><a class="btn primary" href="#practice">Next: The report</a></nav>
 </section>
 
-<!-- ================= 4 PRACTICE ================= -->
+<!-- ================= 4 THE REPORT ================= -->
 <section class="stage" data-s="practice" hidden>
   <header class="st-head">
     <p class="eyebrow">Phase 4 · 20 minutes</p>
-    <h1>Your <mark>turn</mark></h1>
-    <p class="lead">Read what each person says. Write it in reported speech and tap <b>Check</b>. If something is wrong, you get a tip.</p>
-    <p class="de"><b>DE</b>Denk an die 4 Schritte: „ “ weg · said / asked if · Person ändern · Verb einen Schritt zurück.</p>
+    <h1>The <mark>report</mark></h1>
   </header>
-
+  <div class="case">
+    <p class="tag">The case</p>
+    <p>On <b>Monday</b>, somebody shared an embarrassing photo of Jonas (15) in the class chat. Many students laughed and forwarded it. On <b>Wednesday</b>, the class teacher, Ms Becker, talked to the class.</p>
+    <p>Today is <b>Friday</b>. You write a report for the school’s anti-bullying team. Write what each person said on Wednesday in <b>reported speech</b>.</p>
+    <p class="de"><b>DE</b>Du schreibst am Freitag einen Bericht. Denk an Person, Zeitform und Zeitangaben.</p>
+  </div>
   <div class="sub">
-    <h2><span class="step">A</span> What did they say? <span class="mins">10 min</span></h2>
+    <h2><span class="step">A</span> The statements <span class="mins">12 min</span></h2>
     <div class="grid3" id="pr-a"></div>
   </div>
-
   <div class="sub">
-    <h2><span class="step">B</span> The picnic <span class="mins">5 min</span></h2>
-    <p>Everybody is talking at the picnic. The next day Leo tells Grandma. Choose the right sentence.</p>
-    <div class="two">
-      <div class="pic">
-        <img src="media/picnic.jpg" alt="Picnic: Leo, Max, Mum and Mia are talking" width="1500" height="837">
-        <span class="bub" style="left:7%;top:5%;width:10.5%;height:16%">“We are hungry!”</span>
-        <span class="bub" style="left:24.5%;top:5%;width:17.5%;height:15%">“I love sandwiches.”</span>
-        <span class="bub sm" style="left:47.5%;top:5%;width:15%;height:15%">“Do you want some juice, Mia?”</span>
-        <span class="bub" style="left:74%;top:11%;width:16%;height:17%">“The sun is shining!”</span>
-      </div>
-      <div class="card" id="pr-b"></div>
-    </div>
+    <h2><span class="step">B</span> said, told or asked? <span class="mins">4 min</span></h2>
+    <div class="card" id="pr-b"></div>
   </div>
-
   <div class="sub">
-    <h2><span class="step">C</span> Find the right sentence <span class="mins">5 min</span></h2>
-    <p>Typical mistakes! One sentence is right, one is wrong. Tap the right one.</p>
+    <h2><span class="step">C</span> Correct the report <span class="mins">4 min</span></h2>
+    <p>A classmate wrote these sentences. Which version is right?</p>
     <div class="card" id="pr-c"></div>
   </div>
-
   <nav class="st-nav"><a class="btn" href="#rules">Back</a><a class="btn primary" href="#wordmaster">Next: Word Master</a></nav>
 </section>
 
@@ -487,7 +304,7 @@ video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-
     <p class="lead">Write the twelve sentences in reported speech. Tap <b>Check all</b>, then save the PDF and send it to your teacher.</p>
     <p class="de"><b>DE</b>Schreib die Sätze in der indirekten Rede. Dann „Check all“ und als PDF speichern.</p>
   </header>
-  <label class="name"><span>Your name</span><input type="text" id="wm-name" placeholder="first name + class" autocomplete="off" autocapitalize="words" spellcheck="false"></label>
+  <label class="namefield"><span>Your name</span><input type="text" id="wm-name" placeholder="first name + class" autocomplete="off" autocapitalize="words" spellcheck="false"></label>
   <ol class="wm" id="wm-list"></ol>
   <div class="dock">
     <button type="button" class="btn gold" id="wm-check">Check all</button>
@@ -516,106 +333,130 @@ video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-const LEVEL = document.documentElement.dataset.level === 'E' ? 'E' : 'G';
-const KEY = 'rs4-' + LEVEL.toLowerCase();
+const KEY = 'rs4-e';
 let S = {};
 try { S = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
-// Bubbles hold mixed inline text: wrap it in one span so it flows as one centred line box
-const wrapBubbles = root => $$('.bub', root).forEach(b => { if (b.children.length === 1 && b.firstChild === b.firstElementChild && b.firstElementChild.dataset.w) return; const w = document.createElement('span'); w.dataset.w = '1'; w.append(...b.childNodes); b.append(w); });
-wrapBubbles(document);
-
-/* ================= multiple choice ================= */
-// q: { t: question html, o: [options], a: index of the right one, why: shown after answering }
+/* ================= multiple choice: wrong taps only turn red, never reveal ================= */
 function quiz(root, qs) {
   root.innerHTML = qs.map((q, i) => `<div class="q"><p class="q-text">${i + 1}. ${q.t}</p><div class="opts">${q.o.map((o, j) => `<button type="button" class="opt" data-q="${i}" data-o="${j}">${o}</button>`).join('')}</div><p class="fb" data-fb="${i}"></p></div>`).join('');
   root.addEventListener('click', e => {
     const b = e.target.closest('.opt'); if (!b || b.disabled) return;
-    const i = +b.dataset.q, j = +b.dataset.o, q = qs[i], ok = j === q.a;
+    const i = +b.dataset.q, q = qs[i], ok = +b.dataset.o === q.a, fb = $(`[data-fb="${i}"]`, root);
     b.classList.add(ok ? 'right' : 'wrong');
-    const fb = $(`[data-fb="${i}"]`, root);
-    if (ok) {
-      $$(`.opt[data-q="${i}"]`, root).forEach(x => { x.disabled = true; });
-      fb.className = 'fb ok'; fb.innerHTML = 'Right! ' + (q.why || '');
-    } else {
-      b.disabled = true;
-      fb.className = 'fb no'; fb.innerHTML = 'Not quite – try again.' + (q.hint ? ' ' + q.hint : '');
-    }
+    if (ok) { $$(`.opt[data-q="${i}"]`, root).forEach(x => { x.disabled = true; }); fb.className = 'fb ok'; fb.innerHTML = 'Right! ' + (q.why || ''); }
+    else { b.disabled = true; fb.className = 'fb no'; fb.innerHTML = 'Not quite – try again.' + (q.hint ? ' ' + q.hint : ''); }
   });
 }
 const G = '<span class="gap-line"></span>';
 
-quiz($('#warm-quiz'), [
-  { t: `Weatherman: “It <span class="vb">will</span> be sunny all day!”<br>Mia: “The weatherman said it ${G} be sunny all day.”`, o: ['will', 'would', 'was'], a: 1, why: '<span class="vb">will → would</span>' },
-  { t: `Max: “I<span class="vb">’m</span> waiting for Leo at the park!”<br>Mia: “Max said he ${G} waiting for you at the park.”`, o: ['am', 'is', 'was'], a: 2, why: '<span class="vb">am → was</span>' },
-  { t: `Mum: “I <span class="vb">have</span> a secret surprise for Leo!”<br>Mia: “Mum said she ${G} a secret surprise for you.”`, o: ['has', 'had', 'have'], a: 1, why: '<span class="vb">have → had</span>' }
-]);
-quiz($('#watch-quiz'), LEVEL === 'E' ? [
+/* ================= warm-up: tap the changed words ================= */
+// w: the article sentence as tokens; c: indexes of tokens that changed
+const SPOT = [
+  { who: 'Mia (16)', say: 'I am tired of the mean comments.', w: ['Mia', 'said', 'she', 'was', 'tired', 'of', 'the', 'mean', 'comments.'], fixed: [0, 1], c: [2, 3] },
+  { who: 'The coach', say: 'We will play again tomorrow.', w: ['The coach', 'said', 'they', 'would', 'play', 'again', 'the next day.'], fixed: [0, 1], c: [2, 3, 6] },
+  { who: 'Ali', say: 'Where is my phone?', w: ['Ali', 'asked', 'where', 'his', 'phone', 'was.'], fixed: [0], c: [1, 3, 5] },
+  { who: 'Ms Becker', say: 'Don’t forward private photos!', w: ['Ms Becker', 'told', 'the class', 'not', 'to', 'forward', 'private', 'photos.'], fixed: [0], c: [1, 2, 3, 4] }
+];
+const spot = $('#spot');
+spot.innerHTML = SPOT.map((s, i) => `<div class="spot" data-i="${i}"><p class="direct">${esc(s.who)}: “${esc(s.say)}”</p><div class="words">${s.w.map((w, j) => s.fixed.includes(j) ? `<span class="wbtn fixed">${esc(w)}</span>` : `<button type="button" class="wbtn" data-j="${j}" aria-pressed="false">${esc(w)}</button>`).join('')}</div></div>`).join('<hr style="border:0;border-top:1px solid var(--line);width:100%">') +
+  '<div class="row"><button type="button" class="btn primary" id="spot-check">Check</button><p class="fb" id="spot-fb"></p></div>';
+spot.addEventListener('click', e => {
+  const b = e.target.closest('.wbtn[data-j]'); if (!b) return;
+  b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true')); b.classList.remove('right', 'wrong');
+});
+$('#spot-check').addEventListener('click', () => {
+  let found = 0, total = 0, extra = 0;
+  $$('.spot', spot).forEach(box => {
+    const s = SPOT[+box.dataset.i]; total += s.c.length;
+    $$('.wbtn[data-j]', box).forEach(b => {
+      const on = b.getAttribute('aria-pressed') === 'true', ch = s.c.includes(+b.dataset.j);
+      b.classList.toggle('right', on && ch); b.classList.toggle('wrong', on && !ch);
+      if (on && ch) found++; if (on && !ch) extra++;
+    });
+  });
+  const fb = $('#spot-fb');
+  fb.className = 'fb ' + (found === total && !extra ? 'ok' : 'no');
+  fb.textContent = found === total && !extra ? `All ${total} changes found. Well done!` : `${found} of ${total} changes found` + (extra ? `, ${extra} marked word${extra > 1 ? 's' : ''} did not change.` : '. Look again.');
+});
+
+/* ================= quizzes ================= */
+quiz($('#watch-quiz'), [
   { t: `Anna: “I <span class="vb">am</span> hungry today.”<br>Anna said she ${G} hungry that day.`, o: ['is', 'was', 'were'], a: 1, why: 'Backshift: <span class="vb">am → was</span>.' },
-  { t: `Anna: “I am hungry <b>today</b>.”<br>The next day: Anna said she was hungry ${G}.`, o: ['today', 'that day', 'tomorrow'], a: 1, why: 'Time words change too: <b>today → that day</b>.' },
-  { t: 'What comes after <b>told</b>?', o: ['a person: told <b>me</b>, told <b>us</b>', 'nothing: told that …', 'a comma: told, …'], a: 0, why: '<b>tell</b> always needs a person. <b>say</b> doesn’t.' },
-  { t: `“Where do you live?”<br>He asked me where ${G}.`, o: ['did I live', 'I lived', 'do you live'], a: 1, why: 'Reported questions have normal word order and no <i>do / did</i>.' },
-  { t: 'Which kinds of sentences can we report?', o: ['only statements', 'statements, questions and commands', 'only questions'], a: 1, why: 'Statement → <b>said</b>, question → <b>asked</b>, command → <b>told … to</b>.' }
-] : [
-  { t: 'Who carries Grandma’s messages to Mia?', o: ['a cat', 'an owl', 'Mia’s brother'], a: 1, why: 'The owl is the night messenger.' },
-  { t: `Grandma: “<span class="pr">I</span> am baking a cake for you!”<br>Owl: “Grandma said ${G} was baking a cake for you.”`, o: ['I', 'she', 'you'], a: 1, why: '<span class="pr">I → she</span>: the owl talks about Grandma.' },
-  { t: `Owl: “Grandma said she ${G} baking a cake for you.”`, o: ['is', 'am', 'was'], a: 2, why: '<span class="vb">am baking → was baking</span>' },
-  { t: `Grandma: “Do you like strawberries?”<br>Owl: “Grandma asked ${G} you liked strawberries.”`, o: ['do', 'if', 'that'], a: 1, why: 'Questions: <b>asked if</b>, no <i>do</i>.' }
-]);
-quiz($('#rq-a'), [
-  { t: 'Which sentence is <b>reported speech</b>?', o: ['Mum: “I am tired.”', 'Mum said she was tired.', 'Mum said: “I am tired.”'], a: 1, why: 'No “ ”, <span class="pr">she</span>, <span class="vb">was</span>.', hint: 'Reported speech has no “ ”.' }
+  { t: `Anna: “I am hungry <b>today</b>.”<br>The next day: Anna said she was hungry ${G}.`, o: ['today', 'that day', 'tomorrow'], a: 1, why: '<span class="tm">today → that day</span>' },
+  { t: 'What comes after <b>told</b>?', o: ['a person: told <b>me</b>, told <b>us</b>', 'nothing: told that …', 'a comma: told, …'], a: 0, why: '<b>tell</b> always needs a listener. <b>say</b> doesn’t.' },
+  { t: `“Where do you live?”<br>He asked me where ${G}.`, o: ['did I live', 'I lived', 'do you live'], a: 1, why: 'Normal word order, no <i>do / did</i>.' },
+  { t: 'Which kinds of sentences can we report?', o: ['only statements', 'statements, questions and commands', 'only questions'], a: 1, why: 'said · asked · told … to' }
 ]);
 quiz($('#rq-b'), [
-  { t: `Mia: “<span class="pr">I</span> love <span class="pr">my</span> cat.”<br>Mia said ${G} loved ${G} cat.`, o: ['I … my', 'she … her', 'he … his'], a: 1, why: 'Mia is a girl: <span class="pr">I → she, my → her</span>.', hint: 'Who is Mia? A girl or a boy?' },
-  { t: `Leo and Max: “<span class="pr">We</span> are late.”<br>Mia said ${G} were late.`, o: ['we', 'they', 'he'], a: 1, why: '<span class="pr">we → they</span>' }
+  { t: `She ${G} me the answer.`, o: ['said', 'told'], a: 1, why: 'told + person' },
+  { t: `He ${G} that he was ill.`, o: ['said', 'told'], a: 0, why: 'No person after the verb → said.' },
+  { t: `Our teacher ${G} us that the test was easy.`, o: ['said', 'told'], a: 1, why: 'told + <b>us</b>' }
+]);
+quiz($('#rq-c'), [
+  { t: `Noah: “I <span class="vb">have lost</span> my key.”<br>Noah said he ${G} his key.`, o: ['has lost', 'had lost', 'have lost'], a: 1, why: 'present perfect → <span class="vb">past perfect</span>' },
+  { t: `Sara: “I <span class="vb">can</span> come.”<br>Sara said she ${G} come.`, o: ['can', 'could', 'would'], a: 1, why: '<span class="vb">can → could</span>' },
+  { t: `Tom: “I <span class="vb">will</span> text you.”<br>Tom said he ${G} text me.`, o: ['will', 'would', 'was'], a: 1, why: '<span class="vb">will → would</span>' },
+  { t: `Mum: “You <span class="vb">must</span> be home at ten.”<br>Mum said I ${G} be home at ten.`, o: ['must', 'had to', 'have to'], a: 1, why: '<span class="vb">must → had to</span>' }
 ]);
 quiz($('#rq-d'), [
-  { t: `Ben: “I <span class="vb">love</span> pizza.”<br>Ben said he ${G} pizza.`, o: ['love', 'loves', 'loved'], a: 2, why: '<span class="vb">love → loved</span>', hint: 'One step back into the past.' },
-  { t: `Anna: “My brother <span class="vb">plays</span> tennis.”<br>Anna said her brother ${G} tennis.`, o: ['played', 'plays', 'playes'], a: 0, why: '<span class="vb">plays → played</span>' }
+  { t: `On Friday Max said: “I’ll see you <b>tomorrow</b>.”<br>On Monday: Max said he would see me ${G}.`, o: ['tomorrow', 'the next day', 'the day before'], a: 1, why: '<span class="tm">tomorrow → the next day</span>' },
+  { t: `Ella: “I was <b>here</b> <b>yesterday</b>.”<br>Ella said she had been ${G}.`, o: ['here yesterday', 'there the day before', 'there yesterday'], a: 1, why: '<span class="tm">here → there, yesterday → the day before</span>' },
+  { t: `In the morning Paul says: “I’m tired <b>today</b>.” At lunch (same day) you report:`, o: ['Paul said he was tired that day.', 'Paul said he was tired today.'], a: 1, why: 'Same day → <i>today</i> stays.' }
 ]);
 quiz($('#rq-e'), [
-  { t: `Sara: “We <span class="vb">are watching</span> a film.”<br>Sara said they ${G} a film.`, o: ['are watching', 'were watching', 'was watch'], a: 1, why: '<span class="vb">are watching → were watching</span>', hint: 'they → were + -ing' },
-  { t: `Tom: “I<span class="vb">’m doing</span> my homework.”<br>Tom said he ${G} his homework.`, o: ['was doing', 'is doing', 'did doing'], a: 0, why: '<span class="vb">am doing → was doing</span>' }
+  { t: '“Where do you live?” → She asked me …', o: ['… where did I live.', '… where I lived.', '… where do I live?'], a: 1, why: 'normal word order' },
+  { t: '“Is the shop open?” → He asked …', o: ['… if the shop was open.', '… was the shop open.', '… if was the shop open.'], a: 0, why: '<b>if</b> + normal word order' },
+  { t: '“Sit down!” → The teacher told us …', o: ['… sit down.', '… to sit down.', '… that sit down.'], a: 1, why: 'told + person + <b>to</b>' },
+  { t: '“Don’t touch it!” → She told me …', o: ['… not to touch it.', '… don’t touch it.', '… to not touching it.'], a: 0, why: 'told me <b>not to</b> …' }
 ]);
 quiz($('#rq-f'), [
-  { t: 'Lily: “Do you play football?”<br>Lily asked me …', o: ['… if I played football.', '… if do I play football?', '… do you play football.'], a: 0, why: '<b>asked if</b> · no <i>do</i> · <span class="pr">you → I</span> · <span class="vb">play → played</span>', hint: 'No do, no ?.' },
-  { t: 'Max: “Are you OK?”<br>Max asked me …', o: ['… if I am OK.', '… if I was OK.', '… are you OK.'], a: 1, why: '<span class="vb">are → was</span>' }
+  { t: 'Which one is right?', o: ['She said me the answer.', 'She told me the answer.'], a: 1, why: 'tell + person' },
+  { t: 'Which one is right?', o: ['He told that he was ill.', 'He told me that he was ill.'], a: 1, why: 'tell needs a person' },
+  { t: 'Which one is right?', o: ['He said, that he was ill.', 'He said that he was ill.'], a: 1, why: 'no comma before <i>that</i>' },
+  { t: 'Which one is right?', o: ['He said he would be hungry.', 'He said he was hungry.'], a: 1, why: 'Konjunktiv <i>er sei</i> → <i>he was</i>' },
+  { t: 'Which one is right?', o: ['She asked where I lived.', 'She asked where did I live.'], a: 0, why: 'normal word order' },
+  { t: 'Which one is right?', o: ['He told me open the door.', 'He told me to open the door.'], a: 1, why: 'tell + person + <b>to</b>' }
 ]);
 
 /* ================= typed answers ================= */
-// Lowercase, no end punctuation, straight apostrophes; "said that" = "said"; "whether" = "if"
-const norm = v => String(v || '').toLowerCase().replace(/[’`]/g, "'").replace(/[.!?;:,]+\s*$/, '').replace(/\s+/g, ' ').trim()
-  .replace(/^that /, '').replace(/^whether /, 'if ');
+const norm = v => String(v || '').toLowerCase().replace(/[’`]/g, "'").replace(/[.!;:,]+\s*$/, '').replace(/\s+/g, ' ').trim()
+  .replace(/^that /, '').replace(/^whether /, 'if ').replace(/\bthe following day\b/g, 'the next day').replace(/\bcould not\b/g, "couldn't").replace(/\bdid not\b/g, "didn't");
 const words = v => ' ' + norm(v).replace(/[^a-z' ]/g, ' ').replace(/\s+/g, ' ') + ' ';
-// Tips (never the answer): which part still needs work
-function tip(item, val) {
+const has = (w, list) => list.some(x => w.includes(' ' + x + ' '));
+// Tips never give the answer, they only say which part needs work
+function tip(it, val) {
   const raw = String(val || ''), w = words(raw);
   if (!norm(raw)) return 'Write the sentence first.';
-  if (/["“”„]/.test(raw)) return 'Take away the “ ” – reported speech has no quotation marks.';
+  if (/["“”„]/.test(raw)) return 'Take away the “ ”.';
   if (raw.includes('?')) return 'No “?” in reported speech.';
-  if (item.q && !w.startsWith(' if ')) return 'Questions start with <b>if</b>: … asked me <b>if</b> …';
-  if (item.q && / (do|does) /.test(w)) return 'No <b>do / does</b> in reported questions.';
-  if (!item.p.every(p => w.includes(' ' + p + ' '))) return 'Check the <span class="pr">person</span>: who is talking now?';
-  if (!w.includes(' ' + item.v + ' ')) return 'Check the <span class="vb">verb</span>: one step back!';
+  if (it.k === 'yn' && !w.startsWith(' if ')) return 'Yes/no questions: … asked <b>if</b> …';
+  if ((it.k === 'yn' || it.k === 'wh') && / (do|does|did) /.test(w) && !has(w, it.v)) return 'No <b>do / does / did</b> in reported questions.';
+  if (it.k === 'cmd' && !w.startsWith(' to ')) return 'Commands: told … <b>to</b> …';
+  if (it.k === 'neg' && !w.startsWith(' not to ')) return 'Negative commands: told … <b>not to</b> …';
+  if (it.k === 'req' && !w.startsWith(' to ') && !w.startsWith(' if ')) return 'Requests: asked … <b>to</b> …';
+  if (it.p && !it.p.every(p => w.includes(' ' + p + ' '))) return 'Check the <span class="pr">pronouns</span>: who is talking now, and about whom?';
+  if (it.v && !has(w, it.v)) return 'Check the <span class="vb">verb</span>: one step back!';
+  if (it.t && !has(w, it.t)) return 'Check the <span class="tm">time / place</span> words.';
+  if (it.k === 'wh') return 'Check the <b>word order</b>: … asked where <b>I lived</b>.';
   return 'Almost! Check the spelling and the other words.';
 }
-// A "?" or quotation marks make it wrong: reported speech has neither
-const hit = (item, val) => !/[?"“”„]/.test(String(val || '')) && item.a.some(a => norm(a) === norm(val));
+const hit = (it, val) => !/[?"“”„]/.test(String(val || '')) && it.a.some(a => norm(a) === norm(val));
 
 const PRACTICE = [
-  { img: 'p1', box: 'left:56%;top:6%;width:38%;height:21%', who: 'Mia', say: 'I’m eating ice cream.', start: 'Mia said', a: ['she was eating ice cream', 'she was eating an ice cream'], p: ['she'], v: 'was eating' },
-  { img: 'p2', box: 'left:13%;top:4%;width:36%;height:20%', who: 'Max', say: 'I play video games every day.', start: 'Max said', a: ['he played video games every day'], p: ['he'], v: 'played' },
-  { img: 'p3', box: 'left:62%;top:6%;width:34%;height:20%', who: 'Leo (to you)', say: 'Do you like football?', start: 'Leo asked me', a: ['if I liked football'], p: ['i'], v: 'liked', q: true },
-  { img: 'p4', box: 'left:55%;top:5%;width:37%;height:20%', who: 'Mum', say: 'I like books about animals.', start: 'Mum said', a: ['she liked books about animals'], p: ['she'], v: 'liked' },
-  { img: 'p5', box: 'left:8%;top:7%;width:39%;height:22%', who: 'Grandma (to you)', say: 'Do you like my flowers?', start: 'Grandma asked me', a: ['if I liked her flowers'], p: ['i', 'her'], v: 'liked', q: true },
-  { img: 'p6', box: 'left:40%;top:26%;width:19%;height:15%', who: 'Max', say: 'I’m waiting for the bus.', start: 'Max said', a: ['he was waiting for the bus'], p: ['he'], v: 'was waiting', small: true }
+  { who: 'Jonas', say: 'I feel terrible.', start: 'Jonas said', a: ['he felt terrible'], p: ['he'], v: ['felt'] },
+  { who: 'Lea', say: 'I saw the photo yesterday.', start: 'Lea said', a: ['she had seen the photo the day before', 'she saw the photo the day before'], p: ['she'], v: ['had seen', 'saw'], t: ['the day before'] },
+  { who: 'Tim', say: 'We are going to delete the photo.', start: 'Tim said', a: ['they were going to delete the photo'], p: ['they'], v: ['were going to'] },
+  { who: 'Ms Becker to Emir', say: 'Did you share the photo?', start: 'Ms Becker asked Emir', a: ['if he had shared the photo', 'if he shared the photo'], p: ['he'], v: ['had shared', 'shared'], k: 'yn' },
+  { who: 'Ms Becker to the class', say: 'Why do you laugh at other people?', start: 'Ms Becker asked the class', a: ['why they laughed at other people'], p: ['they'], v: ['laughed'], k: 'wh' },
+  { who: 'Ms Becker to the class', say: 'Don’t forward private photos!', start: 'Ms Becker told the class', a: ['not to forward private photos'], k: 'neg' },
+  { who: 'Emir', say: 'I will say sorry to Jonas tomorrow.', start: 'Emir said', a: ['he would say sorry to Jonas the next day'], p: ['he'], v: ['would'], t: ['the next day'] },
+  { who: 'Jonas to Lea', say: 'Can you help me?', start: 'Jonas asked Lea', a: ['to help him', 'if she could help him'], k: 'req' }
 ];
-$('#pr-a').innerHTML = PRACTICE.map((it, i) => `<div class="card pcard">
-  <div class="pic sq"><img src="media/${it.img}.jpg" alt="${esc(it.who)} says something" width="900" height="900"><span class="bub" style="${it.box}${it.small ? ';font-size:3.2cqw' : ''}">“${esc(it.say)}”</span></div>
-  <div class="body"><p class="quote"><span class="who">${esc(it.who)}:</span> “${esc(it.say)}”</p>
+$('#pr-a').innerHTML = PRACTICE.map((it, i) => `<div class="card stmt"><p class="meta">Wednesday · ${esc(it.who)}</p><p class="quote">“${esc(it.say)}”</p>
   <div class="write"><span class="start">${esc(it.start)}</span><input class="in" type="text" data-k="pa${i}" aria-label="${esc(it.start)} …" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
-  <div><button type="button" class="btn small" data-check="${i}">Check</button></div><p class="fb" data-pfb="${i}"></p></div></div>`).join('');
+  <div><button type="button" class="btn small" data-check="${i}">Check</button></div><p class="fb" data-pfb="${i}"></p></div>`).join('');
 $$('#pr-a .in').forEach(inp => {
   inp.value = S[inp.dataset.k] || '';
   inp.addEventListener('input', () => { S[inp.dataset.k] = inp.value; inp.classList.remove('is-right', 'is-wrong'); save(); });
@@ -627,35 +468,34 @@ $('#pr-a').addEventListener('click', e => {
   inp.classList.toggle('is-right', ok); inp.classList.toggle('is-wrong', !ok && !!norm(inp.value));
   fb.className = 'fb ' + (ok ? 'ok' : 'no'); fb.innerHTML = ok ? 'Right! Well done.' : tip(it, inp.value);
 });
-
 quiz($('#pr-b'), [
-  { t: 'Leo: “We are hungry!”<br>Leo said …', o: ['… we were hungry.', '… they were hungry.', '… they are hungry.'], a: 1, why: '<span class="pr">we → they</span>, <span class="vb">are → were</span>' },
-  { t: 'Max: “I love sandwiches.”<br>Max said …', o: ['… he loves sandwiches.', '… I loved sandwiches.', '… he loved sandwiches.'], a: 2, why: '<span class="pr">I → he</span>, <span class="vb">love → loved</span>' },
-  { t: 'Mum: “Do you want some juice, Mia?”<br>Mum asked Mia …', o: ['… if she wanted some juice.', '… if she wants some juice.', '… do she want some juice.'], a: 0, why: '<b>if</b>, <span class="pr">you → she</span>, <span class="vb">want → wanted</span>' },
-  { t: 'Mia: “The sun is shining!”<br>Mia said …', o: ['… the sun is shining.', '… the sun was shining.', '… the sun shined.'], a: 1, why: '<span class="vb">is shining → was shining</span>' }
+  { t: `Jonas ${G} Ms Becker that he felt terrible.`, o: ['said', 'told', 'asked'], a: 1, why: 'told + person' },
+  { t: `Lea ${G} that she had seen the photo.`, o: ['said', 'told', 'asked'], a: 0, why: 'no person → said' },
+  { t: `Ms Becker ${G} Emir if he had shared the photo.`, o: ['said', 'told', 'asked'], a: 2, why: 'question → asked' },
+  { t: `Ms Becker ${G} the class not to forward private photos.`, o: ['said', 'told', 'asked'], a: 1, why: 'command → told … not to' },
+  { t: `Jonas ${G} Lea to help him.`, o: ['said', 'told', 'asked'], a: 2, why: 'request → asked … to' }
 ]);
 quiz($('#pr-c'), [
-  { t: 'Which one is right?', o: ['Max said, that he was tired.', 'Max said that he was tired.'], a: 1, why: 'No comma before <i>that</i>.' },
-  { t: 'Which one is right?', o: ['She asked if I liked pizza.', 'She asked if do I like pizza.'], a: 0, why: 'No <i>do</i> in reported questions.' },
-  { t: 'Which one is right?', o: ['Tom said he is hungry.', 'Tom said he was hungry.'], a: 1, why: 'One step back: <span class="vb">is → was</span>.' },
-  { t: 'Which one is right?', o: ['Mia said I was tired.', 'Mia said she was tired.'], a: 1, why: 'Mia is talking about herself: <span class="pr">I → she</span>.' },
-  { t: 'Which one is right?', o: ['Leo said they were playing football.', 'Leo said they was playing football.'], a: 0, why: '<span class="pr">they</span> → <span class="vb">were</span> + -ing.' }
+  { t: 'Which one is right?', o: ['Tim said they were going to delete the photo.', 'Tim said, that they are going to delete the photo.'], a: 0, why: 'no comma, backshift' },
+  { t: 'Which one is right?', o: ['Ms Becker asked why did they laugh.', 'Ms Becker asked why they laughed.'], a: 1, why: 'normal word order, no did' },
+  { t: 'Which one is right?', o: ['Emir said he would say sorry the next day.', 'Emir said he will say sorry tomorrow.'], a: 0, why: 'will → would, tomorrow → the next day' },
+  { t: 'Which one is right?', o: ['Jonas said Lea that he felt terrible.', 'Jonas told Lea that he felt terrible.'], a: 1, why: 'tell + person' }
 ]);
 
 /* ================= Word Master ================= */
 const WM = [
-  { who: 'Emma', say: 'I am tired.', start: 'Emma said', a: ['she was tired'] },
-  { who: 'Leo', say: 'I like pizza.', start: 'Leo said', a: ['he liked pizza'] },
-  { who: 'Sara', say: 'We are watching a film.', start: 'Sara said', a: ['they were watching a film'] },
-  { who: 'Ben', say: 'I play the guitar.', start: 'Ben said', a: ['he played the guitar'] },
+  { who: 'Sara', say: 'I have finished my homework.', start: 'Sara said', a: ['she had finished her homework'] },
+  { who: 'Ben', say: 'I will call you tomorrow.', start: 'Ben told me', a: ['he would call me the next day'] },
+  { who: 'Noah', say: 'I can’t find my phone.', start: 'Noah said', a: ["he couldn't find his phone"] },
+  { who: 'Tim', say: 'I went to the cinema yesterday.', start: 'Tim said', a: ['he had gone to the cinema the day before', 'he went to the cinema the day before'] },
   { who: 'Lily', say: 'Do you play football?', start: 'Lily asked me', a: ['if I played football'] },
-  { who: 'Mum', say: 'I am making dinner.', start: 'Mum said', a: ['she was making dinner'] },
-  { who: 'Tom', say: 'My sister loves dogs.', start: 'Tom said', a: ['his sister loved dogs'] },
-  { who: 'Max', say: 'Do you like my new bike?', start: 'Max asked me', a: ['if I liked his new bike'] },
-  { who: 'Anna', say: 'We live in Berlin.', start: 'Anna said', a: ['they lived in Berlin'] },
-  { who: 'Jonas', say: 'I am reading a comic.', start: 'Jonas said', a: ['he was reading a comic'] },
-  { who: 'Grandma', say: 'Do you want some cake?', start: 'Grandma asked us', a: ['if we wanted some cake'] },
-  { who: 'Mia and Leo', say: 'We are playing in the garden.', start: 'Mia and Leo said', a: ['they were playing in the garden'] }
+  { who: 'Max', say: 'Where is the bus stop?', start: 'Max asked', a: ['where the bus stop was'] },
+  { who: 'The teacher', say: 'Close the door!', start: 'The teacher told me', a: ['to close the door'] },
+  { who: 'Dad', say: 'Don’t play computer games all night!', start: 'Dad told me', a: ['not to play computer games all night'] },
+  { who: 'Anna', say: 'We are going to win.', start: 'Anna said', a: ['they were going to win'] },
+  { who: 'Mum', say: 'I must go now.', start: 'Mum said', a: ['she had to go then', 'she had to go'] },
+  { who: 'Jonas', say: 'What are you doing here?', start: 'Jonas asked me', a: ['what I was doing there'] },
+  { who: 'Mia', say: 'Please help me.', start: 'Mia asked me', a: ['to help her'] }
 ];
 const wmList = $('#wm-list'), wmRes = $('#wm-res'), wmName = $('#wm-name');
 wmList.innerHTML = WM.map((w, i) => `<li><span class="qn">${i + 1}</span><div class="card"><p class="quote"><span class="who">${esc(w.who)}:</span> “${esc(w.say)}”</p><div class="write"><span class="start">${esc(w.start)}</span><input class="in" type="text" data-k="wm${i}" aria-label="Sentence ${i + 1}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div></div></li>`).join('');
@@ -683,7 +523,6 @@ $('#wm-reset').addEventListener('click', () => {
   wmIns.forEach(inp => { inp.value = ''; inp.classList.remove('is-right', 'is-wrong'); });
   wmRes.textContent = ''; wmRes.className = 'res';
 });
-// PDF report on one A4 page; the PDF library is the Respect site's own copy, loaded on first use
 let pdfLib = null;
 const loadPdf = () => pdfLib || (pdfLib = new Promise((res, rej) => {
   if (window.jspdf) return res(window.jspdf);
@@ -702,7 +541,7 @@ $('#wm-pdf').addEventListener('click', async () => {
   doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.setTextColor(0);
   doc.text('Word Master - Reported speech', M, 20);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(70);
-  doc.text(san('Unit 2 Respect - Lesson 4 (' + LEVEL + '-Kurs)  |  ' + name + '  |  ' + new Date().toLocaleDateString('de-DE')), M, 27);
+  doc.text(san('Unit 2 Respect - Lesson 4 (E-Kurs)  |  ' + name + '  |  ' + new Date().toLocaleDateString('de-DE')), M, 27);
   doc.setDrawColor(0); doc.setLineWidth(.35); doc.line(M, 31, M + W, 31);
   let y = 39, ok = 0, missing = 0;
   WM.forEach((w, i) => {
@@ -716,8 +555,7 @@ $('#wm-pdf').addEventListener('click', async () => {
     doc.text(st, x0, y);
     const x = x0 + doc.getTextWidth(st);
     doc.setFont('helvetica', 'bold');
-    const shown = san(val || '_____');
-    const lines = doc.splitTextToSize(shown, M + W - 24 - x);
+    const lines = doc.splitTextToSize(san(val || '_____'), M + W - 24 - x);
     if (val) { doc.setFillColor(h ? 221 : 246, h ? 232 : 222, h ? 204 : 212); lines.forEach((l, k) => doc.rect(x - .5, y - 3.9 + k * 5, doc.getTextWidth(l) + 1.4, 5.1, 'F')); }
     doc.setTextColor(h ? 40 : 150, h ? 90 : 40, h ? 40 : 30);
     doc.text(lines, x + .2, y, { lineHeightFactor: 1.35 });
@@ -729,7 +567,7 @@ $('#wm-pdf').addEventListener('click', async () => {
   doc.setDrawColor(0); doc.line(M, y - 2, M + W, y - 2);
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.setTextColor(0);
   doc.text('RESULT:  ' + ok + ' / ' + WM.length + ' correct' + (missing ? '   (' + missing + ' not answered)' : ''), M, y + 6);
-  doc.save('wordmaster-reported-speech-' + name.replace(/[^\p{L}\p{N}_-]+/gu, '-').toLowerCase() + '.pdf');
+  doc.save('wordmaster-reported-speech-e-' + name.replace(/[^\p{L}\p{N}_-]+/gu, '-').toLowerCase() + '.pdf');
 });
 
 /* ================= phase timer ================= */
@@ -748,7 +586,7 @@ tGo.addEventListener('click', () => (tick ? tStop() : tStart()));
 $('#t-reset').addEventListener('click', () => tSet(total / 60));
 
 /* ================= phase routing ================= */
-const STAGES = [{ id: 'warm-up', min: 5 }, { id: 'watch', min: 10 }, { id: 'rules', min: 15 }, { id: 'practice', min: 20 }, { id: 'wordmaster', min: 10 }, { id: 'extra', min: 3 }];
+const STAGES = [{ id: 'warm-up', min: 5 }, { id: 'watch', min: 12 }, { id: 'rules', min: 18 }, { id: 'practice', min: 20 }, { id: 'wordmaster', min: 10 }, { id: 'extra', min: 3 }];
 let cur = null;
 function route() {
   const s = STAGES.find(x => x.id === (location.hash || '').slice(1)) || STAGES[0];
