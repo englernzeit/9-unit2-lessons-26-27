@@ -2,6 +2,44 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>
+/* Classroom sound limit: all audio, video (music included) and read-aloud voices play at
+   most 15 %. iPad Safari ignores media.volume, so media is routed through a Web Audio gain
+   node; the AudioContext is unlocked on the first tap. Without Web Audio, volume is clamped. */
+(() => {
+  const CAP = 0.15;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  let ctx = null;
+  const routed = new WeakSet();
+  const unlock = () => {
+    if (!AC) return;
+    try { ctx = ctx || new AC(); if (ctx.state === 'suspended') ctx.resume(); } catch (e) {}
+  };
+  const route = el => {
+    if (routed.has(el)) return;
+    unlock();
+    if (ctx) {
+      try {
+        const src = ctx.createMediaElementSource(el), gain = ctx.createGain();
+        gain.gain.value = CAP; src.connect(gain); gain.connect(ctx.destination);
+        routed.add(el); el.volume = 1;
+        return;
+      } catch (e) {}
+    }
+    if (el.volume > CAP) el.volume = CAP;
+  };
+  ['pointerdown', 'touchstart', 'keydown'].forEach(t => document.addEventListener(t, unlock, { capture: true, passive: true }));
+  // Built-in video controls start playback without calling play(), so catch the play event too
+  document.addEventListener('play', e => { if (e.target instanceof HTMLMediaElement) route(e.target); }, true);
+  document.addEventListener('volumechange', e => { const el = e.target; if (el instanceof HTMLMediaElement && !routed.has(el) && el.volume > CAP) el.volume = CAP; }, true);
+  const play = HTMLMediaElement.prototype.play;
+  HTMLMediaElement.prototype.play = function () { route(this); return play.apply(this, arguments); };
+  if (window.speechSynthesis && window.SpeechSynthesisUtterance) {
+    const speak = window.speechSynthesis.speak.bind(window.speechSynthesis);
+    window.speechSynthesis.speak = u => { try { u.volume = Math.min(u.volume, CAP); } catch (e) {} return speak(u); };
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#222B26">
@@ -558,7 +596,6 @@ textarea.field{resize:vertical;min-height:100px;overflow-y:auto;field-sizing:con
       <ol class="olist" id="hunt"></ol>
       <div class="row-actions" style="gap:12px">
         <button type="button" class="btn btn-ink" data-check="hunt">Check my words</button>
-        <button type="button" class="btn btn-line" id="huntHint">Give me the first letters</button>
       </div>
       <p class="result" id="res-hunt" aria-live="polite"></p>
     </div>
@@ -716,7 +753,6 @@ textarea.field{resize:vertical;min-height:100px;overflow-y:auto;field-sizing:con
 <div class="wmbar">
   <div class="wmbar-in on-dark">
     <button type="button" class="btn btn-accent" data-check="wm">Check all</button>
-    <button type="button" class="btn btn-line" id="solBtn">Show solutions</button>
     <p class="result" id="res-wm" aria-live="polite" style="padding:0 8px"></p>
   </div>
 </div>
@@ -1256,7 +1292,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     return '<li class="wrow"><span class="num" style="background:' + TINTS[i % TINTS.length] + '">' + (i + 1) + '</span><div class="wbody">' +
       '<p class="wde">' + esc(w[0]) + '<mark>' + esc(w[1]) + '</mark>' + esc(w[2]) + '</p>' +
       '<p class="wen">' + esc(w[3]) + '<input class="field gap" type="text" data-save="' + k + '" aria-label="Missing word ' + (i + 1) + '" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">' + esc(w[4]) + '</p>' +
-      '<p class="mono sol">→ ' + esc(w[5]) + '</p></div></li>';
+      '</div></li>';
   }).join('');
 
   /* ================= INPUTS: restore + autosave ================= */
@@ -1427,7 +1463,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
         var ico = $('.qfb-ico', fb);
         ico.innerHTML = ok ? ICON_CHECK : ICON_X;
         ico.style.background = ok ? '#2F6B45' : '#B4473A';
-        $('.qverdict', fb).textContent = ok ? 'Right — it’s ' + word + '!' : 'Not quite — it’s ' + word + '.';
+        $('.qverdict', fb).textContent = ok ? 'Right — it’s ' + word + '!' : 'Not quite — try again.';
         fb.hidden = false;
       } else fb.hidden = true;
     });
@@ -1560,23 +1596,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     }
   }
   $$('[data-check]').forEach(function (b) { b.addEventListener('click', function () { check(b.dataset.check); }); });
-  $('#huntHint').addEventListener('click', function () {
-    setResult('hunt', { text: 'First letters:  1 p…   2 s…   3 s…   4 a…   5 h…', cls: 'tone-warn' });
-  });
-
-  /* show solutions: tap twice instead of a browser pop-up */
-  var solT = null;
-  function renderSolBtn() { $('#solBtn').textContent = UI.confirmSol ? 'Sure? Tap again to show them' : 'Show solutions'; }
-  $('#solBtn').addEventListener('click', function () {
-    clearTimeout(solT);
-    if (!UI.confirmSol) {
-      UI.confirmSol = true; renderSolBtn();
-      solT = setTimeout(function () { UI.confirmSol = false; renderSolBtn(); }, 5000);
-      return;
-    }
-    UI.confirmSol = false; renderSolBtn();
-    $('#wmList').classList.add('show-sol');
-  });
+  function renderSolBtn() {}
 
   /* ================= LIVE PREVIEW ================= */
   function wordCount() {
@@ -1684,7 +1704,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
         doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5);
         doc.text((i + 1) + '.', M, y);
         doc.setFont('helvetica', 'normal');
-        doc.text((val || '-') + '   ' + (hit ? '[ok]' : '[X]  correct: ' + w[5]), M + 8, y);
+        doc.text((val || '-') + '   ' + (hit ? '[ok]' : '[X]'), M + 8, y);
         y += 5.6;
       });
       y += 4;

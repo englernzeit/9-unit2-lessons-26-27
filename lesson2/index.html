@@ -1,4 +1,42 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8>
+<script>
+/* Classroom sound limit: all audio, video (music included) and read-aloud voices play at
+   most 15 %. iPad Safari ignores media.volume, so media is routed through a Web Audio gain
+   node; the AudioContext is unlocked on the first tap. Without Web Audio, volume is clamped. */
+(() => {
+  const CAP = 0.15;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  let ctx = null;
+  const routed = new WeakSet();
+  const unlock = () => {
+    if (!AC) return;
+    try { ctx = ctx || new AC(); if (ctx.state === 'suspended') ctx.resume(); } catch (e) {}
+  };
+  const route = el => {
+    if (routed.has(el)) return;
+    unlock();
+    if (ctx) {
+      try {
+        const src = ctx.createMediaElementSource(el), gain = ctx.createGain();
+        gain.gain.value = CAP; src.connect(gain); gain.connect(ctx.destination);
+        routed.add(el); el.volume = 1;
+        return;
+      } catch (e) {}
+    }
+    if (el.volume > CAP) el.volume = CAP;
+  };
+  ['pointerdown', 'touchstart', 'keydown'].forEach(t => document.addEventListener(t, unlock, { capture: true, passive: true }));
+  // Built-in video controls start playback without calling play(), so catch the play event too
+  document.addEventListener('play', e => { if (e.target instanceof HTMLMediaElement) route(e.target); }, true);
+  document.addEventListener('volumechange', e => { const el = e.target; if (el instanceof HTMLMediaElement && !routed.has(el) && el.volume > CAP) el.volume = CAP; }, true);
+  const play = HTMLMediaElement.prototype.play;
+  HTMLMediaElement.prototype.play = function () { route(this); return play.apply(this, arguments); };
+  if (window.speechSynthesis && window.SpeechSynthesisUtterance) {
+    const speak = window.speechSynthesis.speak.bind(window.speechSynthesis);
+    window.speechSynthesis.speak = u => { try { u.volume = Math.min(u.volume, CAP); } catch (e) {} return speak(u); };
+  }
+})();
+</script><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Racism and Discrimination Lesson</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Faustina:ital,wght@0,400..700;1,400..700&display=swap">
@@ -731,10 +769,10 @@ function binary(root, items, labels) {
   root.addEventListener('click', e => {
     const b = e.target.closest('.opt'); if (!b || b.disabled) return;
     const card = b.closest('.bcard'), it = items[+card.dataset.i], ok = b.dataset.v === it.a;
-    $$('.opt', card).forEach(o => { o.disabled = true; if (o.dataset.v === it.a) o.classList.add('correct'); else if (o === b) o.classList.add('wrong'); });
+    if (ok) $$('.opt', card).forEach(o => { o.disabled = true; if (o === b) o.classList.add('correct'); }); else { b.disabled = true; b.classList.add('wrong'); }
     const fb = $('.fb', card), lab = labels.find(x => x[0] === it.a)[1].toLowerCase();
     fb.hidden = false; fb.className = 'fb ' + (ok ? 'ok' : 'no');
-    fb.innerHTML = `<strong>${ok ? 'Right' : 'Look again'}: ${lab}.</strong> ${it.why}`;
+    fb.innerHTML = ok ? `<strong>Right: ${lab}.</strong> ${it.why}` : '<strong>Not quite.</strong> Try again.';
   });
   draw();
   return draw;
@@ -761,11 +799,11 @@ function quiz(root, qs, o = {}) {
     const b = e.target.closest('.opt'); if (!b || b.disabled) return;
     const box = b.closest('.q'), q = qs[+box.dataset.i];
     const a = q.tf ? (q.a ? 0 : 1) : q.a, ok = +b.dataset.k === a;
-    answered++; if (ok) right++;
-    $$('.opt', box).forEach(x => { x.disabled = true; if (+x.dataset.k === a) x.classList.add('correct'); else if (x === b) x.classList.add('wrong'); });
+    if (!box.dataset.tried) { box.dataset.tried = '1'; answered++; if (ok) right++; }
+    if (ok) $$('.opt', box).forEach(x => { x.disabled = true; if (x === b) x.classList.add('correct'); }); else { b.disabled = true; b.classList.add('wrong'); }
     const fb = $('.fb', box);
     fb.hidden = false; fb.className = 'fb ' + (ok ? 'ok' : 'no');
-    fb.innerHTML = `<strong>${ok ? 'Right.' : 'Not quite.'}</strong> ${q.fb || ''}`;
+    fb.innerHTML = ok ? `<strong>Right.</strong> ${q.fb || ''}` : '<strong>Not quite.</strong> Try again.';
     report();
   });
   draw();
