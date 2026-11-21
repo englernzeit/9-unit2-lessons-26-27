@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-level="G">
 <head>
 <meta charset="utf-8">
 <script>
@@ -72,6 +72,8 @@ mark{background:var(--gold);color:var(--ink);padding:0 .14em;border-radius:.14em
 button{font:inherit}
 :focus-visible{outline:3px solid var(--leaf);outline-offset:2px}
 .wrap{max-width:68rem;margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left,0px))}
+/* One source, two builds: G-Kurs and E-Kurs differ only in the Watch phase */
+[data-level="G"] .e-only,[data-level="E"] .g-only{display:none!important}
 .pr{color:var(--person);font-weight:700}
 .vb{color:var(--verb);font-weight:700}
 .x{text-decoration:line-through;text-decoration-thickness:2px;color:var(--red);opacity:.85}
@@ -249,12 +251,16 @@ video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-
 <section class="stage" data-s="watch" hidden>
   <header class="st-head">
     <p class="eyebrow">Phase 2 · 10 minutes</p>
-    <h1>The night <mark>messenger</mark></h1>
-    <p class="lead">An owl carries Grandma's messages to Mia. Watch carefully: which words change when the owl tells Mia?</p>
-    <p class="de"><b>DE</b>Achte auf die farbigen Wörter: <span class="pr">lila = Person</span>, <span class="vb">orange = Verb</span>.</p>
+    <h1 class="g-only">The night <mark>messenger</mark></h1>
+    <p class="lead g-only">An owl carries Grandma's messages to Mia. Watch carefully: which words change when the owl tells Mia?</p>
+    <p class="de g-only"><b>DE</b>Achte auf die farbigen Wörter: <span class="pr">lila = Person</span>, <span class="vb">orange = Verb</span>.</p>
+    <h1 class="e-only">How reported speech <mark>works</mark></h1>
+    <p class="lead e-only">Anna says, “I am hungry today.” What changes when somebody tells her words the next day? Watch the explainer and look for the three things that change.</p>
+    <p class="de e-only"><b>DE</b>Achte darauf, was sich ändert: die Person, die Zeit (das Verb) und Zeit- und Ortsangaben.</p>
   </header>
   <div class="two">
-    <video src="media/night-messenger.mp4" poster="media/night-messenger.jpg" controls playsinline preload="none"></video>
+    <video class="g-only" src="media/night-messenger.mp4" poster="media/night-messenger.jpg" controls playsinline preload="none"></video>
+    <video class="e-only" src="media/explainer-e.mp4" poster="media/explainer-e.jpg" controls playsinline preload="none"></video>
     <div class="card"><h3>After the video</h3><div id="watch-quiz" class="sub"></div></div>
   </div>
   <nav class="st-nav"><a class="btn" href="#warm-up">Back</a><a class="btn primary" href="#rules">Next: The rules</a></nav>
@@ -510,7 +516,8 @@ video{display:block;width:100%;border-radius:var(--r-md);background:#1d2330;box-
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-const KEY = 'rs4-g';
+const LEVEL = document.documentElement.dataset.level === 'E' ? 'E' : 'G';
+const KEY = 'rs4-' + LEVEL.toLowerCase();
 let S = {};
 try { S = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
@@ -544,7 +551,13 @@ quiz($('#warm-quiz'), [
   { t: `Max: “I<span class="vb">’m</span> waiting for Leo at the park!”<br>Mia: “Max said he ${G} waiting for you at the park.”`, o: ['am', 'is', 'was'], a: 2, why: '<span class="vb">am → was</span>' },
   { t: `Mum: “I <span class="vb">have</span> a secret surprise for Leo!”<br>Mia: “Mum said she ${G} a secret surprise for you.”`, o: ['has', 'had', 'have'], a: 1, why: '<span class="vb">have → had</span>' }
 ]);
-quiz($('#watch-quiz'), [
+quiz($('#watch-quiz'), LEVEL === 'E' ? [
+  { t: `Anna: “I <span class="vb">am</span> hungry today.”<br>Anna said she ${G} hungry that day.`, o: ['is', 'was', 'were'], a: 1, why: 'Backshift: <span class="vb">am → was</span>.' },
+  { t: `Anna: “I am hungry <b>today</b>.”<br>The next day: Anna said she was hungry ${G}.`, o: ['today', 'that day', 'tomorrow'], a: 1, why: 'Time words change too: <b>today → that day</b>.' },
+  { t: 'What comes after <b>told</b>?', o: ['a person: told <b>me</b>, told <b>us</b>', 'nothing: told that …', 'a comma: told, …'], a: 0, why: '<b>tell</b> always needs a person. <b>say</b> doesn’t.' },
+  { t: `“Where do you live?”<br>He asked me where ${G}.`, o: ['did I live', 'I lived', 'do you live'], a: 1, why: 'Reported questions have normal word order and no <i>do / did</i>.' },
+  { t: 'Which kinds of sentences can we report?', o: ['only statements', 'statements, questions and commands', 'only questions'], a: 1, why: 'Statement → <b>said</b>, question → <b>asked</b>, command → <b>told … to</b>.' }
+] : [
   { t: 'Who carries Grandma’s messages to Mia?', o: ['a cat', 'an owl', 'Mia’s brother'], a: 1, why: 'The owl is the night messenger.' },
   { t: `Grandma: “<span class="pr">I</span> am baking a cake for you!”<br>Owl: “Grandma said ${G} was baking a cake for you.”`, o: ['I', 'she', 'you'], a: 1, why: '<span class="pr">I → she</span>: the owl talks about Grandma.' },
   { t: `Owl: “Grandma said she ${G} baking a cake for you.”`, o: ['is', 'am', 'was'], a: 2, why: '<span class="vb">am baking → was baking</span>' },
@@ -689,7 +702,7 @@ $('#wm-pdf').addEventListener('click', async () => {
   doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.setTextColor(0);
   doc.text('Word Master - Reported speech', M, 20);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(70);
-  doc.text(san('Unit 2 Respect - Lesson 4 (G-Kurs)  |  ' + name + '  |  ' + new Date().toLocaleDateString('de-DE')), M, 27);
+  doc.text(san('Unit 2 Respect - Lesson 4 (' + LEVEL + '-Kurs)  |  ' + name + '  |  ' + new Date().toLocaleDateString('de-DE')), M, 27);
   doc.setDrawColor(0); doc.setLineWidth(.35); doc.line(M, 31, M + W, 31);
   let y = 39, ok = 0, missing = 0;
   WM.forEach((w, i) => {
