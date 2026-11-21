@@ -985,6 +985,7 @@ a:hover{color:var(--sw-forest-800)}
 
     <sc-if value="{{ isF1 }}"><iframe src="lesson1-g/" title="Under pressure" style="position:fixed;left:0;right:0;bottom:0;top:84px;width:100%;height:calc(100dvh - 84px);border:0;background:#fff;z-index:5"></iframe></sc-if>
     <sc-if value="{{ isF2 }}"><iframe src="lesson2/" title="Racism and discrimination" style="position:fixed;left:0;right:0;bottom:0;top:84px;width:100%;height:calc(100dvh - 84px);border:0;background:#fff;z-index:5"></iframe></sc-if>
+    <sc-if value="{{ isF4 }}"><iframe src="lesson4-g/" title="Reported speech" style="position:fixed;left:0;right:0;bottom:0;top:84px;width:100%;height:calc(100dvh - 84px);border:0;background:#fff;z-index:5"></iframe></sc-if>
     <sc-if value="{{ notF }}">
     <section style="display:flex;flex-direction:column;gap:10px;padding:8px 0 4px">
       <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sw-sage)">Englisch · Klasse 9 · Unit 2 Respect · Lesson {{ lessonN }}</p>
@@ -1634,7 +1635,7 @@ class Component extends DCLogic {
       entryItems: [0, 1, 2].map(i => Object.assign({ n: i + 1 }, this.inp(L + ':entry:' + i))),
       words: W[L].map(w => ({ en: w[0], de: w[1] })),
       picDe: D.picDe,
-      isF1: L === 1 && lv === 'G', isF2: L === 2, notF: !((L === 1 && lv === 'G') || (L === 2)), isL1: L === 1, isL2: L === 2, isL3: L === 3, isL4: L === 4,
+      isF1: L === 1 && lv === 'G', isF2: L === 2, isF4: L === 4 && lv === 'G', notF: !((L === 1 && lv === 'G') || (L === 2) || (L === 4 && lv === 'G')), isL1: L === 1, isL2: L === 2, isL3: L === 3, isL4: L === 4,
       picWords: ps.items,
       picWordsNote: ps.found + ' of 10 words found in the list. 0 = not in the list, try another word.',
       picScore: ps.score, picGoal: 30,
